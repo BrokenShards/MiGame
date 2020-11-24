@@ -1,0 +1,1082 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SharpSerial</name>
+    </assembly>
+    <members>
+        <member name="T:SharpSerial.IDatabase`4">
+            <summary>
+              Interface for databases.
+            </summary>
+            <typeparam name="T">
+              Data type.
+            </typeparam>
+            <typeparam name="SerialDataT">
+              Serialization data type.
+            </typeparam>
+            <typeparam name="ReadT">
+              The type used to deserialize from a stream.
+            </typeparam>
+            <typeparam name="WriteT">
+              The type used to serialize to a stream.
+            </typeparam>
+        </member>
+        <member name="P:SharpSerial.IDatabase`4.FilePath">
+            <summary>
+              File path used for serialization.
+            </summary>
+        </member>
+        <member name="P:SharpSerial.IDatabase`4.Item(System.String)">
+            <summary>
+              Element accessor.
+            </summary>
+            <param name="key">
+              The key of the element to access.
+            </param>
+        </member>
+        <member name="P:SharpSerial.IDatabase`4.Empty">
+            <summary>
+              If the database is empty.
+            </summary>
+        </member>
+        <member name="P:SharpSerial.IDatabase`4.Count">
+            <summary>
+              The amount of elements the database contains.
+            </summary>
+        </member>
+        <member name="P:SharpSerial.IDatabase`4.Keys">
+            <summary>
+              List of element keys.
+            </summary>
+        </member>
+        <member name="M:SharpSerial.IDatabase`4.Contains(System.String)">
+            <summary>
+              If the database contains an element with the given key.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <returns>
+              True if the database contains an element with the given key and
+              false otherwise.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.IDatabase`4.Get(System.String)">
+            <summary>
+              Gets the element with the given key.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <returns>
+              The element with the given key or null if one does not exist.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.IDatabase`4.Set(System.String,`0)">
+            <summary>
+              Replaces the element with the given key.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <param name="val">
+              The new element.
+            </param>
+            <returns>
+              True if the database contains an element with the given key and 
+              it was successfully replaced, otherwise false.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.IDatabase`4.Add(System.String,`0,System.Boolean)">
+            <summary>
+              Adds an element to the database, optionally replacing an existing
+              element with the same key.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <param name="val">
+              The element to add.
+            </param>
+            <param name="replace">
+              If an element already exists in the database with the given key,
+              should it be replaced?
+            </param>
+            <returns>
+              True if the element was successfully added to the database,
+              otherwise false.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.IDatabase`4.Remove(System.String)">
+            <summary>
+              Removes the element with the given key from the database.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <returns>
+              True if an element existed in the database with the given key and
+              it was removed successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.IDatabase`4.Clear">
+            <summary>
+              Removes all elements from the database.
+            </summary>
+        </member>
+        <member name="M:SharpSerial.IDatabase`4.LoadFromFile">
+            <summary>
+              Loads the database from <see cref="P:SharpSerial.IDatabase`4.FilePath"/>.
+            </summary>
+            <returns>
+              True if the database was loaded successfully from file and false
+              otherwise.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.IDatabase`4.SaveToFile(System.Boolean)">
+            <summary>
+              Saves the database to <see cref="P:SharpSerial.IDatabase`4.FilePath"/>.
+            </summary>
+            <param name="overwrite">
+              If an already existing file should be overwritten.
+            </param>
+            <returns>
+              True if the database was saves successfully to file and false
+              otherwise.
+            </returns>
+        </member>
+        <member name="T:SharpSerial.IDisposableDatabase`4">
+            <summary>
+              Interface for disposable databases.
+            </summary>
+            <typeparam name="T">
+              Disposable data type.
+            </typeparam>
+            <typeparam name="SerialDataT">
+              Serialization data type.
+            </typeparam>
+            <typeparam name="ReadT">
+              The type used to deserialize from a stream.
+            </typeparam>
+            <typeparam name="WriteT">
+              The type used to serialize to a stream.
+            </typeparam>
+        </member>
+        <member name="T:SharpSerial.ITextDatabase`1">
+            <summary>
+              Database for text serializable types.
+            </summary>
+            <typeparam name="T">
+              Data type.
+            </typeparam>
+        </member>
+        <member name="T:SharpSerial.IDisposableTextDatabase`1">
+            <summary>
+              Database for disposable text serializable types.
+            </summary>
+            <typeparam name="T">
+              Disposable data type.
+            </typeparam>
+        </member>
+        <member name="T:SharpSerial.IBinaryDatabase`1">
+            <summary>
+              Database for binary serializable types.
+            </summary>
+            <typeparam name="T">
+              Data type.
+            </typeparam>
+        </member>
+        <member name="T:SharpSerial.IDisposableBinaryDatabase`1">
+            <summary>
+              Database for disposable binary serializable types.
+            </summary>
+            <typeparam name="T">
+              Disposable data type.
+            </typeparam>
+        </member>
+        <member name="T:SharpSerial.Database`4">
+            <summary>
+              Base class for databases.
+            </summary>
+            <typeparam name="T">
+              Data type.
+            </typeparam>
+            <typeparam name="SerialDataT">
+              Serialization data type.
+            </typeparam>
+            <typeparam name="ReadT">
+              The type used to deserialize from a stream.
+            </typeparam>
+            <typeparam name="WriteT">
+              The type used to serialize to a stream.
+            </typeparam>
+        </member>
+        <member name="M:SharpSerial.Database`4.#ctor">
+            <summary>
+              Constructor
+            </summary>
+        </member>
+        <member name="M:SharpSerial.Database`4.#ctor(SharpSerial.Database{`0,`1,`2,`3})">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="sd">
+              The database to copy from.
+            </param>
+        </member>
+        <member name="P:SharpSerial.Database`4.FilePath">
+            <summary>
+              File path used for serialization.
+            </summary>
+        </member>
+        <member name="P:SharpSerial.Database`4.Item(System.String)">
+            <summary>
+              Element accessor.
+            </summary>
+            <param name="key">
+              The key of the element to access.
+            </param>
+        </member>
+        <member name="P:SharpSerial.Database`4.Empty">
+            <summary>
+              If the database is empty.
+            </summary>
+        </member>
+        <member name="P:SharpSerial.Database`4.Count">
+            <summary>
+              The amount of elements the database contains.
+            </summary>
+        </member>
+        <member name="P:SharpSerial.Database`4.Keys">
+            <summary>
+              List of element keys.
+            </summary>
+        </member>
+        <member name="P:SharpSerial.Database`4.FileData">
+            <summary>
+              The object serialized into its data type.
+            </summary>
+        </member>
+        <member name="M:SharpSerial.Database`4.Contains(System.String)">
+            <summary>
+              If the database contains an element with the given key.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <returns>
+              True if the database contains an element with the given key and
+              false otherwise.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.Database`4.Get(System.String)">
+            <summary>
+              Gets the element with the given key.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <returns>
+              The element with the given key or null if one does not exist.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.Database`4.Set(System.String,`0)">
+            <summary>
+              Replaces the element with the given key.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <param name="val">
+              The new element.
+            </param>
+            <returns>
+              True if the database contains an element with the given key and 
+              it was successfully replaced, otherwise false.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.Database`4.Add(System.String,`0,System.Boolean)">
+            <summary>
+              Adds an element to the database, optionally replacing an existing
+              element with the same key.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <param name="val">
+              The element to add.
+            </param>
+            <param name="replace">
+              If an element already exists in the database with the given key,
+              should it be replaced?
+            </param>
+            <returns>
+              True if the element was successfully added to the database,
+              otherwise false.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.Database`4.Remove(System.String)">
+            <summary>
+              Removes the element with the given key from the database.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <returns>
+              True if an element existed in the database with the given key and
+              it was removed successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.Database`4.Clear">
+            <summary>
+              Removes all elements from the database.
+            </summary>
+        </member>
+        <member name="M:SharpSerial.Database`4.LoadFromStream(`2)">
+            <summary>
+              Attempts to deserialize the object from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.Database`4.SaveToStream(`3)">
+            <summary>
+              Attempts to serialize the object to the stream.
+            </summary>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.Database`4.LoadFromFile">
+            <summary>
+              Loads the database from <see cref="P:SharpSerial.Database`4.FilePath"/>.
+            </summary>
+            <returns>
+              True if the database was loaded successfully from file and false
+              otherwise.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.Database`4.SaveToFile(System.Boolean)">
+            <summary>
+              Saves the database to <see cref="P:SharpSerial.Database`4.FilePath"/>.
+            </summary>
+            <param name="overwrite">
+              If an already existing file should be overwritten.
+            </param>
+            <returns>
+              True if the database was saves successfully to file and false
+              otherwise.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.Database`4.GetEnumerator">
+            <summary>
+              Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+              An enumerator that iterates through the collection.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.Database`4.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+              Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+              An enumerator that iterates through the collection.
+            </returns>
+        </member>
+        <member name="F:SharpSerial.Database`4.m_db">
+            <summary>
+              Collection of database elements indexed by their string key.
+            </summary>
+        </member>
+        <member name="T:SharpSerial.DisposableDatabase`4">
+            <summary>
+              Base class for disposable databases.
+            </summary>
+            <typeparam name="T">
+              Disposable data type.
+            </typeparam>
+            <typeparam name="SerialDataT">
+              Serialization data type.
+            </typeparam>
+            <typeparam name="ReadT">
+              The type used to deserialize from a stream.
+            </typeparam>
+            <typeparam name="WriteT">
+              The type used to serialize to a stream.
+            </typeparam>
+        </member>
+        <member name="M:SharpSerial.DisposableDatabase`4.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:SharpSerial.DisposableDatabase`4.#ctor(SharpSerial.DisposableDatabase{`0,`1,`2,`3})">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="dd">
+              The database to copy from.
+            </param>
+        </member>
+        <member name="M:SharpSerial.DisposableDatabase`4.Remove(System.String)">
+            <summary>
+              Disposes and removes the element with the given key from the
+              database.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <returns>
+              True if an element existed in the database with the given key and
+              it was removed successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.DisposableDatabase`4.Clear">
+            <summary>
+              Removes all elements from the database.
+            </summary>
+        </member>
+        <member name="M:SharpSerial.DisposableDatabase`4.Dispose">
+            <summary>
+              Performs application-defined tasks associated with freeing, 
+              releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:SharpSerial.TextDatabase`1">
+            <summary>
+              Base class for databases that contain text serializable objects.
+            </summary>
+            <typeparam name="T">
+              The text serializable type the database will contain.
+            </typeparam>
+        </member>
+        <member name="M:SharpSerial.TextDatabase`1.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:SharpSerial.TextDatabase`1.#ctor(SharpSerial.TextDatabase{`0})">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="sd">
+              The database to copy from.
+            </param>
+        </member>
+        <member name="M:SharpSerial.TextDatabase`1.LoadFromStream(System.IO.StreamReader)">
+            <summary>
+              Attempts to deserialize the object from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.TextDatabase`1.SaveToStream(System.IO.StreamWriter)">
+            <summary>
+              Attempts to serialize the object to the stream.
+            </summary>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.TextDatabase`1.LoadFromFile">
+            <summary>
+              Loads the database from the file path.
+            </summary>
+            <returns>
+              True if the database was loaded successfully from file and false
+              otherwise.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.TextDatabase`1.SaveToFile(System.Boolean)">
+            <summary>
+              Saves the database to the file path.
+            </summary>
+            <param name="overwrite">
+              If an already existing file should be overwritten.
+            </param>
+            <returns>
+              True if the database was saves successfully to file and false
+              otherwise.
+            </returns>
+        </member>
+        <member name="T:SharpSerial.DisposableTextDatabase`1">
+            <summary>
+              Base class for databases that contain disposable, text serializable objects.
+            </summary>
+            <typeparam name="T">
+              The disposable, text serializable type the database will contain.
+            </typeparam>
+        </member>
+        <member name="M:SharpSerial.DisposableTextDatabase`1.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:SharpSerial.DisposableTextDatabase`1.#ctor(SharpSerial.DisposableTextDatabase{`0})">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="dtd">
+              The database to copy from.
+            </param>
+        </member>
+        <member name="M:SharpSerial.DisposableTextDatabase`1.Remove(System.String)">
+            <summary>
+              Disposes and removes the element with the given key from the
+              database.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <returns>
+              True if an element existed in the database with the given key and
+              it was removed successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.DisposableTextDatabase`1.Clear">
+            <summary>
+              Removes all elements from the database.
+            </summary>
+        </member>
+        <member name="M:SharpSerial.DisposableTextDatabase`1.Dispose">
+            <summary>
+              Performs application-defined tasks associated with freeing, 
+              releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:SharpSerial.BinaryDatabase`1">
+            <summary>
+              Base class for databases that contain binary serializable objects.
+            </summary>
+            <typeparam name="T">
+              The binary serializable type the database will contain.
+            </typeparam>
+        </member>
+        <member name="M:SharpSerial.BinaryDatabase`1.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:SharpSerial.BinaryDatabase`1.#ctor(SharpSerial.BinaryDatabase{`0})">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="sd">
+              The database to copy from.
+            </param>
+        </member>
+        <member name="M:SharpSerial.BinaryDatabase`1.LoadFromStream(System.IO.BinaryReader)">
+            <summary>
+              Attempts to deserialize the object from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.BinaryDatabase`1.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+              Attempts to serialize the object to the stream.
+            </summary>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.BinaryDatabase`1.LoadFromFile">
+            <summary>
+              Loads the database from the file path.
+            </summary>
+            <returns>
+              True if the database was loaded successfully from file and false
+              otherwise.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.BinaryDatabase`1.SaveToFile(System.Boolean)">
+            <summary>
+              Saves the database to the file path.
+            </summary>
+            <param name="overwrite">
+              If an already existing file should be overwritten.
+            </param>
+            <returns>
+              True if the database was saves successfully to file and false
+              otherwise.
+            </returns>
+        </member>
+        <member name="T:SharpSerial.DisposableBinaryDatabase`1">
+            <summary>
+              Base class for databases that contain disposable, binary serializable objects.
+            </summary>
+            <typeparam name="T">
+              The disposable, binary serializable type the database will contain.
+            </typeparam>
+        </member>
+        <member name="M:SharpSerial.DisposableBinaryDatabase`1.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:SharpSerial.DisposableBinaryDatabase`1.#ctor(SharpSerial.DisposableBinaryDatabase{`0})">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="dbd">
+              The database to copy from.
+            </param>
+        </member>
+        <member name="M:SharpSerial.DisposableBinaryDatabase`1.Remove(System.String)">
+            <summary>
+              Disposes and removes the element with the given key from the
+              database.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <returns>
+              True if an element existed in the database with the given key and
+              it was removed successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.DisposableBinaryDatabase`1.Clear">
+            <summary>
+              Removes all elements from the database.
+            </summary>
+        </member>
+        <member name="M:SharpSerial.DisposableBinaryDatabase`1.Dispose">
+            <summary>
+              Performs application-defined tasks associated with freeing, 
+              releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:SharpSerial.DatabaseManager">
+            <summary>
+              Singleton class that manages binary databases.
+            </summary>
+        </member>
+        <member name="P:SharpSerial.DatabaseManager.Empty">
+            <summary>
+              If the manager contains no databases.
+            </summary>
+        </member>
+        <member name="P:SharpSerial.DatabaseManager.Count">
+            <summary>
+              The amount of databases in the manager.
+            </summary>
+        </member>
+        <member name="M:SharpSerial.DatabaseManager.Contains(System.Type)">
+            <summary>
+              If the manager contains a database of the given type.
+            </summary>
+            <param name="t">
+              The database type to check.
+            </param>
+            <returns>
+              True if the manager contains a database of the given type,
+              otherwise false.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.DatabaseManager.Get``2">
+            <summary>
+              Attempts to get the database of type T. Loading it from file or
+              creating a new one if needed.
+            </summary>
+            <typeparam name="T">
+              The binary database type.
+            </typeparam>
+            <typeparam name="D">
+              Data type managed by T.
+            </typeparam>
+            <returns>
+              The database of the given type if it exists or can be loaded,
+              otherwise null.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.DatabaseManager.Load``2(System.Boolean)">
+            <summary>
+              Attempts to load the database of type T from file.
+            </summary>
+            <typeparam name="T">
+              The binary database type.
+            </typeparam>
+            <typeparam name="D">
+              Data type managed by T
+            </typeparam>
+            <param name="reload">
+              If an already loaded database should be loaded again.
+            </param>
+            <returns>
+              True if the database was loaded successfully or loaded already,
+              otherwise false.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.DatabaseManager.Save``2(System.Boolean)">
+            <summary>
+              Attempts to save the database of type T to file.
+            </summary>
+            <typeparam name="T">
+              The binary database type.
+            </typeparam>
+            <typeparam name="D">
+              Data type managed by T
+            </typeparam>
+            <param name="overwrite">
+              If an already existing file should be overwritten.
+            </param>
+            <returns>
+              True if the database was already loaded and was saved successfully
+              to file, otherwise false.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.DatabaseManager.Create``2(System.Boolean)">
+            <summary>
+              Attempts to create a new database of type T.
+            </summary>
+            <typeparam name="T">
+              The binary database type.
+            </typeparam>
+            <typeparam name="D">
+              Data type managed by T
+            </typeparam>
+            <param name="delete">
+              If an already existing database should be deleted.
+            </param>
+            <returns>
+              True if the database was created successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="P:SharpSerial.DatabaseManager.Instance">
+            <summary>
+              The singleton instance.
+            </summary>
+        </member>
+        <member name="T:SharpSerial.ISerializable`3">
+            <summary>
+              Interface for objects that can be serialized/deserialized to/from a file.
+            </summary>
+            <typeparam name="DataT">
+              The data type the object is serialized into.
+            </typeparam>
+            <typeparam name="ReadT">
+              The stream reader type used to deserialize the object from a stream.
+            </typeparam>
+            <typeparam name="WriteT">
+              The stream writer type used to serialize the object to a stream.
+            </typeparam>
+        </member>
+        <member name="P:SharpSerial.ISerializable`3.FileData">
+            <summary>
+              The object serialized into its file data.
+            </summary>
+        </member>
+        <member name="M:SharpSerial.ISerializable`3.LoadFromStream(`1)">
+            <summary>
+              Attempts to deserialize the object from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.ISerializable`3.SaveToStream(`2)">
+            <summary>
+              Attempts to serialize the object to the stream.
+            </summary>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="T:SharpSerial.ITextSerializable">
+            <summary>
+              Interface for objects that can be serialized/deserialized to/from text files.
+            </summary>
+        </member>
+        <member name="T:SharpSerial.IBinarySerializable">
+            <summary>
+              Interface for objects that are be serialized/deserialized to/from binary files.
+            </summary>
+        </member>
+        <member name="T:SharpSerial.IXmlLoadable">
+            <summary>
+              Interface for objects that can be loaded from an xml element.
+            </summary>
+        </member>
+        <member name="M:SharpSerial.IXmlLoadable.LoadFromXml(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load the object from the xml element.
+            </summary>
+            <param name="element">
+              The xml element.
+            </param>
+            <returns>
+              True if the object was successfully loaded, otherwise false.
+            </returns>
+        </member>
+        <member name="T:SharpSerial.TextSerializable">
+            <summary>
+              Base class for objects that are be serialized/deserialized to/from text files.
+            </summary>
+        </member>
+        <member name="P:SharpSerial.TextSerializable.FileData">
+            <summary>
+              The object serialized into file data.
+            </summary>
+            <remarks>
+              Used by the default implementation of <see cref="M:SharpSerial.TextSerializable.SaveToStream(System.IO.StreamWriter)"/>.
+              Throws <see cref="T:System.InvalidOperationException"/> by default so either override this or, 
+              <see cref="M:SharpSerial.TextSerializable.SaveToStream(System.IO.StreamWriter)"/>.
+            </remarks>
+        </member>
+        <member name="M:SharpSerial.TextSerializable.LoadFromStream(System.IO.StreamReader)">
+            <summary>
+              Attempts to deserialize the object from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.TextSerializable.SaveToStream(System.IO.StreamWriter)">
+            <summary>
+              Attempts to serialize the object to the stream.
+            </summary>
+            <remarks>
+              Default implementation attempts to write <see cref="P:SharpSerial.TextSerializable.FileData"/> to stream so either override this or
+              <see cref="P:SharpSerial.TextSerializable.FileData"/>.
+            </remarks>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.TextSerializable.FromFile``1(System.String)">
+            <summary>
+              Constructs an object of type T and attempts to deserialize it from file.
+            </summary>
+            <typeparam name="T">
+              The type of object to deserialize.
+            </typeparam>
+            <param name="path">
+              The file path.
+            </param>
+            <returns>
+              A new object of type T deserialzed from file on success, otherwise null.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.TextSerializable.ToFile``1(``0,System.String,System.Boolean)">
+            <summary>
+              Attempts to serialize the object to file.
+            </summary>
+            <param name="t">
+              The object to save to file.
+            </param>
+            <param name="path">
+              The file path.
+            </param>
+            <param name="replace">
+              If a file already exists at <paramref name="path"/>, should it be replaced?
+            </param>
+            <returns>
+              True if <paramref name="path"/> is valid and data is successfully written to file, otherwise false. Also
+              returns false if a file already exists at <paramref name="path"/> and <paramref name="replace"/> is false.
+            </returns>
+        </member>
+        <member name="T:SharpSerial.BinarySerializable">
+            <summary>
+              Base class for objects that are be serialized/deserialized to/from 
+              binary files.
+            </summary>
+        </member>
+        <member name="P:SharpSerial.BinarySerializable.FileData">
+            <summary>
+              The object serialized into file data.
+            </summary>
+            <remarks>
+              Used by the default implementation of <see cref="M:SharpSerial.BinarySerializable.SaveToStream(System.IO.BinaryWriter)"/>.
+              Throws <see cref="T:System.InvalidOperationException"/> by default so either override this or, 
+              <see cref="M:SharpSerial.BinarySerializable.SaveToStream(System.IO.BinaryWriter)"/>.
+            </remarks>
+        </member>
+        <member name="M:SharpSerial.BinarySerializable.LoadFromStream(System.IO.BinaryReader)">
+            <summary>
+              Attempts to deserialize the object from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.BinarySerializable.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+              Attempts to serialize the object to the stream.
+            </summary>
+            <remarks>
+              Default implementation attempts to write <see cref="P:SharpSerial.BinarySerializable.FileData"/> to stream so either override this or
+              <see cref="P:SharpSerial.BinarySerializable.FileData"/>.
+            </remarks>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.BinarySerializable.FromFile``1(System.String)">
+            <summary>
+              Constructs an object of type T and attempts to deserialize from file.
+            </summary>
+            <typeparam name="T">
+              The type of object to deserialize.
+            </typeparam>
+            <param name="path">
+              The file path.
+            </param>
+            <returns>
+              A new object of type T deserialzed from file on success, otherwise null.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.BinarySerializable.ToFile``1(``0,System.String,System.Boolean)">
+            <summary>
+              Attempts to serialize an object to file.
+            </summary>
+            <param name="t">
+              The object to save to file.
+            </param>
+            <param name="path">
+              The file path.
+            </param>
+            <param name="replace">
+              If a file already exists at <paramref name="path"/>, should it be replaced?
+            </param>
+            <returns>
+              True if <paramref name="path"/> is valid and data is successfully written to file, otherwise false. Also
+              returns false if a file already exists at <paramref name="path"/> and <paramref name="replace"/> is false.
+            </returns>
+        </member>
+        <member name="T:SharpSerial.XmlLoadable">
+            <summary>
+              Base class for objects that can be loaded from an xml element.
+            </summary>
+        </member>
+        <member name="F:SharpSerial.XmlLoadable.XmlHeader">
+            <summary>
+              Standard xml header.
+            </summary>
+        </member>
+        <member name="M:SharpSerial.XmlLoadable.LoadFromXml(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load the object from the xml element.
+            </summary>
+            <param name="element">
+              The xml element.
+            </param>
+            <returns>
+              True if the object was successfully loaded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.XmlLoadable.ToString">
+            <summary>
+              Converts the object to an xml string.
+            </summary>
+            <returns>
+              Returns the object to an xml string.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.XmlLoadable.ToString(System.UInt32)">
+            <summary>
+              Converts the object to an xml string with the given indentation level.
+            </summary>
+            <param name="indent">
+              Indentation level.
+            </param>
+            <returns>
+              Returns the object to an xml string with the given indentation level.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.XmlLoadable.FromXml``1(System.Xml.XmlElement)">
+            <summary>
+              Attempts to create a new object from the xml element.
+            </summary>
+            <typeparam name="T">
+              The type of object to load.
+            </typeparam>
+            <param name="element">
+              The xml element.
+            </param>
+            <returns>
+              A valid object of type T loaded from the xml element on success and null on failure.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.XmlLoadable.FromFile``1(System.String,System.String,System.Xml.XmlNamespaceManager)">
+            <summary>
+              Attempts to create a new object loaded from xml at the given path.
+            </summary>
+            <typeparam name="T">
+              The type to load.
+            </typeparam>
+            <param name="path">
+              The path of the xml document.
+            </param>
+            <param name="xpath">
+              Optional xpath expression to select a single node to load from.
+            </param>
+            <param name="nsm">
+              Optional xml namespace manager.
+            </param>
+            <returns>
+              A valid object of type T on success and null on failure.
+            </returns>
+        </member>
+        <member name="M:SharpSerial.XmlLoadable.ToFile(SharpSerial.IXmlLoadable,System.String,System.Boolean)">
+            <summary>
+              Attempts to save XmlLoadable object to file.
+            </summary>
+            <remarks>
+              Please note <see cref="F:SharpSerial.XmlLoadable.XmlHeader"/> will be written at the beginning of the file
+              before the file data.
+            </remarks>
+            <param name="x">
+              The object to save.
+            </param>
+            <param name="path">
+              The path to save the object to.
+            </param>
+            <param name="overwrite">
+              If an already existing file should be overwritten.
+            </param>
+            <returns>
+              True if the object was written to file successfully, otherwise false.
+            </returns>
+        </member>
+    </members>
+</doc>
