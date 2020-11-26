@@ -226,20 +226,36 @@ namespace SharpGame
 		}
 
 		/// <summary>
-		///   Called after <see cref="Update(float)"/>, use this to update any additional logic
-		///   that is not tied to the game state.
+		///   Called before the state manager updates the game state. Put any additional logic that
+		///   is required but not tied to the game state in here.
 		/// </summary>
 		/// <param name="dt">
 		///   Delta time.
 		/// </param>
-		protected virtual void OnUpdate( float dt )
+		protected virtual void PreUpdate( float dt )
 		{ }
 		/// <summary>
-		///   Called after <see cref="Draw()"/>, use this to draw any additional content on top of
-		///   the game state.
+		///   Called after the state manager updates the game state. Put any additional logic that
+		///   not tied to the game state in here.
 		/// </summary>
-		protected virtual void OnDraw()
+		/// <param name="dt">
+		///   Delta time.
+		/// </param>
+		protected virtual void PostUpdate( float dt )
 		{ }
+		/// <summary>
+		///   Called before the state manager draws the game state. Use this to draw any additional
+		///   content underneath the game state.
+		/// </summary>
+		protected virtual void PreDraw()
+		{ }
+		/// <summary>
+		///   Called after the state manager draws the game state. Use this to draw any additional
+		///   content on top of the game state.
+		/// </summary>
+		protected virtual void PostDraw()
+		{ }
+
 		/// <summary>
 		///   Called before the game window is disposed of, use this to dispose of any additional
 		///   content not tied to the game state.
@@ -307,8 +323,9 @@ namespace SharpGame
 		/// </param>
 		private void Update( float dt )
 		{
+			PreUpdate( dt );
 			Manager.Update( dt );
-			OnUpdate( dt );
+			PostUpdate( dt );
 		}
 		/// <summary>
 		///   Draws the game content to the render window; called every frame after updating.
@@ -317,8 +334,9 @@ namespace SharpGame
 		{
 			Window.Clear();
 
+			PreDraw();
 			Window.Draw( Manager );
-			OnDraw();
+			PostDraw();
 
 			Window.Display();
 		}

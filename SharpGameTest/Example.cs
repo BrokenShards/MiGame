@@ -25,14 +25,16 @@ using System;
 using SFML.Graphics;
 using SFML.System;
 using SharpGame;
-using SharpLogger;
 
 namespace SharpGameTest
 {
+	// In this quick example, we implement two different game states, use the state manager to
+	// switch between them and the game window to run them.
+
 	public class TestState : GameState
 	{
-		// Here we set Storable to return true to indicate our state can be stored behind another
-		// state and will not be destroyed when pushing a new state to the stack.
+		// Here we set Storable to true to indicate our state can be stored behind another and will
+		// not be removed when a new state is added.
 		public override bool Storable
 		{
 			get { return true; }
@@ -52,7 +54,8 @@ namespace SharpGameTest
 														 view.Center.Y + ( i < 2 ? -( size.Y / 2.0f ) : ( size.Y / 2.0f ) ) ),
 										   new Color( 0, 0, 0, 255 ) );
 
-			return Logger.LogReturn( "Test state loaded successfully.", true );
+			Console.WriteLine( "Test state loaded successfully." );
+			return true;
 		}
 
 		// Update is called every frame and is where your logic should go.
@@ -77,10 +80,15 @@ namespace SharpGameTest
 
 			if( done )
 			{
-				// Here we use the state manager to set a new active state. Since Storable is
-				// true, this state will not be destroyed and will be stored behind the new
-				// state.
-				Manager.Push( new TestState2() );
+				// Here we call StateManager.Push(IGameState) to add a new state to top of the
+				// stack and load it. Since Storable is true, this state will not be destroyed and
+				// will be stored behind the new state.
+				if( !Manager.Push( new TestState2() ) )
+				{
+					// Here adding the new state failed, so TestState2.LoadContent() must have
+					// failed.
+					throw new Exception( "Failed switching to test state 2." );
+				}
 			}
 		}
 		// Draw is called every frame after update and is where your draw calls should go.
@@ -99,7 +107,7 @@ namespace SharpGameTest
 		// This should be used to set the state up for storage.
 		public override void OnStore()
 		{
-			Logger.Log( "Test state stored." );
+			Console.WriteLine( "Test state stored." );
 		}
 		// OnRestore is called when the state becomes active again. This should be used to
 		// reinitialise the state, ready to run again.
@@ -112,7 +120,7 @@ namespace SharpGameTest
 				m_verts[ i ] = vert;
 			}
 
-			Logger.Log( "Test state restored." );
+			Console.WriteLine( "Test state restored." );
 		}
 
 		private VertexArray m_verts;
@@ -128,7 +136,6 @@ namespace SharpGameTest
 		{
 			m_verts = new VertexArray( PrimitiveType.Quads, 4 );
 
-			// Here we access the running game through the state manager using GameState.Manager.Game.
 			View view = Manager.Game.Window.GetView();
 			Vector2f size = view.Size / 2.0f;
 
@@ -138,16 +145,28 @@ namespace SharpGameTest
 										   Color.Green );
 
 			m_timer = new Clock();
-			return Logger.LogReturn( "Test state 2 loaded successfully.", true );
+			Console.WriteLine( "Test state 2 loaded successfully." );
+			return true;
 		}
 
 		public override void Update( float dt )
 		{
+			// Here we want to pop back to the previous state after 2 seconds.
 			if( m_timer.ElapsedTime.AsSeconds() >= 2.0f )
 			{
-				// Here we pop the state off the top of the state stack and destroy it, returning
-				// back to a previously restored state.
-				Manager.Pop();
+				// Ensure there is a state to pop back to, if not, we call Reset to remove all 
+				// stored states and add a new one.
+				if( Manager.Count == 1 )
+				{
+					if( !Manager.Reset( new TestState() ) )
+						throw new Exception( "Failed resetting back to test state." );
+				}
+				else
+				{
+					// We call StateManager.Pop() to remove the current game state and restore the
+					// previously stored state.
+					Manager.Pop();
+				}
 			}
 		}
 		// Draw is called every frame after update and is where your draw calls should go.

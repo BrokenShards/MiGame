@@ -77,15 +77,9 @@ namespace SharpGame
 		public bool Push( IGameState state )
 		{
 			if( state == null )
-				return Logger.LogReturn( "Unable to push null game state.", false, LogType.Error );
+				return Logger.LogReturn( "Cannot push null game state.", false, LogType.Error );
 
 			state.Manager = this;
-
-			if( !state.LoadContent() )
-			{
-				state.Manager = null;
-				return Logger.LogReturn( "Unable to push game state: Loading content failed.", false, LogType.Error );
-			}
 
 			if( !Empty )
 			{
@@ -94,7 +88,14 @@ namespace SharpGame
 				else
 					m_states.Pop().Dispose();
 			}
-			
+
+			if( !state.LoadContent() )
+			{
+				state.Manager = null;
+				state.Dispose();
+				return Logger.LogReturn( "Cannot push game state: Loading content failed.", false, LogType.Error );
+			}
+
 			m_states.Push( state );
 			return true;
 		}
