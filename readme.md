@@ -41,6 +41,13 @@ Please see `Example.cs` in the test project for usage examples.
 
 ## Changelog
 
+### Version 0.3.0
+- `GameWindow.Run(IGameState)` now returns an `ExitCode` that is stored in `GameWindow.ExitCode`.
+- `GameWindow.Exit(int)` has been replaced with `GameWindow.Exit(ExitCode)`.
+- `GameState` now contains the virtual methods `OnGainFocus(object,EventArgs)`,
+  `OnLoseFocus(object,EventArgs)`, `OnCloseRequest(object,EventArgs)` and 
+  `OnTextEntered(object,TextEventArgs)` that are called on their respective window events.
+
 ### Version 0.2.0
 - `GameWindow.OnUpdate(float)` has been replaced with `GameWindow.PreUpdate(float)` for updating
   logic before the current game state and `GameWindow.PostUpdate(float)` for updating logic after.
@@ -48,7 +55,7 @@ Please see `Example.cs` in the test project for usage examples.
   before/underneath the current game state and `GameWindow.PostUpdate(float)` for drawing content
   after/above.
 - When calling `StateManager.Push(IGameState)`, `GameState.OnStore()` is called for the current
-  state before `GameState.OnLoad()` is called for the new state, as originally intended.  
+  state before `GameState.OnLoad()` is called for the new state, as originally intended.
 
 ### Version 0.1.0
 - Initial release.

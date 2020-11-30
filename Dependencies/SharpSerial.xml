@@ -1023,6 +1023,20 @@
               Returns the object to an xml string with the given indentation level.
             </returns>
         </member>
+        <member name="M:SharpSerial.XmlLoadable.ToString(SharpSerial.IXmlLoadable,System.UInt32)">
+            <summary>
+              Converts the object to an xml string with optional indentation.
+            </summary>
+            <param name="xl">
+              The object.
+            </param>
+            <param name="indent">
+              Indentation level.
+            </param>
+            <returns>
+              Returns the object to an xml string with the given indentation level.
+            </returns>
+        </member>
         <member name="M:SharpSerial.XmlLoadable.FromXml``1(System.Xml.XmlElement)">
             <summary>
               Attempts to create a new object from the xml element.

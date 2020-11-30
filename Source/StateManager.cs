@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 
 using SFML.Graphics;
+using SFML.Window;
 using SharpLogger;
 
 namespace SharpGame
@@ -158,6 +159,70 @@ namespace SharpGame
 			if( !Empty )
 				m_states.Peek().Draw( target, states );
 		}
+
+		/// <summary>
+		///   Called when the game window gains focus.
+		/// </summary>
+		/// <param name="sender">
+		///   Event sender.
+		/// </param>
+		/// <param name="e">
+		///   Event arguments.
+		/// </param>
+		public void OnGainFocus( object sender, EventArgs e )
+		{
+			if( !Empty )
+				m_states.Peek().OnGainFocus( sender, e );
+		}
+		/// <summary>
+		///   Called when the game window loses focus.
+		/// </summary>
+		/// <param name="sender">
+		///   Event sender.
+		/// </param>
+		/// <param name="e">
+		///   Event arguments.
+		/// </param>
+		public void OnLoseFocus( object sender, EventArgs e )
+		{
+			if( !Empty )
+				m_states.Peek().OnLoseFocus( sender, e );
+		}
+		/// <summary>
+		///   Called when an attempt is made to cloe the game window. Return true to allow the
+		///   window to close, or false to deny it.
+		/// </summary>
+		/// <param name="sender">
+		///   Event sender.
+		/// </param>
+		/// <param name="e">
+		///   Event arguments.
+		/// </param>
+		/// <returns>
+		///   True if the game window should close, or false to keep it open.
+		/// </returns>
+		public bool OnCloseRequest( object sender, EventArgs e )
+		{
+			if( !Empty )
+				return m_states.Peek().OnCloseRequest( sender, e );
+
+			return true;
+		}
+		/// <summary>
+		///   Called when text is entered.
+		/// </summary>
+		/// <param name="sender">
+		///   Event sender.
+		/// </param>
+		/// <param name="e">
+		///   Event arguments.
+		/// </param>
+		public void OnTextEntered( object sender, TextEventArgs e )
+		{
+			if( !Empty )
+				m_states.Peek().OnTextEntered( sender, e );
+		}
+
 		/// <summary>
 		///   Disposes of all game states.
 		/// </summary>

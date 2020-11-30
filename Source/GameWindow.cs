@@ -31,6 +31,49 @@ using SharpSerial;
 namespace SharpGame
 {
 	/// <summary>
+	///   Possible game exit codes.
+	/// </summary>
+	public enum ExitCode
+	{
+		/// <summary>
+		///   If the game ran successfully.
+		/// </summary>
+		Success =  0,
+
+		/// <summary>
+		///   If game initialisation failed.
+		/// </summary>
+		InitFail = -1,
+		/// <summary>
+		///   If additional game initialisation failed.
+		/// </summary>
+		OnInitFail = -2,
+		/// <summary>
+		///   If additional content loading failed.
+		/// </summary>
+		OnLoadFail = -3,
+
+		/// <summary>
+		///   If trying to load a null game state.
+		/// </summary>
+		NullStateFail = -4,
+		/// <summary>
+		///   If loading the game state fails.
+		/// </summary>
+		StateLoadFail = -5,
+
+		/// <summary>
+		///   If an unexpected exception is thrown during execution.
+		/// </summary>
+		UnexpectedFail = -6,
+
+		/// <summary>
+		///   If an attempt was made to run the game while it is already running.
+		/// </summary>
+		UnexpectedRun = -7
+	}
+
+	/// <summary>
 	///   Base class for games.
 	/// </summary>
 	public class GameWindow : IDisposable
@@ -82,7 +125,7 @@ namespace SharpGame
 		/// <summary>
 		///   Game exit code.
 		/// </summary>
-		public int ExitCode
+		public ExitCode ExitCode
 		{
 			get; private set;
 		}
@@ -118,52 +161,81 @@ namespace SharpGame
 		/// <returns>
 		///   Zero on success or a negative error code on failure.
 		/// </returns>
-		public int Run( IGameState state )
+		public ExitCode Run( IGameState state )
 		{
 			if( state == null )
-				return -1;
-
-			int result = 0;
-			Running = Initialise();
-
-			if( !Running )
-				result = -2;
-			else if( !LoadContent( state ) )
+				ExitCode = ExitCode.NullStateFail;
+			else if( Running )
 			{
-				result = -3;
+				ExitCode = ExitCode.UnexpectedRun;
 				Running = false;
 			}
+			else
+				Running = Initialise() && LoadContent( state );
 
-			using( Timestep timer = new Timestep( Settings.TargetFps ) )
+			try
 			{
-				while( Running && Window.IsOpen )
+				using( Timestep timer = new Timestep( Settings.TargetFps ) )
 				{
-					timer.BeginFrame();
-					Window.DispatchEvents();
-
-					if( timer.IsTimeToUpdate )
+					while( Running && Window.IsOpen )
 					{
-						Update( timer.DeltaTime );
-						Draw();
+						timer.BeginFrame();
+						Window.DispatchEvents();
 
-						timer.EndFrame();
+						if( timer.IsTimeToUpdate )
+						{
+							Update( timer.DeltaTime );
+							Draw();
+
+							timer.EndFrame();
+						}
 					}
 				}
 			}
+			catch( Exception e )
+			{
+				Logger.Log( "Unexpected exception thrown: \"" + e.Message + "\".", LogType.Error );
+				ExitCode = ExitCode.UnexpectedFail;
+			}
 
 			Dispose();
-			return result;
+			return ExitCode;
 		}
 		/// <summary>
 		///   Issues an exit request.
 		/// </summary>
 		/// <param name="exitcode">
-		///   Exit code.
+		///   Exit code or null to leave exit code unchanged.
 		/// </param>
-		public void Exit( int exitcode = 0 )
+		public void Exit( ExitCode? exitcode = null )
 		{
-			ExitCode = exitcode;
+			if( exitcode.HasValue )
+				ExitCode = exitcode.Value;
+
 			Running  = false;
+		}
+
+		/// <summary>
+		///   Disposes of all game content, ready to be destroyed.
+		/// </summary>
+		public void Dispose()
+		{
+			Running = false;
+			OnDispose();
+
+			if( !XmlLoadable.ToFile( Settings, SettingsPath, true ) )
+				Logger.Log( "Unable to save window settings to file.", LogType.Error );
+
+			if( Manager != null )
+			{
+				Manager.Dispose();
+				Manager = null;
+			}
+			if( Window != null )
+			{
+				Window.Dispose();
+				Window = null;
+			}
 		}
 
 		/// <summary>
@@ -187,42 +259,6 @@ namespace SharpGame
 		protected virtual bool OnLoad()
 		{
 			return true;
-		}
-
-		/// <summary>
-		///   Called when the game window gains focus.
-		/// </summary>
-		/// <param name="sender">
-		///   Event sender.
-		/// </param>
-		/// <param name="e">
-		///   Event arguments.
-		/// </param>
-		protected virtual void OnGainFocus( object sender, EventArgs e )
-		{ }
-		/// <summary>
-		///   Called when the game window loses focus.
-		/// </summary>
-		/// <param name="sender">
-		///   Event sender.
-		/// </param>
-		/// <param name="e">
-		///   Event arguments.
-		/// </param>
-		protected virtual void OnLoseFocus( object sender, EventArgs e )
-		{ }
-		/// <summary>
-		///   Called when the game window gets a close request.
-		/// </summary>
-		/// <param name="sender">
-		///   Event sender.
-		/// </param>
-		/// <param name="e">
-		///   Event arguments.
-		/// </param>
-		protected virtual void OnClose( object sender, EventArgs e )
-		{
-			Window?.Close();
 		}
 
 		/// <summary>
@@ -263,12 +299,6 @@ namespace SharpGame
 		protected virtual void OnDispose()
 		{ }
 
-		/// <summary>
-		///   Initialises the game.
-		/// </summary>
-		/// <returns>
-		///   True on success, false on failure.
-		/// </returns>
 		private bool Initialise()
 		{
 			// Load/Save WindowSettings.
@@ -280,14 +310,20 @@ namespace SharpGame
 			if( !File.Exists( SettingsPath ) )
 			{
 				if( !XmlLoadable.ToFile( Settings, SettingsPath, true ) )
+				{
+					ExitCode = ExitCode.InitFail;
 					return Logger.LogReturn( "Failed saving default window settings to file.", false, LogType.Error );
+				}
 			}
 			else
 			{
 				Settings = XmlLoadable.FromFile<WindowSettings>( SettingsPath );
 
 				if( Settings == null )
+				{
+					ExitCode = ExitCode.InitFail;
 					return Logger.LogReturn( "Failed loading window settings from file although it exists.", false, LogType.Error );
+				}
 			}
 
 			// Set up window.
@@ -297,39 +333,47 @@ namespace SharpGame
 			Window = new RenderWindow( new VideoMode( Settings.Width, Settings.Height ), GameTitle, Settings.Fullscreen ? Styles.Fullscreen : Styles.Close );
 
 			if( Window == null || !Window.IsOpen )
+			{
+				ExitCode = ExitCode.InitFail;
 				return Logger.LogReturn( "Failed creating render window.", false, LogType.Error );
+			}
 
 			Window.Closed      += OnClose;
 			Window.GainedFocus += OnGainFocus;
 			Window.LostFocus   += OnLoseFocus;
+			Window.TextEntered += OnTextEntered;
 
 			Manager = new StateManager( this );
-			return OnInit();
+
+			if( !OnInit() )
+			{
+				ExitCode = ExitCode.OnInitFail;
+				return false;
+			}
+
+			return true;
 		}
-		/// <summary>
-		///   Loads extra content and the given game state ready for the game to run.
-		/// </summary>
-		/// <param name="state"></param>
-		/// <returns></returns>
 		private bool LoadContent( IGameState state )
 		{
-			return Manager.Reset( state ) && OnLoad();
+			if( !Manager.Reset( state ) )
+			{
+				ExitCode = ExitCode.StateLoadFail;
+				return false;
+			}
+			if( !OnLoad() )
+			{
+				ExitCode = ExitCode.OnLoadFail;
+				return false;
+			}
+
+			return true;
 		}
-		/// <summary>
-		///   Updates game logic; called every frame before drawing.
-		/// </summary>
-		/// <param name="dt">
-		///   Delta time.
-		/// </param>
 		private void Update( float dt )
 		{
 			PreUpdate( dt );
 			Manager.Update( dt );
 			PostUpdate( dt );
 		}
-		/// <summary>
-		///   Draws the game content to the render window; called every frame after updating.
-		/// </summary>
 		private void Draw()
 		{
 			Window.Clear();
@@ -340,26 +384,25 @@ namespace SharpGame
 
 			Window.Display();
 		}
-		/// <summary>
-		///   Disposes of all game content, ready to be destroyed.
-		/// </summary>
-		public void Dispose()
+
+		private void OnGainFocus( object sender, EventArgs e )
 		{
-			OnDispose();
+			Manager?.OnGainFocus( sender, e );
+		}
+		private void OnLoseFocus( object sender, EventArgs e )
+		{
+			Manager?.OnLoseFocus( sender, e );
+		}
+		private void OnTextEntered( object sender, TextEventArgs e )
+		{
+			Manager?.OnTextEntered( sender, e );
+		}
+		private void OnClose( object sender, EventArgs e )
+		{
+			if( Manager != null && !Manager.OnCloseRequest( sender, e ) )
+				return;
 
-			if( !XmlLoadable.ToFile( Settings, SettingsPath, true ) )
-				Logger.Log( "Unable to save window settings to file.", LogType.Error );
-
-			if( Manager != null )
-			{
-				Manager.Dispose();
-				Manager = null;
-			}
-			if( Window != null )
-			{
-				Window.Dispose();
-				Window = null;
-			}
+			Window?.Close();
 		}
 	}
 }

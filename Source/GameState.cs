@@ -22,6 +22,7 @@
 
 using System;
 using SFML.Graphics;
+using SFML.Window;
 
 namespace SharpGame
 {
@@ -64,6 +65,51 @@ namespace SharpGame
 		///   Called when a storable state is restored.
 		/// </summary>
 		void onRestore();
+
+		/// <summary>
+		///   Called when the game window gains focus.
+		/// </summary>
+		/// <param name="sender">
+		///   Event sender.
+		/// </param>
+		/// <param name="e">
+		///   Event arguments.
+		/// </param>
+		void OnGainFocus( object sender, EventArgs e );
+		/// <summary>
+		///   Called when the game window loses focus.
+		/// </summary>
+		/// <param name="sender">
+		///   Event sender.
+		/// </param>
+		/// <param name="e">
+		///   Event arguments.
+		/// </param>
+		void OnLoseFocus( object sender, EventArgs e );
+		/// <summary>
+		///   Called when an attempt is made to cloe the game window. Return true to allow the
+		///   window to close, or false to deny it.
+		/// </summary>
+		/// <param name="sender">
+		///   Event sender.
+		/// </param>
+		/// <param name="e">
+		///   Event arguments.
+		/// </param>
+		/// <returns>
+		///   True if the game window should close, or false to keep it open.
+		/// </returns>
+		bool OnCloseRequest( object sender, EventArgs e );
+		/// <summary>
+		///   Called when text is entered.
+		/// </summary>
+		/// <param name="sender">
+		///   Event sender.
+		/// </param>
+		/// <param name="e">
+		///   Event arguments.
+		/// </param>
+		void OnTextEntered( object sender, TextEventArgs e );
 	}
 
 	/// <summary>
@@ -144,6 +190,56 @@ namespace SharpGame
 		///   Called when a storable state is restored.
 		/// </summary>
 		public virtual void onRestore()
+		{ }
+		/// <summary>
+		///   Called when the game window gains focus.
+		/// </summary>
+		/// <param name="sender">
+		///   Event sender.
+		/// </param>
+		/// <param name="e">
+		///   Event arguments.
+		/// </param>
+		public virtual void OnGainFocus( object sender, EventArgs e )
+		{ }
+		/// <summary>
+		///   Called when the game window loses focus.
+		/// </summary>
+		/// <param name="sender">
+		///   Event sender.
+		/// </param>
+		/// <param name="e">
+		///   Event arguments.
+		/// </param>
+		public virtual void OnLoseFocus( object sender, EventArgs e )
+		{ }
+		/// <summary>
+		///   Called when an attempt is made to cloe the game window. Return true to allow the
+		///   window to close, or false to deny it.
+		/// </summary>
+		/// <param name="sender">
+		///   Event sender.
+		/// </param>
+		/// <param name="e">
+		///   Event arguments.
+		/// </param>
+		/// <returns>
+		///   True if the game window should close, or false to keep it open.
+		/// </returns>
+		public virtual bool OnCloseRequest( object sender, EventArgs e )
+		{
+			return true;
+		}
+		/// <summary>
+		///   Called when text is entered.
+		/// </summary>
+		/// <param name="sender">
+		///   Event sender.
+		/// </param>
+		/// <param name="e">
+		///   Event arguments.
+		/// </param>
+		public virtual void OnTextEntered( object sender, TextEventArgs e )
 		{ }
 	}
 }
