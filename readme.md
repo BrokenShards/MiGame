@@ -1,14 +1,15 @@
-﻿# SharpGame
+﻿# MiGame
 A basic game library for use with SFML.Net.
 
 ## Dependencies
 - SFML.Net `https://github.com/graphnode/SFML.Net.git`
-- SharpLogger `https://github.com/BrokenShards/SharpLogger.git`
-- SharpSerial `https://github.com/BrokenShards/SharpSerial.git`
-- SharpTest `https://github.com/BrokenShards/SharpTest.git`
+- MiCore `https://github.com/BrokenShards/MiCore.git`
+- MiGfx `https://github.com/BrokenShards/MiGfx.git`
+- MiInput `https://github.com/BrokenShards/MiInput.git`
+- XInputDotNetPure `https://github.com/speps/XInputDotNet.git`
 
 ## Usage
-In SharpGame, games are made up of game states that are managed by a state manager, owned by a game
+In MiGame, games are made up of game states that are managed by a state manager, owned by a game
 window.
 <br>
 A game state, as the name implies, represents a state of your game such as a title screen
@@ -37,9 +38,12 @@ if( result != 0 )
 The `GameWindow` class can also be inherited from to easily integrate other systems and libraries,
 check the documentation for more information.
 <br>
-Please see `Example.cs` in the test project for usage examples.
+Please see `MiGameTest/Test.cs` in the test project for usage examples.
 
 ## Changelog
+
+### Version 0.4.0
+- Renamed to `MiGame` and updated to depend on `MiCore`, `MiGfx` and `MiInput`.
 
 ### Version 0.3.0
 - `GameWindow.Run(IGameState)` now returns an `ExitCode` that is stored in `GameWindow.ExitCode`.

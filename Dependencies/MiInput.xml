@@ -1,0 +1,2621 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MiInput</name>
+    </assembly>
+    <members>
+        <member name="T:MiInput.Action">
+            <summary>
+              A collection of inputs mapped to a name.
+            </summary>
+        </member>
+        <member name="M:MiInput.Action.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiInput.Action.#ctor(MiInput.Action)">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="a">
+              The object to copy.
+            </param>
+        </member>
+        <member name="M:MiInput.Action.#ctor(System.String)">
+            <summary>
+              Constructs the object with the given positive name.
+            </summary>
+            <param name="name">
+              The positive name.
+            </param>
+        </member>
+        <member name="M:MiInput.Action.#ctor(System.String,MiInput.InputMap[])">
+            <summary>
+              Constructs the object with the given positive name and input map.
+            </summary>
+            <param name="name">
+              The positive name.
+            </param>
+            <param name="map">
+              The input map.
+            </param>
+        </member>
+        <member name="P:MiInput.Action.Name">
+            <summary>
+              Action name.
+            </summary>
+        </member>
+        <member name="P:MiInput.Action.Empty">
+            <summary>
+              If no inputs are mapped.
+            </summary>
+        </member>
+        <member name="P:MiInput.Action.Count">
+            <summary>
+              The amount of mapped inputs.
+            </summary>
+        </member>
+        <member name="P:MiInput.Action.Item(System.UInt32)">
+            <summary>
+              Accesses the input map at the given index.
+            </summary>
+            <param name="index">
+              The input map index.
+            </param>
+            <returns>
+              The input map at the given index.
+            </returns>
+        </member>
+        <member name="M:MiInput.Action.Contains(MiInput.InputMap)">
+            <summary>
+              If the action already contains the input map.
+            </summary>
+            <param name="map">
+              The input map.
+            </param>
+            <returns>
+              True if the action already contains the input map.
+            </returns>
+        </member>
+        <member name="M:MiInput.Action.Get(System.UInt32)">
+            <summary>
+              Gets the input map at the given index.
+            </summary>
+            <param name="index">
+              The input map index.
+            </param>
+            <returns>
+              The input map at the given index or null if the index is out of range.
+            </returns>
+        </member>
+        <member name="M:MiInput.Action.Set(System.UInt32,MiInput.InputMap)">
+            <summary>
+              Replaces an existing input map.
+            </summary>
+            <param name="index">
+              The input map index.
+            </param>
+            <param name="map">
+              The input map.
+            </param>
+            <returns>
+              True if index is within range, map is valid and does not collide with any existing input maps, and the
+              existing input map was replaces with map, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.Action.Add(MiInput.InputMap)">
+            <summary>
+              Adds an input map.
+            </summary>
+            <param name="map">
+              The input map.
+            </param>
+            <returns>
+              True if the input map is valid, does not collide with any existing input maps, and was added successfully.
+            </returns>
+        </member>
+        <member name="M:MiInput.Action.Add(MiInput.InputMap[])">
+            <summary>
+              Adds several input maps and returns how many were successful.
+            </summary>
+            <param name="maps">
+              List if input maps.
+            </param>
+            <returns>
+              The amount of successfully added input maps.
+            </returns>
+        </member>
+        <member name="M:MiInput.Action.Remove(System.UInt32)">
+            <summary>
+              Removes the input map at the given index.
+            </summary>
+            <param name="index">
+              The input map index.
+            </param>
+            <returns>
+              If the index is valid and the input map was removed successfully.
+            </returns>
+        </member>
+        <member name="M:MiInput.Action.Remove(MiInput.InputMap)">
+            <summary>
+              Removes the given input map.
+            </summary>
+            <param name="map">
+              The input map.
+            </param>
+            <returns>
+              If the input map existed and was removed successfully.
+            </returns>
+        </member>
+        <member name="M:MiInput.Action.Clear">
+            <summary>
+              Removes as input maps.
+            </summary>
+        </member>
+        <member name="P:MiInput.Action.Value">
+            <summary>
+              Returns the current value of the mapped input.
+            </summary>
+        </member>
+        <member name="P:MiInput.Action.IsPositive">
+            <summary>
+              If the mapped inputs are classed as positive/pressed.
+            </summary>
+        </member>
+        <member name="P:MiInput.Action.IsNegative">
+            <summary>
+              If the mapped inputs are classed as negative/pressed.
+            </summary>
+        </member>
+        <member name="P:MiInput.Action.IsPressed">
+            <summary>
+              If any of the mapped inputs are pressed.
+            </summary>
+        </member>
+        <member name="P:MiInput.Action.JustPressed">
+            <summary>
+              If any of the mapped inputs were just pressed.
+            </summary>
+        </member>
+        <member name="P:MiInput.Action.JustReleased">
+            <summary>
+              If any of the mapped inputs were just released.
+            </summary>
+        </member>
+        <member name="P:MiInput.Action.IsValid">
+            <summary>
+              If the action is valid.
+            </summary>
+        </member>
+        <member name="M:MiInput.Action.LoadFromXml(System.Xml.XmlElement)">
+            <summary>
+              Loads data from an xml element.
+            </summary>
+            <param name="ele">
+              The element to load data from.
+            </param>
+            <returns>
+              True if loaded successfully and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.Action.ToString">
+            <summary>
+              Returns the action as an xml string, ready to be written to file.
+            </summary>
+            <returns>
+              The action as an xml string.
+            </returns>
+        </member>
+        <member name="M:MiInput.Action.GetEnumerator">
+            <summary>
+              Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+              An enumerator that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="T:MiInput.ActionSet">
+            <summary>
+              A collection of actions.
+            </summary>
+        </member>
+        <member name="M:MiInput.ActionSet.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiInput.ActionSet.#ctor(MiInput.ActionSet)">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="a">
+              The object to copy.
+            </param>
+        </member>
+        <member name="M:MiInput.ActionSet.#ctor(MiInput.Action[])">
+            <summary>
+              Constructs the set, populating it with one or multiple actions.
+            </summary>
+            <param name="acts">
+              The actions to construct the set with.
+            </param>
+        </member>
+        <member name="P:MiInput.ActionSet.Item(System.String)">
+            <summary>
+              Accesses the action with the given name if it exists within the set.
+            </summary>
+            <param name="a">
+              The name of the action.
+            </param>
+            <returns>
+              The action with the given name in the set if it exists, otherwise null.
+            </returns>
+        </member>
+        <member name="P:MiInput.ActionSet.Empty">
+            <summary>
+              If the set contains no actions.
+            </summary>
+        </member>
+        <member name="P:MiInput.ActionSet.Count">
+            <summary>
+              The amount of actions in the set.
+            </summary>
+        </member>
+        <member name="M:MiInput.ActionSet.Contains(MiInput.Action)">
+            <summary>
+              If the set contains either the given action, or an action with the same name.
+            </summary>
+            <param name="a">
+              The action to check.
+            </param>
+            <returns>
+              True if the set contains the action and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.ActionSet.Contains(System.String)">
+            <summary>
+              If the set contains an action with the given name.
+            </summary>
+            <param name="action">
+              The action string to check.
+            </param>
+            <returns>
+              True if the set contains an action with the given name and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.ActionSet.Get(System.String)">
+            <summary>
+              Gets the action with the given name if it exists within the set.
+            </summary>
+            <param name="action">
+              The name of the action.
+            </param>
+            <returns>
+              The action with the given name in the set if it exists, otherwise null.
+            </returns>
+        </member>
+        <member name="M:MiInput.ActionSet.Add(MiInput.Action,System.Boolean)">
+            <summary>
+             Adds an action to the set.
+            </summary>
+            <param name="a">
+              The action to add.
+            </param>
+            <param name="replace">
+              If an action with the same name exists in the set, should it be replaced?
+            </param>
+            <returns>
+              True if the action was successfully added to the set and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.ActionSet.Add(MiInput.Action[])">
+            <summary>
+              Adds multipe actions to the set.
+            </summary>
+            <param name="acts">
+              One or multiple actions to add.
+            </param>
+            <returns>
+              The amount of actions that were successfully added to the set.
+            </returns>
+        </member>
+        <member name="M:MiInput.ActionSet.Remove(MiInput.Action)">
+            <summary>
+              Removes either the given action, or an existing action with the same name from the set.
+            </summary>
+            <param name="a">
+              The action to remove.
+            </param>
+            <returns>
+              True if the action existed within the set and was removed successfully and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.ActionSet.Remove(System.String)">
+            <summary>
+              Removes either the given action, or an existing action with the same name from the set.
+            </summary>
+            <param name="action">
+              The action to remove.
+            </param>
+            <returns>
+              True if the action existed within the set and was removed successfully and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.ActionSet.Clear">
+            <summary>
+              Removes all actions from the set.
+            </summary>
+        </member>
+        <member name="M:MiInput.ActionSet.LoadFromFile(System.String)">
+            <summary>
+              Loads the set from an xml file.
+            </summary>
+            <param name="path">
+              The path of the file to load.
+            </param>
+            <returns>
+              True on success and false on failure.
+            </returns>
+        </member>
+        <member name="M:MiInput.ActionSet.LoadFromXml(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load the object from the xml element.
+            </summary>
+            <param name="element">
+              The xml element.
+            </param>
+            <returns>
+              True if object data was loaded successfully and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.ActionSet.ToString">
+            <summary>
+              Returns a string containg the xml data of the set as it would be written in file.
+            </summary>
+            <returns>
+              A string containg the xml data of the set as it would be written in file.
+            </returns>
+        </member>
+        <member name="M:MiInput.ActionSet.GetEnumerator">
+            <summary>
+              Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+              An enumerator that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="T:MiInput.Input">
+            <summary>
+              Singleton input manager class.
+            </summary>
+        </member>
+        <member name="F:MiInput.Input.MaxJoysticks">
+            <summary>
+              Maximum number of joysticks that can be connected at once.
+            </summary>
+        </member>
+        <member name="F:MiInput.Input.AxisPressThreshold">
+            <summary>
+              Minimum axis value that registers a button press.
+            </summary>
+        </member>
+        <member name="F:MiInput.Input.DefaultPath">
+            <summary>
+              Default input settings path.
+            </summary>
+        </member>
+        <member name="M:MiInput.Input.IsButton(MiInput.InputDevice,System.String)">
+            <summary>
+              Checks if the given string represents a valid buttton/key for the given input device.
+            </summary>
+            <param name="dev">
+              The input device.
+            </param>
+            <param name="but">
+              The button/key string.
+            </param>
+            <returns>
+              True if the given string represents a valid button/key for the given input device, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.Input.IsAxis(MiInput.InputDevice,System.String)">
+            <summary>
+              Checks if the given string represents a valid axis for the given input device.
+            </summary>
+            <param name="dev">
+              The input device.
+            </param>
+            <param name="axis">
+              The axis string.
+            </param>
+            <returns>
+              True if the given string represents a valid axis for the given input device, otherwise false.
+            </returns>
+        </member>
+        <member name="P:MiInput.Input.Manager">
+            <summary>
+              The singleton input manager instance.
+            </summary>
+        </member>
+        <member name="P:MiInput.Input.Keyboard">
+            <summary>
+              Keyboard manager.
+            </summary>
+        </member>
+        <member name="P:MiInput.Input.Mouse">
+            <summary>
+              Mouse manager.
+            </summary>
+        </member>
+        <member name="P:MiInput.Input.Joystick">
+            <summary>
+              Array of joystick managers for each player.
+            </summary>
+        </member>
+        <member name="P:MiInput.Input.FirstJoystick">
+            <summary>
+              The index of the first connected joystick.
+            </summary>
+        </member>
+        <member name="P:MiInput.Input.Actions">
+            <summary>
+              Currently mapped actions for each player.
+            </summary>
+        </member>
+        <member name="P:MiInput.Input.LastDevice">
+            <summary>
+              The device the most recent input came from. Assigned when calling 
+              <see cref="M:MiInput.Input.Update"/>.
+            </summary>
+        </member>
+        <member name="M:MiInput.Input.JoystickConnected(System.UInt32)">
+            <summary>
+              If the joystick at the given index is connected.
+            </summary>
+            <param name="player">
+              The player index of the joystick.
+            </param>
+            <returns>
+              True if the joystick is connected and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.Input.IsPressed(MiInput.InputDevice,System.String)">
+            <summary>
+              Checks if the given button/key is pressed on the given device.
+            </summary>
+            <param name="dev">
+              The input device.
+            </param>
+            <param name="but">
+              The button/key to check.
+            </param>
+            <returns>
+              True if the button/key is valid for the given device and is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.Input.JustPressed(MiInput.InputDevice,System.String)">
+            <summary>
+              Checks if the given button/key has just been pressed on the given device.
+            </summary>
+            <param name="dev">
+              The input device.
+            </param>
+            <param name="but">
+              The button/key to check.
+            </param>
+            <returns>
+              True if the button/key is valid for the given device and has just been pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.Input.JustReleased(MiInput.InputDevice,System.String)">
+            <summary>
+              Checks if the given button/key has just been released on the given device.
+            </summary>
+            <param name="dev">
+              The input device.
+            </param>
+            <param name="but">
+              The button/key to check.
+            </param>
+            <returns>
+              True if the button/key is valid for the given device and has just been released, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.Input.GetAxis(MiInput.InputDevice,System.String)">
+            <summary>
+              Gets the current value of the given axis on the given device.
+            </summary>
+            <param name="dev">
+              The input device.
+            </param>
+            <param name="axis">
+              The axis to check.
+            </param>
+            <returns>
+              The current value of the given axis on the given device if it is valid, otherwise 0.0f.
+            </returns>
+        </member>
+        <member name="M:MiInput.Input.GetLastAxis(MiInput.InputDevice,System.String)">
+            <summary>
+              Gets the previous value of the given axis on the given device.
+            </summary>
+            <param name="dev">
+              The input device.
+            </param>
+            <param name="axis">
+              The axis to check.
+            </param>
+            <returns>
+              The previous value of the given axis on the given device if it is valid, otherwise 0.0f.
+            </returns>
+        </member>
+        <member name="M:MiInput.Input.GetAxisDelta(MiInput.InputDevice,System.String)">
+            <summary>
+              Gets the delta value of the given axis on the given device.
+            </summary>
+            <param name="dev">
+              The input device.
+            </param>
+            <param name="axis">
+              The axis to check.
+            </param>
+            <returns>
+              The delta value of the given axis on the given device if it is valid, otherwise 0.0f.
+            </returns>
+        </member>
+        <member name="M:MiInput.Input.AxisIsPressed(MiInput.InputDevice,System.String)">
+            <summary>
+              Checks if the given axis is pressed on the given device.
+            </summary>
+            <param name="dev">
+              The input device.
+            </param>
+            <param name="axis">
+              The axis to check.
+            </param>
+            <returns>
+              True if the axis is valid for the given device and is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.Input.AxisJustPressed(MiInput.InputDevice,System.String)">
+            <summary>
+              Checks if the given axis has just been pressed on the given device.
+            </summary>
+            <param name="dev">
+              The input device.
+            </param>
+            <param name="axis">
+              The axis to check.
+            </param>
+            <returns>
+              True if the axis is valid for the given device and has just been pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.Input.AxisJustReleased(MiInput.InputDevice,System.String)">
+            <summary>
+              Checks if the given axis has just been released on the given device.
+            </summary>
+            <param name="dev">
+              The input device.
+            </param>
+            <param name="axis">
+              The axis to check.
+            </param>
+            <returns>
+              True if the axis is valid for the given device and has just been released, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.Input.IsPressed(System.String,System.UInt32)">
+            <summary>
+              Checks if the input mapped to action is pressed.
+            </summary>
+            <param name="action">
+              The name of the mapped action.
+            </param>
+            <param name="player">
+              The player index.
+            </param>
+            <returns>
+              True if index and action are valid, mapped and pressed, otherwise false.
+            </returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+              If player greater than or equal to <see cref="F:MiInput.Input.MaxJoysticks"/>.
+            </exception>
+        </member>
+        <member name="M:MiInput.Input.JustPressed(System.String,System.UInt32)">
+            <summary>
+              Checks if the input mapped to action was just pressed.
+            </summary>
+            <param name="action">
+              The name of the mapped action.
+            </param>
+            <param name="player">
+              The player index.
+            </param>
+            <returns>
+              True if index and action are valid, mapped and was just pressed, otherwise false.
+            </returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+              If player greater than or equal to <see cref="F:MiInput.Input.MaxJoysticks"/>.
+            </exception>
+        </member>
+        <member name="M:MiInput.Input.JustReleased(System.String,System.UInt32)">
+            <summary>
+              Checks if the input mapped to action was just released.
+            </summary>
+            <param name="action">
+              The name of the mapped action.
+            </param>
+            <param name="player">
+              The player index.
+            </param>
+            <returns>
+              True if index and action are valid, mapped and was just released, otherwise false.
+            </returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+              If player greater than or equal to <see cref="F:MiInput.Input.MaxJoysticks"/>.
+            </exception>
+        </member>
+        <member name="M:MiInput.Input.GetValue(System.String,System.UInt32)">
+            <summary>
+              Gets the current value of the action.
+            </summary>
+            <param name="action">
+              The name of the mapped action.
+            </param>
+            <param name="player">
+              The player index.
+            </param>
+            <returns>
+              The current value of the mapped action if it is valid, otherwise zero.
+            </returns>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+              If player greater than or equal to <see cref="F:MiInput.Input.MaxJoysticks"/>.
+            </exception>
+        </member>
+        <member name="M:MiInput.Input.Update">
+            <summary>
+              Updates input device states.
+            </summary>
+        </member>
+        <member name="M:MiInput.Input.LoadFromXml(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load the object from the xml element.
+            </summary>
+            <param name="element">
+              The xml element.
+            </param>
+            <returns>
+              True if the object was loaded successfully and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.Input.LoadFromFile(System.String)">
+            <summary>
+              Loads the action set from an optional path.
+            </summary>
+            <param name="path">
+              The path to load the action set from, or null to use the default path.
+            </param>
+            <returns>
+              True on success and false on failure.
+            </returns>
+        </member>
+        <member name="M:MiInput.Input.SaveToFile(System.String,System.Boolean)">
+            <summary>
+              Saves the action set to an optional path, optionally overwriting any existing file.
+            </summary>
+            <param name="path">
+              File path.
+            </param>
+            <param name="overwrite">
+              If an already existing file should be overwritten.
+            </param>
+            <returns>
+              True if the action set was successfully written to file, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.Input.ToString">
+            <summary>
+              Converts the object to an xml string.
+            </summary>
+            <returns>
+              Returns the object as an xml string.
+            </returns>
+        </member>
+        <member name="T:MiInput.InputDevice">
+            <summary>
+              Enumeration of possible input devices.
+            </summary>
+        </member>
+        <member name="F:MiInput.InputDevice.Keyboard">
+            <summary>
+              Keyboard input.
+            </summary>
+        </member>
+        <member name="F:MiInput.InputDevice.Mouse">
+            <summary>
+              Mouse input.
+            </summary>
+        </member>
+        <member name="F:MiInput.InputDevice.Joystick">
+            <summary>
+              Joystick/Controller input.
+            </summary>
+        </member>
+        <member name="F:MiInput.InputDevice.COUNT">
+            <summary>
+              Total values.
+            </summary>
+        </member>
+        <member name="T:MiInput.InputType">
+            <summary>
+              Enumeration of possible input types.
+            </summary>
+        </member>
+        <member name="F:MiInput.InputType.Button">
+            <summary>
+              A key or button press.
+            </summary>
+        </member>
+        <member name="F:MiInput.InputType.Axis">
+            <summary>
+              Axis value.
+            </summary>
+        </member>
+        <member name="F:MiInput.InputType.COUNT">
+            <summary>
+              Total values.
+            </summary>
+        </member>
+        <member name="T:MiInput.InputMap">
+            <summary>
+              Used to map inputs.
+            </summary>
+        </member>
+        <member name="M:MiInput.InputMap.Collides(MiInput.InputMap,MiInput.InputMap)">
+            <summary>
+              Checks if two input maps collide with eachother.
+            </summary>
+            <param name="m1">
+              The first input map.
+            </param>
+            <param name="m2">
+              The second input map.
+            </param>
+            <returns>
+              True if both input maps are valid and collide with eachother.
+            </returns>
+        </member>
+        <member name="M:MiInput.InputMap.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiInput.InputMap.#ctor(MiInput.InputDevice,MiInput.InputType,System.String,System.String)">
+            <summary>
+              Constructs the map with the given values.
+            </summary>
+            <param name="dev">
+              Input device.
+            </param>
+            <param name="typ">
+              Input type.
+            </param>
+            <param name="val">
+              Positive input value.
+            </param>
+            <param name="neg">
+              Negative input value.
+            </param>
+        </member>
+        <member name="M:MiInput.InputMap.#ctor(MiInput.InputMap)">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="i">
+              The map to copy from.
+            </param>
+        </member>
+        <member name="P:MiInput.InputMap.IsValid">
+            <summary>
+              If the input map is valid.
+            </summary>
+        </member>
+        <member name="P:MiInput.InputMap.Device">
+            <summary>
+              Input device.
+            </summary>
+        </member>
+        <member name="P:MiInput.InputMap.Type">
+            <summary>
+              Input type.
+            </summary>
+        </member>
+        <member name="P:MiInput.InputMap.Value">
+            <summary>
+              Positive input.
+            </summary>
+        </member>
+        <member name="P:MiInput.InputMap.Negative">
+            <summary>
+              Negative input.
+            </summary>
+        </member>
+        <member name="P:MiInput.InputMap.Invert">
+            <summary>
+              If the inputs should be inversed.
+            </summary>
+        </member>
+        <member name="M:MiInput.InputMap.LoadFromXml(System.Xml.XmlElement)">
+            <summary>
+              Loads data from an xml element.
+            </summary>
+            <param name="ele">
+              The element to load data from.
+            </param>
+            <returns>
+              True if loaded successfully and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.InputMap.ToString">
+            <summary>
+              Gets the xml file representation of the object as a string with no added indentation.
+            </summary>
+            <returns>
+              The xml object data as a string.
+            </returns>
+        </member>
+        <member name="T:MiInput.JoystickManager">
+            <summary>
+              Manages the state of the Joysticks.
+            </summary>
+        </member>
+        <member name="M:MiInput.JoystickManager.IsButton(System.String)">
+            <summary>
+              Checks if the given string represents a valid button.
+            </summary>
+            <remarks>
+              A valid button string is a number between zero and the button count.
+            </remarks>
+            <param name="val">
+              The string to check.
+            </param>
+            <returns>
+              True if the given string represents a valid joystick button and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.ToButton(System.String)">
+            <summary>
+              Parses the given string to its joystick button representation.
+            </summary>
+            <param name="val">
+              The string to parse.
+            </param>
+            <returns>
+              The joystick button parsed from the string on success or -1 on failure.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.IsAxis(System.String)">
+            <summary>
+              Checks if the given string represents a valid axis.
+            </summary>
+            <param name="val">
+              The string to check.
+            </param>
+            <returns>
+              True if the given string represents a valid joystick axis and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.ToAxis(System.String)">
+            <summary>
+              Parses the given string to its joystick axis value.
+            </summary>
+            <param name="val">
+              The string to parse.
+            </param>
+            <returns>
+              The joystick axis value parsed from the string on success or -1 on failure.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiInput.JoystickManager.#ctor(MiInput.JoystickManager)">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="man">
+              The manager to copy.
+            </param>
+        </member>
+        <member name="M:MiInput.JoystickManager.#ctor(System.UInt32)">
+            <summary>
+              Constructor that sets player index.
+            </summary>
+            <param name="player">
+              The player index.
+            </param>
+        </member>
+        <member name="P:MiInput.JoystickManager.Player">
+            <summary>
+              The targeted index of the joystick to update from.
+            </summary>
+        </member>
+        <member name="P:MiInput.JoystickManager.IsConnected">
+            <summary>
+              If the joystick is connected.
+            </summary>
+        </member>
+        <member name="P:MiInput.JoystickManager.FirstConnected">
+            <summary>
+              The first connected joystick.
+            </summary>
+        </member>
+        <member name="M:MiInput.JoystickManager.Update">
+            <summary>
+              Updates the managed device states.
+            </summary>
+        </member>
+        <member name="M:MiInput.JoystickManager.Reset">
+            <summary>
+              Reset the device state.
+            </summary>
+        </member>
+        <member name="M:MiInput.JoystickManager.IsPressed(System.UInt32)">
+            <summary>
+              If the button is pressed.
+            </summary>
+            <param name="but">
+              The index of the button.
+            </param>
+            <returns>
+              True if the button index is valid and the button is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.IsPressed(System.String)">
+            <summary>
+              If the button is pressed.
+            </summary>
+            <param name="but">
+              The name of the button.
+            </param>
+            <returns>
+              True if the button name is valid and the button is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.IsPressed(MiInput.XButton)">
+            <summary>
+              If the button is pressed.
+            </summary>
+            <param name="but">
+              The index of the button.
+            </param>
+            <returns>
+              True if the button index is valid and the button is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.JustPressed(System.UInt32)">
+            <summary>
+              If the button has just been pressed.
+            </summary>
+            <param name="but">
+              The index of the button.
+            </param>
+            <returns>
+              True if the button index is valid and the button has just been pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.JustPressed(System.String)">
+            <summary>
+              If the button has just been pressed.
+            </summary>
+            <param name="but">
+              The name of the button.
+            </param>
+            <returns>
+              True if the button name is valid and the button has just been pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.JustPressed(MiInput.XButton)">
+            <summary>
+              If the button has just been pressed.
+            </summary>
+            <param name="but">
+              The index of the button.
+            </param>
+            <returns>
+              True if the button index is valid and the button has just been pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.JustReleased(System.UInt32)">
+            <summary>
+              If the button has just been released.
+            </summary>
+            <param name="but">
+              The index of the button.
+            </param>
+            <returns>
+              True if the button index is valid and the button has just been released, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.JustReleased(System.String)">
+            <summary>
+              If the button has just been released.
+            </summary>
+            <param name="but">
+              The name of the button.
+            </param>
+            <returns>
+              True if the button name is valid and the button has just been released, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.JustReleased(MiInput.XButton)">
+            <summary>
+              If the button has just been released.
+            </summary>
+            <param name="but">
+              The index of the button.
+            </param>
+            <returns>
+              True if the button index is valid and the button has just been released, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.AnyPressed">
+            <summary>
+              Checks if any button is currently pressed.
+            </summary>
+            <returns>
+              True if any buttons are currently pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.AnyJustPressed">
+            <summary>
+              Checks if any button has just been pressed.
+            </summary>
+            <returns>
+              True if any buttons have just been pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.AnyJustReleased">
+            <summary>
+              Checks if any button has just been pressed.
+            </summary>
+            <returns>
+              True if any buttons have just been pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.AnyJustMoved">
+            <summary>
+              Checks if any axis has just been moved.
+            </summary>
+            <returns>
+              True if any axies have just been moved and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.GetAxis(System.UInt32)">
+            <summary>
+              Gets the current state of the axis.
+            </summary>
+            <param name="ax">
+              The index of the axis.
+            </param>
+            <returns>
+              The current state of the axis if the index is valid, otherwise 0.0.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.GetAxis(System.String)">
+            <summary>
+              Gets the current state of the axis.
+            </summary>
+            <param name="ax">
+              The name of the axis.
+            </param>
+            <returns>
+              The current state of the axis if the name is valid, otherwise 0.0.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.GetAxis(MiInput.XAxis)">
+            <summary>
+              Gets the current state of the axis.
+            </summary>
+            <param name="ax">
+              The index of the axis.
+            </param>
+            <returns>
+              The current state of the axis if the index is valid, otherwise 0.0.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.GetLastAxis(System.UInt32)">
+            <summary>
+              Gets the previous state of the axis.
+            </summary>
+            <param name="ax">
+              The index of the axis.
+            </param>
+            <returns>
+              The previous state of the axis if the index is valid, otherwise 0.0.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.GetLastAxis(System.String)">
+            <summary>
+              Gets the previous state of the axis.
+            </summary>
+            <param name="ax">
+              The name of the axis.
+            </param>
+            <returns>
+              The previous state of the axis if the name is valid, otherwise 0.0.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.GetLastAxis(MiInput.XAxis)">
+            <summary>
+              Gets the previous state of the axis.
+            </summary>
+            <param name="ax">
+              The index of the axis.
+            </param>
+            <returns>
+              The previous state of the axis if the index is valid, otherwise 0.0.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.AxisDelta(System.UInt32)">
+            <summary>
+              Gets the difference in value between the last two update calls of the given axis from the given joystick
+              player index.
+            </summary>
+            <param name="ax">
+              The axis to check.
+            </param>
+            <returns>
+              The difference in value between the last to update calls of the given axis from the given joystick player
+              index. Will also return zero if <paramref name="ax"/> is out of range.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.AxisDelta(System.String)">
+            <summary>
+              Gets the difference in value between the last two update calls of the given axis from the given joystick
+              player index.
+            </summary>
+            <param name="ax">
+              The axis to check.
+            </param>
+            <returns>
+              The difference in value between the last to update calls of the given axis from the given joystick player
+              index. Will also return zero if <paramref name="ax"/> is out of range.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.AxisDelta(MiInput.XAxis)">
+            <summary>
+              Gets the difference in value between the last two update calls of the given axis from the given joystick
+              player index.
+            </summary>
+            <param name="ax">
+              The axis to check.
+            </param>
+            <returns>
+              The difference in value between the last to update calls of the given axis from the given joystick player
+              index. Will also return zero if <paramref name="ax"/> is out of range.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.AxisIsPressed(System.UInt32)">
+            <summary>
+              Check if the given axis is pressed.
+            </summary>
+            <param name="ax">
+              The index of the axis.
+            </param>
+            <returns>
+              True if the given axis is pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.AxisIsPressed(System.String)">
+            <summary>
+              Check if the given axis is pressed.
+            </summary>
+            <param name="ax">
+              The name of the axis.
+            </param>
+            <returns>
+              True if the given axis is pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.AxisIsPressed(MiInput.XAxis)">
+            <summary>
+              Check if the given axis is pressed.
+            </summary>
+            <param name="ax">
+              The index of the axis.
+            </param>
+            <returns>
+              True if the given axis is pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.AxisJustPressed(System.UInt32)">
+            <summary>
+              Check if the given axis was just pressed.
+            </summary>
+            <param name="ax">
+              The index of the axis.
+            </param>
+            <returns>
+              True if the given axis was just pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.AxisJustPressed(System.String)">
+            <summary>
+              Check if the given axis was just pressed.
+            </summary>
+            <param name="ax">
+              The name of the axis.
+            </param>
+            <returns>
+              True if the given axis was just pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.AxisJustPressed(MiInput.XAxis)">
+            <summary>
+              Check if the given axis was just pressed.
+            </summary>
+            <param name="ax">
+              The index of the axis.
+            </param>
+            <returns>
+              True if the given axis was just pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.AxisJustReleased(System.UInt32)">
+            <summary>
+              Check if the given axis was just released.
+            </summary>
+            <param name="ax">
+              The axis to check.
+            </param>
+            <returns>
+              True if the given axis was just released and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.AxisJustReleased(System.String)">
+            <summary>
+              Check if the given axis was just released.
+            </summary>
+            <param name="ax">
+              The axis to check.
+            </param>
+            <returns>
+              True if the given axis was just released and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickManager.AxisJustReleased(MiInput.XAxis)">
+            <summary>
+              Check if the given axis was just released.
+            </summary>
+            <param name="ax">
+              The axis to check.
+            </param>
+            <returns>
+              True if the given axis was just released and false otherwise.
+            </returns>
+        </member>
+        <member name="T:MiInput.XButton">
+            <summary>
+              Possible XInput device buttons.
+            </summary>
+        </member>
+        <member name="F:MiInput.XButton.A">
+            <summary>
+              A button.
+            </summary>
+        </member>
+        <member name="F:MiInput.XButton.B">
+            <summary>
+              B button.
+            </summary>
+        </member>
+        <member name="F:MiInput.XButton.X">
+            <summary>
+              X button.
+            </summary>
+        </member>
+        <member name="F:MiInput.XButton.Y">
+            <summary>
+              Y button.
+            </summary>
+        </member>
+        <member name="F:MiInput.XButton.Start">
+            <summary>
+              Start button.
+            </summary>
+        </member>
+        <member name="F:MiInput.XButton.Back">
+            <summary>
+              Back button.
+            </summary>
+        </member>
+        <member name="F:MiInput.XButton.Guide">
+            <summary>
+              Guide button.
+            </summary>
+        </member>
+        <member name="F:MiInput.XButton.LB">
+            <summary>
+              Left bumper.
+            </summary>
+        </member>
+        <member name="F:MiInput.XButton.RB">
+            <summary>
+              Right bumper.
+            </summary>
+        </member>
+        <member name="F:MiInput.XButton.LT">
+            <summary>
+              Left trigger.
+            </summary>
+        </member>
+        <member name="F:MiInput.XButton.RT">
+            <summary>
+              Right trigger.
+            </summary>
+        </member>
+        <member name="F:MiInput.XButton.LS">
+            <summary>
+              Left stick click.
+            </summary>
+        </member>
+        <member name="F:MiInput.XButton.RS">
+            <summary>
+              Right stick click.
+            </summary>
+        </member>
+        <member name="F:MiInput.XButton.DPadUp">
+            <summary>
+              DPad up.
+            </summary>
+        </member>
+        <member name="F:MiInput.XButton.DPadDown">
+            <summary>
+              DPad down.
+            </summary>
+        </member>
+        <member name="F:MiInput.XButton.DPadLeft">
+            <summary>
+              DPad left.
+            </summary>
+        </member>
+        <member name="F:MiInput.XButton.DPadRight">
+            <summary>
+              DPad right.
+            </summary>
+        </member>
+        <member name="F:MiInput.XButton.COUNT">
+            <summary>
+              Button count.
+            </summary>
+        </member>
+        <member name="T:MiInput.XAxis">
+            <summary>
+              Possible XInput device axies.
+            </summary>
+        </member>
+        <member name="F:MiInput.XAxis.LeftStickX">
+            <summary>
+              Left stick horizontal axis.
+            </summary>
+        </member>
+        <member name="F:MiInput.XAxis.LeftStickY">
+            <summary>
+              Left stick vertical axis.
+            </summary>
+        </member>
+        <member name="F:MiInput.XAxis.RightStickX">
+            <summary>
+              Right stick horizontal axis.
+            </summary>
+        </member>
+        <member name="F:MiInput.XAxis.RightStickY">
+            <summary>
+              Right stick vertical axis.
+            </summary>
+        </member>
+        <member name="F:MiInput.XAxis.LeftTrigger">
+            <summary>
+              Left trigger.
+            </summary>
+        </member>
+        <member name="F:MiInput.XAxis.RightTrigger">
+            <summary>
+              Right trigger.
+            </summary>
+        </member>
+        <member name="F:MiInput.XAxis.Triggers">
+            <summary>
+              Both triggers.
+            </summary>
+        </member>
+        <member name="F:MiInput.XAxis.COUNT">
+            <summary>
+              Axis count.
+            </summary>
+        </member>
+        <member name="T:MiInput.JoystickState">
+            <summary>
+              Represents the state of a single joystick at a given moment.
+            </summary>
+        </member>
+        <member name="F:MiInput.JoystickState.ButtonCount">
+            <summary>
+              Button count.
+            </summary>
+        </member>
+        <member name="F:MiInput.JoystickState.AxisCount">
+            <summary>
+              Axis count.
+            </summary>
+        </member>
+        <member name="M:MiInput.JoystickState.#ctor">
+            <summary>
+              Constructs a new state.
+            </summary>
+        </member>
+        <member name="M:MiInput.JoystickState.#ctor(MiInput.JoystickState)">
+            <summary>
+              Constructs a new state by copying from another instance.
+            </summary>
+            <param name="js">
+              The state to copy from.
+            </param>
+        </member>
+        <member name="M:MiInput.JoystickState.#ctor(System.UInt32)">
+            <summary>
+              Constructs a new state with a given player number.
+            </summary>
+            <param name="player">
+              The player number.
+            </param>
+        </member>
+        <member name="P:MiInput.JoystickState.Player">
+            <summary>
+              The targeted index of the joystick to update from.
+            </summary>
+        </member>
+        <member name="M:MiInput.JoystickState.Update">
+            <summary>
+              Updates the object to the current state of the device.
+            </summary>
+        </member>
+        <member name="M:MiInput.JoystickState.Reset">
+            <summary>
+              Reset state values.
+            </summary>
+        </member>
+        <member name="M:MiInput.JoystickState.IsPressed(System.UInt32)">
+            <summary>
+              If the button is pressed.
+            </summary>
+            <param name="button">
+              The index of the button.
+            </param>
+            <returns>
+              True if the button index is within range and the button is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickState.IsPressed(MiInput.XButton)">
+            <summary>
+              If the button is pressed.
+            </summary>
+            <param name="but">
+              The button to check.
+            </param>
+            <returns>
+              True if the button is within range and is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickState.IsPressed(System.String)">
+            <summary>
+              If the button is pressed.
+            </summary>
+            <param name="but">
+              The button to check.
+            </param>
+            <returns>
+              True if the button is valid and is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickState.GetAxis(System.UInt32)">
+            <summary>
+              The current axis value.
+            </summary>
+            <param name="axis">
+              The index of the axis.
+            </param>
+            <returns>
+              The value of the axis if the index is within range, otherwise 0.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickState.GetAxis(MiInput.XAxis)">
+            <summary>
+              The value of the axis.
+            </summary>
+            <param name="axis">
+              The axis to check.
+            </param>
+            <returns>
+              The value of the axis if it is within range, otherwise 0.0.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickState.GetAxis(System.String)">
+            <summary>
+              The value of the axis.
+            </summary>
+            <param name="axis">
+              The axis to check.
+            </param>
+            <returns>
+              The value of the axis if it is valid, otherwise 0.0.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickState.AxisIsPressed(System.UInt32,System.Boolean)">
+            <summary>
+              If the axis is engaged enough to be pressed.
+            </summary>
+            <param name="axis">
+              The index of the axis.
+            </param>
+            <param name="bidir">
+              If a negative axis value should trigger a press.
+            </param>
+            <returns>
+              If the axis is engaged enough to be pressed. 
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickState.AxisIsPressed(MiInput.XAxis,System.Boolean)">
+            <summary>
+              If the axis is engaged enough to be pressed.
+            </summary>
+            <param name="axis">
+              The index of the axis.
+            </param>
+            <param name="bidir">
+              If a negative axis value should trigger a press.
+            </param>
+            <returns>
+              If the axis is engaged enough to be pressed. 
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickState.AxisIsPressed(System.String,System.Boolean)">
+            <summary>
+              If the axis is engaged enough to be pressed.
+            </summary>
+            <param name="axis">
+              The name of the axis.
+            </param>
+            <param name="bidir">
+              If a negative axis value should trigger a press.
+            </param>
+            <returns>
+              If the axis is engaged enough to be pressed. 
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickState.Clone">
+            <summary>
+              Deep coppies the object.
+            </summary>
+            <returns>
+              A deep copy of the object.
+            </returns>
+        </member>
+        <member name="M:MiInput.JoystickState.Equals(MiInput.JoystickState)">
+            <summary>
+              Checks if this object is equal to another.
+            </summary>
+            <param name="other">
+              The object to check against.
+            </param>
+            <returns>
+              True if this object is considered equal to the given object.
+            </returns>
+        </member>
+        <member name="F:MiInput.JoystickState.m_axis">
+            <summary>
+              Array containing axis values.
+            </summary>
+        </member>
+        <member name="F:MiInput.JoystickState.m_button">
+            <summary>
+              Array containing buttin values.
+            </summary>
+        </member>
+        <member name="T:MiInput.KeyboardManager">
+            <summary>
+              Manages the state of the Keyboard.
+            </summary>
+        </member>
+        <member name="M:MiInput.KeyboardManager.IsKey(System.String)">
+            <summary>
+              Checks if the given string represents a valid key.
+            </summary>
+            <remarks>
+              A valid key string is either a case-insensitive <see cref="T:SFML.Window.Keyboard.Key"/> name or value.
+            </remarks>
+            <param name="val">
+              The string to check.
+            </param>
+            <returns>
+              True if the given string represents a valid keyboard key and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.KeyboardManager.ToKey(System.String)">
+            <summary>
+              Parses the given string to its keyboard key representation.
+            </summary>
+            <param name="val">
+              The string to parse.
+            </param>
+            <returns>
+              The keyboard key parsed from the string on success or null on failure.
+            </returns>
+        </member>
+        <member name="M:MiInput.KeyboardManager.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiInput.KeyboardManager.#ctor(MiInput.KeyboardManager)">
+            <summary>
+              Copy constructor.
+            </summary>
+        </member>
+        <member name="M:MiInput.KeyboardManager.Update">
+            <summary>
+              Updates the managed device states.
+            </summary>
+        </member>
+        <member name="M:MiInput.KeyboardManager.Reset">
+            <summary>
+              Reset the device state.
+            </summary>
+        </member>
+        <member name="M:MiInput.KeyboardManager.IsPressed(System.UInt32)">
+            <summary>
+              If the button is pressed.
+            </summary>
+            <param name="but">
+              The index of the button.
+            </param>
+            <returns>
+              True if the button index is valid and the button is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.KeyboardManager.IsPressed(System.String)">
+            <summary>
+              If the button is pressed.
+            </summary>
+            <param name="but">
+              The name of the button.
+            </param>
+            <returns>
+              True if the button name is valid and the button is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.KeyboardManager.IsPressed(SFML.Window.Keyboard.Key)">
+            <summary>
+              If the key is pressed.
+            </summary>
+            <param name="key">
+              The index of the key.
+            </param>
+            <returns>
+              True if the key index is valid and the key is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.KeyboardManager.JustPressed(System.UInt32)">
+            <summary>
+              If the button has just been pressed.
+            </summary>
+            <param name="but">
+              The index of the button.
+            </param>
+            <returns>
+              True if the button index is valid and the button has just been pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.KeyboardManager.JustPressed(System.String)">
+            <summary>
+              If the button has just been pressed.
+            </summary>
+            <param name="but">
+              The name of the button.
+            </param>
+            <returns>
+              True if the button name is valid and the button has just been pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.KeyboardManager.JustPressed(SFML.Window.Keyboard.Key)">
+            <summary>
+              If the key has just been pressed.
+            </summary>
+            <param name="key">
+              The index of the key.
+            </param>
+            <returns>
+              True if the key index is valid and the key has just been pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.KeyboardManager.JustReleased(System.UInt32)">
+            <summary>
+              If the button has just been released.
+            </summary>
+            <param name="but">
+              The index of the button.
+            </param>
+            <returns>
+              True if the button index is valid and the button has just been released, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.KeyboardManager.JustReleased(System.String)">
+            <summary>
+              If the button has just been released.
+            </summary>
+            <param name="but">
+              The name of the button.
+            </param>
+            <returns>
+              True if the button name is valid and the button has just been released, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.KeyboardManager.JustReleased(SFML.Window.Keyboard.Key)">
+            <summary>
+              If the key has just been released.
+            </summary>
+            <param name="key">
+              The index of the key.
+            </param>
+            <returns>
+              True if the key index is valid and the key has just been released, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.KeyboardManager.AnyPressed">
+            <summary>
+              Checks if any key is currently pressed.
+            </summary>
+            <returns>
+              True if any keys are currently pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.KeyboardManager.AnyJustPressed">
+            <summary>
+              Checks if any key has just been pressed.
+            </summary>
+            <returns>
+              True if any keys have just been pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.KeyboardManager.AnyJustReleased">
+            <summary>
+              Checks if any key has just been pressed.
+            </summary>
+            <returns>
+              True if any keys have just been pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="T:MiInput.KeyboardState">
+            <summary>
+              Represents the state of the keyboard at a given moment.
+            </summary>
+        </member>
+        <member name="F:MiInput.KeyboardState.KeyCount">
+            <summary>
+              Key count.
+            </summary>
+        </member>
+        <member name="M:MiInput.KeyboardState.#ctor">
+            <summary>
+              Construct a new state.
+            </summary>
+        </member>
+        <member name="M:MiInput.KeyboardState.#ctor(MiInput.KeyboardState)">
+            <summary>
+              Construct a new state by copying from another instance.
+            </summary>
+            <param name="state">
+              The state to copy from.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+              If <paramref name="state"/> is null.
+            </exception>
+        </member>
+        <member name="M:MiInput.KeyboardState.Update">
+            <summary>
+              Updates the object to the current state of the device.
+            </summary>
+        </member>
+        <member name="M:MiInput.KeyboardState.Reset">
+            <summary>
+              Reset state values.
+            </summary>
+        </member>
+        <member name="M:MiInput.KeyboardState.IsPressed(System.UInt32)">
+            <summary>
+              If the key is pressed.
+            </summary>
+            <param name="key">
+              The index of the key.
+            </param>
+            <returns>
+              True if the key index is within range and the key is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.KeyboardState.IsPressed(SFML.Window.Keyboard.Key)">
+            <summary>
+              If the key is pressed.
+            </summary>
+            <param name="key">
+              The key to check.
+            </param>
+            <returns>
+              True if the key is within range and is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.KeyboardState.IsPressed(System.String)">
+            <summary>
+              If the key with the given name is pressed.
+            </summary>
+            <param name="key">
+              The name of the key.
+            </param>
+            <returns>
+              True if the key name is valid and the key is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.KeyboardState.Clone">
+            <summary>
+              Deep coppies the object.
+            </summary>
+            <returns>
+              A deep copy of the object.
+            </returns>
+        </member>
+        <member name="M:MiInput.KeyboardState.Equals(MiInput.KeyboardState)">
+            <summary>
+              Checks if this object is equal to another.
+            </summary>
+            <param name="other">
+              The object to check against.
+            </param>
+            <returns>
+              True if this object is considered equal to the given object.
+            </returns>
+        </member>
+        <member name="T:MiInput.MouseManager">
+            <summary>
+              Manages the state of the Mouse.
+            </summary>
+        </member>
+        <member name="M:MiInput.MouseManager.IsButton(System.String)">
+            <summary>
+              Checks if the given string represents a valid button.
+            </summary>
+            <remarks>
+              A valid button string is either a case-insensitive <see cref="T:SFML.Window.Mouse.Button"/> name or value.
+            </remarks>
+            <param name="val">
+              The string to check.
+            </param>
+            <returns>
+              True if the given string represents a valid mouse button and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.ToButton(System.String)">
+            <summary>
+              Parses the given string to its mouse button representation.
+            </summary>
+            <param name="val">
+              The string to parse.
+            </param>
+            <returns>
+              The mouse button parsed from the string on success or ButtonCount on failure.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.IsAxis(System.String)">
+            <summary>
+              Checks if the given string represents a valid axis.
+            </summary>
+            <remarks>
+              A valid axis string is either a case-insensitive <see cref="T:MiInput.MouseAxis"/> name or value.
+            </remarks>
+            <param name="val">
+              The string to check.
+            </param>
+            <returns>
+              True if the given string represents a valid mouse axis and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.ToAxis(System.String)">
+            <summary>
+              Parses the given string to its mouse axis representation.
+            </summary>
+            <param name="val">
+              The string to parse.
+            </param>
+            <returns>
+              The mouse axis parsed from the string on success or MouseAxis.COUNT on failure.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiInput.MouseManager.#ctor(MiInput.MouseManager)">
+            <summary>
+              Copy constructor.
+            </summary>
+        </member>
+        <member name="M:MiInput.MouseManager.Update">
+            <summary>
+              Updates the managed device states.
+            </summary>
+        </member>
+        <member name="M:MiInput.MouseManager.Reset">
+            <summary>
+              Reset the device state.
+            </summary>
+        </member>
+        <member name="M:MiInput.MouseManager.GetPosition">
+            <summary>
+              Get the current mouse position in desktop coordinates.
+            </summary>
+            <returns>
+              The current mouse position relative to the desktop.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.GetNormalizedPosition">
+            <summary>
+              Get the current mouse position in desktop coordinates.
+            </summary>
+            <returns>
+              The current mouse position relative to the desktop.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.GetNormalizedPosition(SFML.System.Vector2f)">
+            <summary>
+              The mouse position normalized in relation to a window size.
+            </summary>
+            <param name="size">
+              The window size.
+            </param>
+            <returns>
+              The mouse position normalized in relation to the window size.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.GetNormalizePosition(SFML.System.Vector2f,SFML.System.Vector2f)">
+            <summary>
+              The mouse position normalized in relation to a window position and size.
+            </summary>
+            <param name="pos">
+              The window position.
+            </param>
+            <param name="size">
+              The window size.
+            </param>
+            <returns>
+              The mouse position normalized in relation to the window position and size.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.GetLastPosition">
+            <summary>
+              Get the previous mouse position in desktop coordinates.
+            </summary>
+            <returns>
+              The previous mouse position relative to the desktop.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.GetLastNormalizedPosition">
+            <summary>
+              Get the last mouse position in desktop coordinates.
+            </summary>
+            <returns>
+              The last mouse position relative to the desktop.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.GetLastNormalizedPosition(SFML.System.Vector2f)">
+            <summary>
+              The last mouse position normalized in relation to a window size.
+            </summary>
+            <param name="size">
+              The window size.
+            </param>
+            <returns>
+              The last mouse position normalized in relation to the window size.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.GetaLastNormalizePosition(SFML.System.Vector2f,SFML.System.Vector2f)">
+            <summary>
+              The lastmouse position normalized in relation to a window position and size.
+            </summary>
+            <param name="pos">
+              The window position.
+            </param>
+            <param name="size">
+              The window size.
+            </param>
+            <returns>
+              The last mouse position normalized in relation to the window position and size.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.GetPosition(SFML.Window.Window)">
+            <summary>
+              Get the current mouse position relative to the given window.
+            </summary>
+            <param name="window">
+              The window.
+            </param>
+            <returns>
+              The mouse position relative to the given window.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.IsPressed(System.UInt32)">
+            <summary>
+              If the button is pressed.
+            </summary>
+            <param name="but">
+              The index of the button.
+            </param>
+            <returns>
+              True if the button index is valid and the button is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.IsPressed(System.String)">
+            <summary>
+              If the button is pressed.
+            </summary>
+            <param name="but">
+              The name of the button.
+            </param>
+            <returns>
+              True if the button name is valid and the button is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.IsPressed(SFML.Window.Mouse.Button)">
+            <summary>
+              If the button is pressed.
+            </summary>
+            <param name="but">
+              The index of the button.
+            </param>
+            <returns>
+              True if the button index is valid and the button is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.JustPressed(System.UInt32)">
+            <summary>
+              If the button has just been pressed.
+            </summary>
+            <param name="but">
+              The index of the button.
+            </param>
+            <returns>
+              True if the button index is valid and the button has just been pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.JustPressed(System.String)">
+            <summary>
+              If the button has just been pressed.
+            </summary>
+            <param name="but">
+              The name of the button.
+            </param>
+            <returns>
+              True if the button name is valid and the button has just been pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.JustPressed(SFML.Window.Mouse.Button)">
+            <summary>
+              If the button has just been pressed.
+            </summary>
+            <param name="but">
+              The index of the button.
+            </param>
+            <returns>
+              True if the button index is valid and the button has just been pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.JustReleased(System.UInt32)">
+            <summary>
+              If the button has just been released.
+            </summary>
+            <param name="but">
+              The index of the button.
+            </param>
+            <returns>
+              True if the button index is valid and the button has just been released, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.JustReleased(System.String)">
+            <summary>
+              If the button has just been released.
+            </summary>
+            <param name="but">
+              The name of the button.
+            </param>
+            <returns>
+              True if the button name is valid and the button has just been released, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.JustReleased(SFML.Window.Mouse.Button)">
+            <summary>
+              If the button has just been released.
+            </summary>
+            <param name="but">
+              The index of the button.
+            </param>
+            <returns>
+              True if the button index is valid and the button has just been released, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.AnyPressed">
+            <summary>
+              Checks if any button is currently pressed.
+            </summary>
+            <returns>
+              True if any buttons are currently pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.AnyJustPressed">
+            <summary>
+              Checks if any button has just been pressed.
+            </summary>
+            <returns>
+              True if any buttons have just been pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.AnyJustReleased">
+            <summary>
+              Checks if any button has just been pressed.
+            </summary>
+            <returns>
+              True if any buttons have just been pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.AnyJustMoved">
+            <summary>
+              Checks if any axis has just been moved.
+            </summary>
+            <returns>
+              True if any axies have just been moved and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.GetAxis(System.UInt32)">
+            <summary>
+              Gets the current state of the axis.
+            </summary>
+            <param name="ax">
+              The index of the axis.
+            </param>
+            <returns>
+              The current state of the axis if the index is valid, otherwise 0.0.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.GetAxis(System.String)">
+            <summary>
+              Gets the current state of the axis.
+            </summary>
+            <param name="ax">
+              The name of the axis.
+            </param>
+            <returns>
+              The current state of the axis if the name is valid, otherwise 0.0.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.GetAxis(MiInput.MouseAxis)">
+            <summary>
+              Gets the current state of the axis.
+            </summary>
+            <param name="ax">
+              The index of the axis.
+            </param>
+            <returns>
+              The current state of the axis if the index is valid, otherwise 0.0.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.GetLastAxis(System.UInt32)">
+            <summary>
+              Gets the previous state of the axis.
+            </summary>
+            <param name="ax">
+              The index of the axis.
+            </param>
+            <returns>
+              The previous state of the axis if the index is valid, otherwise 0.0.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.GetLastAxis(System.String)">
+            <summary>
+              Gets the previous state of the axis.
+            </summary>
+            <param name="ax">
+              The name of the axis.
+            </param>
+            <returns>
+              The previous state of the axis if the name is valid, otherwise 0.0.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.GetLastAxis(MiInput.MouseAxis)">
+            <summary>
+              Gets the previous state of the axis.
+            </summary>
+            <param name="ax">
+              The index of the axis.
+            </param>
+            <returns>
+              The previous state of the axis if the index is valid, otherwise 0.0.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.AxisDelta(System.UInt32)">
+            <summary>
+              Gets the difference in value between the last two update calls of the given axis from the given joystick
+              player index.
+            </summary>
+            <param name="ax">
+              The axis to check.
+            </param>
+            <returns>
+              The difference in value between the last to update calls of the given axis from the given joystick player
+              index. Will also return zero if <paramref name="ax"/> is out of range.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.AxisDelta(System.String)">
+            <summary>
+              Gets the difference in value between the last two update calls of the given axis from the given joystick
+              player index.
+            </summary>
+            <param name="ax">
+              The axis to check.
+            </param>
+            <returns>
+              The difference in value between the last to update calls of the given axis from the given joystick player
+              index. Will also return zero if <paramref name="ax"/> is out of range.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.AxisDelta(MiInput.MouseAxis)">
+            <summary>
+              Gets the difference in value between the last two update calls of the given axis from the given joystick
+              player index.
+            </summary>
+            <param name="ax">
+              The axis to check.
+            </param>
+            <returns>
+              The difference in value between the last to update calls of the given axis from the given joystick player
+              index. Will also return zero if <paramref name="ax"/> is out of range.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.AxisIsPressed(System.UInt32)">
+            <summary>
+              Check if the given axis is pressed.
+            </summary>
+            <param name="ax">
+              The index of the axis.
+            </param>
+            <returns>
+              True if the given axis is pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.AxisIsPressed(System.String)">
+            <summary>
+              Check if the given axis is pressed.
+            </summary>
+            <param name="ax">
+              The name of the axis.
+            </param>
+            <returns>
+              True if the given axis is pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.AxisIsPressed(MiInput.MouseAxis)">
+            <summary>
+              Check if the given axis is pressed.
+            </summary>
+            <param name="ax">
+              The index of the axis.
+            </param>
+            <returns>
+              True if the given axis is pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.AxisJustPressed(System.UInt32)">
+            <summary>
+              Check if the given axis was just pressed.
+            </summary>
+            <param name="ax">
+              The index of the axis.
+            </param>
+            <returns>
+              True if the given axis was just pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.AxisJustPressed(System.String)">
+            <summary>
+              Check if the given axis was just pressed.
+            </summary>
+            <param name="ax">
+              The name of the axis.
+            </param>
+            <returns>
+              True if the given axis was just pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.AxisJustPressed(MiInput.MouseAxis)">
+            <summary>
+              Check if the given axis was just pressed.
+            </summary>
+            <param name="ax">
+              The index of the axis.
+            </param>
+            <returns>
+              True if the given axis was just pressed and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.AxisJustReleased(System.UInt32)">
+            <summary>
+              Check if the given axis was just released.
+            </summary>
+            <param name="ax">
+              The axis to check.
+            </param>
+            <returns>
+              True if the given axis was just released and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.AxisJustReleased(System.String)">
+            <summary>
+              Check if the given axis was just released.
+            </summary>
+            <param name="ax">
+              The axis to check.
+            </param>
+            <returns>
+              True if the given axis was just released and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseManager.AxisJustReleased(MiInput.MouseAxis)">
+            <summary>
+              Check if the given axis was just released.
+            </summary>
+            <param name="ax">
+              The axis to check.
+            </param>
+            <returns>
+              True if the given axis was just released and false otherwise.
+            </returns>
+        </member>
+        <member name="T:MiInput.MouseAxis">
+            <summary>
+              Mouse input axies.
+            </summary>
+        </member>
+        <member name="F:MiInput.MouseAxis.XPosition">
+            <summary>
+              Horizontal position.
+            </summary>
+        </member>
+        <member name="F:MiInput.MouseAxis.YPosition">
+            <summary>
+              Vertical position.
+            </summary>
+        </member>
+        <member name="F:MiInput.MouseAxis.COUNT">
+            <summary>
+              Axis count.
+            </summary>
+        </member>
+        <member name="T:MiInput.MouseState">
+            <summary>
+              Represents the state of the mouse at a given moment.
+            </summary>
+        </member>
+        <member name="F:MiInput.MouseState.ButtonCount">
+            <summary>
+              Button count.
+            </summary>
+        </member>
+        <member name="F:MiInput.MouseState.AxisCount">
+            <summary>
+              Axis count.
+            </summary>
+        </member>
+        <member name="M:MiInput.MouseState.#ctor">
+            <summary>
+              Construct a new state.
+            </summary>
+        </member>
+        <member name="M:MiInput.MouseState.#ctor(MiInput.MouseState)">
+            <summary>
+              Construct a new state by copying from another instance.
+            </summary>
+            <param name="state">
+              The state to copy from.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+              If <paramref name="state"/> is null.
+            </exception>
+        </member>
+        <member name="P:MiInput.MouseState.Position">
+            <summary>
+              Mouse's desktop position.
+            </summary>
+        </member>
+        <member name="M:MiInput.MouseState.NormalizePosition">
+            <summary>
+              The mouse position normalized in relation to the desktop.
+            </summary>
+            <returns>
+              The mouse position normalized in relation to the desktop.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseState.NormalizePosition(SFML.System.Vector2f)">
+            <summary>
+              The mouse position normalized in relation to a window size.
+            </summary>
+            <param name="size">
+              The window size.
+            </param>
+            <returns>
+              The mouse position normalized in relation to the window size.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseState.NormalizePosition(SFML.System.Vector2f,SFML.System.Vector2f)">
+            <summary>
+              The mouse position normalized in relation to a window position and size.
+            </summary>
+            <param name="pos">
+              The window position.
+            </param>
+            <param name="size">
+              The window size.
+            </param>
+            <returns>
+              The mouse position normalized in relation to the window position and size.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseState.Update">
+            <summary>
+              Updates values to the current state of the mouse.
+            </summary>
+        </member>
+        <member name="M:MiInput.MouseState.Reset">
+            <summary>
+              Resets all values.
+            </summary>
+        </member>
+        <member name="M:MiInput.MouseState.IsPressed(System.UInt32)">
+            <summary>
+              If the button is pressed.
+            </summary>
+            <param name="button">
+              The index of the button.
+            </param>
+            <returns>
+              True if the button index is within range and the button is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseState.IsPressed(SFML.Window.Mouse.Button)">
+            <summary>
+              If the button is pressed.
+            </summary>
+            <param name="but">
+              The button to check.
+            </param>
+            <returns>
+              True if the button is within range and is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseState.IsPressed(System.String)">
+            <summary>
+              If the button is pressed.
+            </summary>
+            <param name="but">
+              The button to check.
+            </param>
+            <returns>
+              True if the button is valid and is pressed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseState.GetAxis(System.UInt32)">
+            <summary>
+              The current axis value.
+            </summary>
+            <param name="axis">
+              The index of the axis.
+            </param>
+            <returns>
+              The value of the axis if the index is within range, otherwise 0.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseState.GetAxis(MiInput.MouseAxis)">
+            <summary>
+              The value of the axis.
+            </summary>
+            <param name="axis">
+              The axis to check.
+            </param>
+            <returns>
+              The value of the axis if it is within range, otherwise 0.0.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseState.GetAxis(System.String)">
+            <summary>
+              The value of the axis.
+            </summary>
+            <param name="axis">
+              The axis to check.
+            </param>
+            <returns>
+              The value of the axis if it is valid, otherwise 0.0.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseState.AxisIsPressed(System.UInt32,System.Boolean)">
+            <summary>
+              If the axis is engaged enough to be pressed.
+            </summary>
+            <param name="axis">
+              The index of the axis.
+            </param>
+            <param name="bidir">
+              If a negative axis value should trigger a press.
+            </param>
+            <returns>
+              If the axis is engaged enough to be pressed. 
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseState.AxisIsPressed(MiInput.MouseAxis,System.Boolean)">
+            <summary>
+              If the axis is engaged enough to be pressed.
+            </summary>
+            <param name="axis">
+              The index of the axis.
+            </param>
+            <param name="bidir">
+              If a negative axis value should trigger a press.
+            </param>
+            <returns>
+              If the axis is engaged enough to be pressed. 
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseState.AxisIsPressed(System.String,System.Boolean)">
+            <summary>
+              If the axis is engaged enough to be pressed.
+            </summary>
+            <param name="axis">
+              The name of the axis.
+            </param>
+            <param name="bidir">
+              If a negative axis value should trigger a press.
+            </param>
+            <returns>
+              If the axis is engaged enough to be pressed. 
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseState.Clone">
+            <summary>
+              Deep coppies the object.
+            </summary>
+            <returns>
+              A deep copy of the object.
+            </returns>
+        </member>
+        <member name="M:MiInput.MouseState.Equals(MiInput.MouseState)">
+            <summary>
+              Checks if this object is equal to another.
+            </summary>
+            <param name="other">
+              The object to check against.
+            </param>
+            <returns>
+              True if this object is considered equal to the given object.
+            </returns>
+        </member>
+    </members>
+</doc>

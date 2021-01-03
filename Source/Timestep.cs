@@ -2,8 +2,8 @@
 // Timestep.cs 
 ////////////////////////////////////////////////////////////////////////////////
 //
-// SharpGame - A simple game framework for use with SFML.Net.
-// Copyright (C) 2020 Michael Furlong <michaeljfurlong@outlook.com>
+// MiGame - A simple game framework for use with SFML.Net.
+// Copyright (C) 2021 Michael Furlong <michaeljfurlong@outlook.com>
 //
 // This program is free software: you can redistribute it and/or modify it 
 // under the terms of the GNU General Public License as published by the Free 
@@ -23,7 +23,7 @@
 using System;
 using SFML.System;
 
-namespace SharpGame
+namespace MiGame
 {
 	/// <summary>
 	///   Keeps time in the game.

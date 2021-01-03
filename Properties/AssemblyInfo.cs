@@ -2,8 +2,8 @@
 // AssemblyInfo.cs 
 ////////////////////////////////////////////////////////////////////////////////
 //
-// SharpGame - A simple game framework for use with SFML.Net.
-// Copyright (C) 2020 Michael Furlong <michaeljfurlong@outlook.com>
+// MiGame - A simple game framework for use with SFML.Net.
+// Copyright (C) 2021 Michael Furlong <michaeljfurlong@outlook.com>
 //
 // This program is free software: you can redistribute it and/or modify it 
 // under the terms of the GNU General Public License as published by the Free 
@@ -26,12 +26,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle( "SharpGame" )]
+[assembly: AssemblyTitle( "MiGame" )]
 [assembly: AssemblyDescription( "A simple game framework for use with SFML.Net." )]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "Michael Furlong" )]
-[assembly: AssemblyProduct( "SharpGame" )]
-[assembly: AssemblyCopyright( "Copyright © Michael Furlong 2020" )]
+[assembly: AssemblyProduct( "MiGame" )]
+[assembly: AssemblyCopyright( "Copyright © Michael Furlong 2021" )]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]
 
@@ -53,5 +53,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion( "0.3.0.0" )]
-[assembly: AssemblyFileVersion( "0.3.0.0" )]
+[assembly: AssemblyVersion( "0.4.0.0" )]
+[assembly: AssemblyFileVersion( "0.4.0.0" )]

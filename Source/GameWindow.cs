@@ -2,8 +2,8 @@
 // BaseGame.cs 
 ////////////////////////////////////////////////////////////////////////////////
 //
-// SharpGame - A simple game framework for use with SFML.Net.
-// Copyright (C) 2020 Michael Furlong <michaeljfurlong@outlook.com>
+// MiGame - A simple game framework for use with SFML.Net.
+// Copyright (C) 2021 Michael Furlong <michaeljfurlong@outlook.com>
 //
 // This program is free software: you can redistribute it and/or modify it 
 // under the terms of the GNU General Public License as published by the Free 
@@ -25,10 +25,9 @@ using System.IO;
 using SFML.Graphics;
 using SFML.Window;
 
-using SharpLogger;
-using SharpSerial;
+using MiCore;
 
-namespace SharpGame
+namespace MiGame
 {
 	/// <summary>
 	///   Possible game exit codes.
@@ -164,11 +163,14 @@ namespace SharpGame
 		public ExitCode Run( IGameState state )
 		{
 			if( state == null )
+			{
 				ExitCode = ExitCode.NullStateFail;
+				Running  = false;
+			}
 			else if( Running )
 			{
 				ExitCode = ExitCode.UnexpectedRun;
-				Running = false;
+				Running  = false;
 			}
 			else
 				Running = Initialise() && LoadContent( state );
@@ -194,8 +196,7 @@ namespace SharpGame
 			}
 			catch( Exception e )
 			{
-				Logger.Log( "Unexpected exception thrown: \"" + e.Message + "\".", LogType.Error );
-				ExitCode = ExitCode.UnexpectedFail;
+				ExitCode = Logger.LogReturn( "Unexpected exception: " + e.Message, ExitCode.UnexpectedFail, LogType.Error );
 			}
 
 			Dispose();

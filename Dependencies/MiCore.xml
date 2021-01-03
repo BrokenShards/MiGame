@@ -1,0 +1,2270 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>MiCore</name>
+    </assembly>
+    <members>
+        <member name="T:MiCore.Component">
+            <summary>
+              Base class for components.
+            </summary>
+        </member>
+        <member name="M:MiCore.Component.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiCore.Component.#ctor(System.String[],System.String[])">
+            <summary>
+              Constructor.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">
+              If any strings in required or incompatible are not registered component type names.
+              If required and incompatible contain any of the same type names.
+            </exception>
+        </member>
+        <member name="M:MiCore.Component.#ctor(MiCore.Component)">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="comp">
+              The object to copy.
+            </param>
+        </member>
+        <member name="P:MiCore.Component.RequiredComponents">
+            <summary>
+              Contains the types of components required by this component type.
+            </summary>
+        </member>
+        <member name="P:MiCore.Component.IncompatibleComponents">
+            <summary>
+              Contains the types of components incompatible with this component type.
+            </summary>
+        </member>
+        <member name="P:MiCore.Component.TypeName">
+            <summary>
+              The component type name.
+            </summary>
+        </member>
+        <member name="P:MiCore.Component.Parent">
+            <summary>
+              The entity that owns the component.
+            </summary>
+        </member>
+        <member name="M:MiCore.Component.Requires(System.String)">
+            <summary>
+              Checks if the component requires a component with the given component name.
+            </summary>
+            <param name="typename">
+              The name of the component to check.
+            </param>
+            <returns>
+              True if the component requires on the given component type name.
+            </returns>
+        </member>
+        <member name="M:MiCore.Component.Requires(System.Type)">
+            <summary>
+              Checks if the component requires a component of the given type.
+            </summary>
+            <param name="type">
+              The component type.
+            </param>
+            <returns>
+              True if the component requires on the given component type.
+            </returns>
+        </member>
+        <member name="M:MiCore.Component.Requires``1">
+            <summary>
+              Checks if the component requires a component of the given type.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              True if the component requires on the given component type.
+            </returns>
+        </member>
+        <member name="M:MiCore.Component.Incompatible(System.String)">
+            <summary>
+              Checks if the component is incompatible with a component with the given component name.
+            </summary>
+            <param name="typename">
+              The name of the component to check.
+            </param>
+            <returns>
+              True if the component is incompatible with the given component type name.
+            </returns>
+        </member>
+        <member name="M:MiCore.Component.Incompatible(System.Type)">
+            <summary>
+              Checks if the component is incompatible with a component of the given type.
+            </summary>
+            <param name="type">
+              The component type.
+            </param>
+            <returns>
+              True if the component is incompatible with the given component type.
+            </returns>
+        </member>
+        <member name="M:MiCore.Component.Incompatible``1">
+            <summary>
+              Checks if the component is incompatible with a component of the given type.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              True if the component is incompatible with the given component type.
+            </returns>
+        </member>
+        <member name="T:MiCore.ComponentRegister">
+            <summary>
+              Used for registering components.
+            </summary>
+        </member>
+        <member name="M:MiCore.ComponentRegister.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="P:MiCore.ComponentRegister.Manager">
+            <summary>
+              The singleton object.
+            </summary>
+        </member>
+        <member name="P:MiCore.ComponentRegister.Empty">
+            <summary>
+              If no components are registered.
+            </summary>
+        </member>
+        <member name="P:MiCore.ComponentRegister.Count">
+            <summary>
+              The amount of components registered.
+            </summary>
+        </member>
+        <member name="M:MiCore.ComponentRegister.Registered``1">
+            <summary>
+              Checks if the given component type is registered.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              True if the given component type is registered, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentRegister.Registered(System.String)">
+            <summary>
+              Checks if the given component type name is registered.
+            </summary>
+            <param name="typename">
+              The component type name.
+            </param>
+            <returns>
+              True if the given component type name is registered, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentRegister.Registered(System.Type)">
+            <summary>
+              Checks if the given component type is registered.
+            </summary>
+            <param name="type">
+              The component type.
+            </param>
+            <returns>
+              True if the given component type is registered, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentRegister.Register``1">
+            <summary>
+              Registers a component type.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              True if the component type was registered successfully and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentRegister.Create``1">
+            <summary>
+              Creates a new component of the given type.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              A new component of the given type or null if unregistered or unable to create.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentRegister.Create(System.String)">
+            <summary>
+              Creates a component from a given type name.
+            </summary>
+            <param name="typename">
+              The component type name.
+            </param>
+            <returns>
+              A new component if the type name was registered, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentRegister.Create(System.Type)">
+            <summary>
+              Creates a component from a given type if it is registered.
+            </summary>
+            <param name="type">
+              The component type.
+            </param>
+            <returns>
+             A new component if the type was registered, otherwise null.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentRegister.GetEnumerator">
+            <summary>
+              Gets an enumerator to iterate through the collection.
+            </summary>
+            <returns>
+              An enumerator to iterate through the collection.
+            </returns>
+        </member>
+        <member name="T:MiCore.IDatabase`4">
+            <summary>
+              Interface for databases.
+            </summary>
+            <typeparam name="T">
+              Data type.
+            </typeparam>
+            <typeparam name="SerialDataT">
+              Serialization data type.
+            </typeparam>
+            <typeparam name="ReadT">
+              The type used to deserialize from a stream.
+            </typeparam>
+            <typeparam name="WriteT">
+              The type used to serialize to a stream.
+            </typeparam>
+        </member>
+        <member name="P:MiCore.IDatabase`4.FilePath">
+            <summary>
+              File path used for serialization.
+            </summary>
+        </member>
+        <member name="P:MiCore.IDatabase`4.Item(System.String)">
+            <summary>
+              Element accessor.
+            </summary>
+            <param name="key">
+              The key of the element to access.
+            </param>
+        </member>
+        <member name="P:MiCore.IDatabase`4.Empty">
+            <summary>
+              If the database is empty.
+            </summary>
+        </member>
+        <member name="P:MiCore.IDatabase`4.Count">
+            <summary>
+              The amount of elements the database contains.
+            </summary>
+        </member>
+        <member name="P:MiCore.IDatabase`4.Keys">
+            <summary>
+              List of element keys.
+            </summary>
+        </member>
+        <member name="M:MiCore.IDatabase`4.Contains(System.String)">
+            <summary>
+              If the database contains an element with the given key.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <returns>
+              True if the database contains an element with the given key and
+              false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.IDatabase`4.Get(System.String)">
+            <summary>
+              Gets the element with the given key.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <returns>
+              The element with the given key or null if one does not exist.
+            </returns>
+        </member>
+        <member name="M:MiCore.IDatabase`4.Set(System.String,`0)">
+            <summary>
+              Replaces the element with the given key.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <param name="val">
+              The new element.
+            </param>
+            <returns>
+              True if the database contains an element with the given key and 
+              it was successfully replaced, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.IDatabase`4.Add(System.String,`0,System.Boolean)">
+            <summary>
+              Adds an element to the database, optionally replacing an existing
+              element with the same key.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <param name="val">
+              The element to add.
+            </param>
+            <param name="replace">
+              If an element already exists in the database with the given key,
+              should it be replaced?
+            </param>
+            <returns>
+              True if the element was successfully added to the database,
+              otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.IDatabase`4.Remove(System.String)">
+            <summary>
+              Removes the element with the given key from the database.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <returns>
+              True if an element existed in the database with the given key and
+              it was removed successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.IDatabase`4.Clear">
+            <summary>
+              Removes all elements from the database.
+            </summary>
+        </member>
+        <member name="M:MiCore.IDatabase`4.LoadFromFile">
+            <summary>
+              Loads the database from <see cref="P:MiCore.IDatabase`4.FilePath"/>.
+            </summary>
+            <returns>
+              True if the database was loaded successfully from file and false
+              otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.IDatabase`4.SaveToFile(System.Boolean)">
+            <summary>
+              Saves the database to <see cref="P:MiCore.IDatabase`4.FilePath"/>.
+            </summary>
+            <param name="overwrite">
+              If an already existing file should be overwritten.
+            </param>
+            <returns>
+              True if the database was saves successfully to file and false
+              otherwise.
+            </returns>
+        </member>
+        <member name="T:MiCore.IDisposableDatabase`4">
+            <summary>
+              Interface for disposable databases.
+            </summary>
+            <typeparam name="T">
+              Disposable data type.
+            </typeparam>
+            <typeparam name="SerialDataT">
+              Serialization data type.
+            </typeparam>
+            <typeparam name="ReadT">
+              The type used to deserialize from a stream.
+            </typeparam>
+            <typeparam name="WriteT">
+              The type used to serialize to a stream.
+            </typeparam>
+        </member>
+        <member name="T:MiCore.ITextDatabase`1">
+            <summary>
+              Database for text serializable types.
+            </summary>
+            <typeparam name="T">
+              Data type.
+            </typeparam>
+        </member>
+        <member name="T:MiCore.IDisposableTextDatabase`1">
+            <summary>
+              Database for disposable text serializable types.
+            </summary>
+            <typeparam name="T">
+              Disposable data type.
+            </typeparam>
+        </member>
+        <member name="T:MiCore.IBinaryDatabase`1">
+            <summary>
+              Database for binary serializable types.
+            </summary>
+            <typeparam name="T">
+              Data type.
+            </typeparam>
+        </member>
+        <member name="T:MiCore.IDisposableBinaryDatabase`1">
+            <summary>
+              Database for disposable binary serializable types.
+            </summary>
+            <typeparam name="T">
+              Disposable data type.
+            </typeparam>
+        </member>
+        <member name="T:MiCore.Database`4">
+            <summary>
+              Base class for databases.
+            </summary>
+            <typeparam name="T">
+              Data type.
+            </typeparam>
+            <typeparam name="SerialDataT">
+              Serialization data type.
+            </typeparam>
+            <typeparam name="ReadT">
+              The type used to deserialize from a stream.
+            </typeparam>
+            <typeparam name="WriteT">
+              The type used to serialize to a stream.
+            </typeparam>
+        </member>
+        <member name="M:MiCore.Database`4.#ctor">
+            <summary>
+              Constructor
+            </summary>
+        </member>
+        <member name="M:MiCore.Database`4.#ctor(MiCore.Database{`0,`1,`2,`3})">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="sd">
+              The database to copy from.
+            </param>
+        </member>
+        <member name="P:MiCore.Database`4.FilePath">
+            <summary>
+              File path used for serialization.
+            </summary>
+        </member>
+        <member name="P:MiCore.Database`4.Item(System.String)">
+            <summary>
+              Element accessor.
+            </summary>
+            <param name="key">
+              The key of the element to access.
+            </param>
+        </member>
+        <member name="P:MiCore.Database`4.Empty">
+            <summary>
+              If the database is empty.
+            </summary>
+        </member>
+        <member name="P:MiCore.Database`4.Count">
+            <summary>
+              The amount of elements the database contains.
+            </summary>
+        </member>
+        <member name="P:MiCore.Database`4.Keys">
+            <summary>
+              List of element keys.
+            </summary>
+        </member>
+        <member name="P:MiCore.Database`4.FileData">
+            <summary>
+              The object serialized into its data type.
+            </summary>
+        </member>
+        <member name="M:MiCore.Database`4.Contains(System.String)">
+            <summary>
+              If the database contains an element with the given key.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <returns>
+              True if the database contains an element with the given key and
+              false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.Database`4.Get(System.String)">
+            <summary>
+              Gets the element with the given key.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <returns>
+              The element with the given key or null if one does not exist.
+            </returns>
+        </member>
+        <member name="M:MiCore.Database`4.Set(System.String,`0)">
+            <summary>
+              Replaces the element with the given key.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <param name="val">
+              The new element.
+            </param>
+            <returns>
+              True if the database contains an element with the given key and 
+              it was successfully replaced, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.Database`4.Add(System.String,`0,System.Boolean)">
+            <summary>
+              Adds an element to the database, optionally replacing an existing
+              element with the same key.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <param name="val">
+              The element to add.
+            </param>
+            <param name="replace">
+              If an element already exists in the database with the given key,
+              should it be replaced?
+            </param>
+            <returns>
+              True if the element was successfully added to the database,
+              otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.Database`4.Remove(System.String)">
+            <summary>
+              Removes the element with the given key from the database.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <returns>
+              True if an element existed in the database with the given key and
+              it was removed successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.Database`4.Clear">
+            <summary>
+              Removes all elements from the database.
+            </summary>
+        </member>
+        <member name="M:MiCore.Database`4.LoadFromStream(`2)">
+            <summary>
+              Attempts to deserialize the object from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.Database`4.SaveToStream(`3)">
+            <summary>
+              Attempts to serialize the object to the stream.
+            </summary>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.Database`4.LoadFromFile">
+            <summary>
+              Loads the database from <see cref="P:MiCore.Database`4.FilePath"/>.
+            </summary>
+            <returns>
+              True if the database was loaded successfully from file and false
+              otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.Database`4.SaveToFile(System.Boolean)">
+            <summary>
+              Saves the database to <see cref="P:MiCore.Database`4.FilePath"/>.
+            </summary>
+            <param name="overwrite">
+              If an already existing file should be overwritten.
+            </param>
+            <returns>
+              True if the database was saves successfully to file and false
+              otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.Database`4.GetEnumerator">
+            <summary>
+              Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+              An enumerator that iterates through the collection.
+            </returns>
+        </member>
+        <member name="M:MiCore.Database`4.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+              Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+              An enumerator that iterates through the collection.
+            </returns>
+        </member>
+        <member name="F:MiCore.Database`4.m_db">
+            <summary>
+              Collection of database elements indexed by their string key.
+            </summary>
+        </member>
+        <member name="T:MiCore.DisposableDatabase`4">
+            <summary>
+              Base class for disposable databases.
+            </summary>
+            <typeparam name="T">
+              Disposable data type.
+            </typeparam>
+            <typeparam name="SerialDataT">
+              Serialization data type.
+            </typeparam>
+            <typeparam name="ReadT">
+              The type used to deserialize from a stream.
+            </typeparam>
+            <typeparam name="WriteT">
+              The type used to serialize to a stream.
+            </typeparam>
+        </member>
+        <member name="M:MiCore.DisposableDatabase`4.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiCore.DisposableDatabase`4.#ctor(MiCore.DisposableDatabase{`0,`1,`2,`3})">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="dd">
+              The database to copy from.
+            </param>
+        </member>
+        <member name="M:MiCore.DisposableDatabase`4.Remove(System.String)">
+            <summary>
+              Disposes and removes the element with the given key from the
+              database.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <returns>
+              True if an element existed in the database with the given key and
+              it was removed successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.DisposableDatabase`4.Clear">
+            <summary>
+              Removes all elements from the database.
+            </summary>
+        </member>
+        <member name="M:MiCore.DisposableDatabase`4.Dispose">
+            <summary>
+              Performs application-defined tasks associated with freeing, 
+              releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:MiCore.TextDatabase`1">
+            <summary>
+              Base class for databases that contain text serializable objects.
+            </summary>
+            <typeparam name="T">
+              The text serializable type the database will contain.
+            </typeparam>
+        </member>
+        <member name="M:MiCore.TextDatabase`1.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiCore.TextDatabase`1.#ctor(MiCore.TextDatabase{`0})">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="sd">
+              The database to copy from.
+            </param>
+        </member>
+        <member name="M:MiCore.TextDatabase`1.LoadFromStream(System.IO.StreamReader)">
+            <summary>
+              Attempts to deserialize the object from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.TextDatabase`1.SaveToStream(System.IO.StreamWriter)">
+            <summary>
+              Attempts to serialize the object to the stream.
+            </summary>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.TextDatabase`1.LoadFromFile">
+            <summary>
+              Loads the database from the file path.
+            </summary>
+            <returns>
+              True if the database was loaded successfully from file and false
+              otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.TextDatabase`1.SaveToFile(System.Boolean)">
+            <summary>
+              Saves the database to the file path.
+            </summary>
+            <param name="overwrite">
+              If an already existing file should be overwritten.
+            </param>
+            <returns>
+              True if the database was saves successfully to file and false
+              otherwise.
+            </returns>
+        </member>
+        <member name="T:MiCore.DisposableTextDatabase`1">
+            <summary>
+              Base class for databases that contain disposable, text serializable objects.
+            </summary>
+            <typeparam name="T">
+              The disposable, text serializable type the database will contain.
+            </typeparam>
+        </member>
+        <member name="M:MiCore.DisposableTextDatabase`1.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiCore.DisposableTextDatabase`1.#ctor(MiCore.DisposableTextDatabase{`0})">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="dtd">
+              The database to copy from.
+            </param>
+        </member>
+        <member name="M:MiCore.DisposableTextDatabase`1.Remove(System.String)">
+            <summary>
+              Disposes and removes the element with the given key from the
+              database.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <returns>
+              True if an element existed in the database with the given key and
+              it was removed successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.DisposableTextDatabase`1.Clear">
+            <summary>
+              Removes all elements from the database.
+            </summary>
+        </member>
+        <member name="M:MiCore.DisposableTextDatabase`1.Dispose">
+            <summary>
+              Performs application-defined tasks associated with freeing, 
+              releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:MiCore.BinaryDatabase`1">
+            <summary>
+              Base class for databases that contain binary serializable objects.
+            </summary>
+            <typeparam name="T">
+              The binary serializable type the database will contain.
+            </typeparam>
+        </member>
+        <member name="M:MiCore.BinaryDatabase`1.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiCore.BinaryDatabase`1.#ctor(MiCore.BinaryDatabase{`0})">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="sd">
+              The database to copy from.
+            </param>
+        </member>
+        <member name="M:MiCore.BinaryDatabase`1.LoadFromStream(System.IO.BinaryReader)">
+            <summary>
+              Attempts to deserialize the object from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.BinaryDatabase`1.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+              Attempts to serialize the object to the stream.
+            </summary>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.BinaryDatabase`1.LoadFromFile">
+            <summary>
+              Loads the database from the file path.
+            </summary>
+            <returns>
+              True if the database was loaded successfully from file and false
+              otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.BinaryDatabase`1.SaveToFile(System.Boolean)">
+            <summary>
+              Saves the database to the file path.
+            </summary>
+            <param name="overwrite">
+              If an already existing file should be overwritten.
+            </param>
+            <returns>
+              True if the database was saves successfully to file and false
+              otherwise.
+            </returns>
+        </member>
+        <member name="T:MiCore.DisposableBinaryDatabase`1">
+            <summary>
+              Base class for databases that contain disposable, binary serializable objects.
+            </summary>
+            <typeparam name="T">
+              The disposable, binary serializable type the database will contain.
+            </typeparam>
+        </member>
+        <member name="M:MiCore.DisposableBinaryDatabase`1.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiCore.DisposableBinaryDatabase`1.#ctor(MiCore.DisposableBinaryDatabase{`0})">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="dbd">
+              The database to copy from.
+            </param>
+        </member>
+        <member name="M:MiCore.DisposableBinaryDatabase`1.Remove(System.String)">
+            <summary>
+              Disposes and removes the element with the given key from the
+              database.
+            </summary>
+            <param name="key">
+              The element key.
+            </param>
+            <returns>
+              True if an element existed in the database with the given key and
+              it was removed successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.DisposableBinaryDatabase`1.Clear">
+            <summary>
+              Removes all elements from the database.
+            </summary>
+        </member>
+        <member name="M:MiCore.DisposableBinaryDatabase`1.Dispose">
+            <summary>
+              Performs application-defined tasks associated with freeing, 
+              releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:MiCore.DatabaseManager">
+            <summary>
+              Singleton class that manages binary databases.
+            </summary>
+        </member>
+        <member name="P:MiCore.DatabaseManager.Empty">
+            <summary>
+              If the manager contains no databases.
+            </summary>
+        </member>
+        <member name="P:MiCore.DatabaseManager.Count">
+            <summary>
+              The amount of databases in the manager.
+            </summary>
+        </member>
+        <member name="M:MiCore.DatabaseManager.Contains(System.Type)">
+            <summary>
+              If the manager contains a database of the given type.
+            </summary>
+            <param name="t">
+              The database type to check.
+            </param>
+            <returns>
+              True if the manager contains a database of the given type,
+              otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.DatabaseManager.Get``2">
+            <summary>
+              Attempts to get the database of type T. Loading it from file or
+              creating a new one if needed.
+            </summary>
+            <typeparam name="T">
+              The binary database type.
+            </typeparam>
+            <typeparam name="D">
+              Data type managed by T.
+            </typeparam>
+            <returns>
+              The database of the given type if it exists or can be loaded,
+              otherwise null.
+            </returns>
+        </member>
+        <member name="M:MiCore.DatabaseManager.Load``2(System.Boolean)">
+            <summary>
+              Attempts to load the database of type T from file.
+            </summary>
+            <typeparam name="T">
+              The binary database type.
+            </typeparam>
+            <typeparam name="D">
+              Data type managed by T
+            </typeparam>
+            <param name="reload">
+              If an already loaded database should be loaded again.
+            </param>
+            <returns>
+              True if the database was loaded successfully or loaded already,
+              otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.DatabaseManager.Save``2(System.Boolean)">
+            <summary>
+              Attempts to save the database of type T to file.
+            </summary>
+            <typeparam name="T">
+              The binary database type.
+            </typeparam>
+            <typeparam name="D">
+              Data type managed by T
+            </typeparam>
+            <param name="overwrite">
+              If an already existing file should be overwritten.
+            </param>
+            <returns>
+              True if the database was already loaded and was saved successfully
+              to file, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.DatabaseManager.Create``2(System.Boolean)">
+            <summary>
+              Attempts to create a new database of type T.
+            </summary>
+            <typeparam name="T">
+              The binary database type.
+            </typeparam>
+            <typeparam name="D">
+              Data type managed by T
+            </typeparam>
+            <param name="delete">
+              If an already existing database should be deleted.
+            </param>
+            <returns>
+              True if the database was created successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="P:MiCore.DatabaseManager.Instance">
+            <summary>
+              The singleton instance.
+            </summary>
+        </member>
+        <member name="T:MiCore.Entity">
+            <summary>
+              Base class for all game objects.
+            </summary>
+        </member>
+        <member name="M:MiCore.Entity.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiCore.Entity.#ctor(System.String)">
+            <summary>
+              Constructor setting the object ID.
+            </summary>
+            <param name="id">
+              The object ID. Will be converted to a valid ID if needed.
+            </param>
+        </member>
+        <member name="P:MiCore.Entity.ID">
+            <summary>
+              The object ID.
+            </summary>
+        </member>
+        <member name="P:MiCore.Entity.Empty">
+            <summary>
+              If the entity contains no components.
+            </summary>
+        </member>
+        <member name="P:MiCore.Entity.Count">
+            <summary>
+              The amount of components the entity contains.
+            </summary>
+        </member>
+        <member name="M:MiCore.Entity.Contains``1">
+            <summary>
+              Checks if the entity contains a component of the given type.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              True if the entity contains a component with the given type, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.Entity.Contains(System.String)">
+            <summary>
+              Checks if the entity contains a component with the given type name.
+            </summary>
+            <param name="type">
+              The component type name.
+            </param>
+            <returns>
+              True if the entity contains a component with the given type name, 
+              otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.Entity.IndexOf``1">
+            <summary>
+              Gets the index of the component with the given type.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              A non-negative index if the entity contains a component with the given type,
+              otherwise -1.
+            </returns>
+        </member>
+        <member name="M:MiCore.Entity.IndexOf(System.String)">
+            <summary>
+              Gets the index of the component with the given type name.
+            </summary>
+            <param name="type">
+              The component type name.
+            </param>
+            <returns>
+              A non-negative index if the entity contains a component with the given type name,
+              otherwise -1.
+            </returns>
+        </member>
+        <member name="M:MiCore.Entity.Get(System.Int32)">
+            <summary>
+              Gets the component at the given index.
+            </summary>
+            <param name="index">
+              The component index.
+            </param>
+            <returns>
+              The component at the given index or null if the index is out of range.
+            </returns>
+        </member>
+        <member name="M:MiCore.Entity.Get(System.String)">
+            <summary>
+              Gets the component with the given type name.
+            </summary>
+            <param name="typename">
+              The component type name.
+            </param>
+            <returns>
+              The component with the given type name if it exists, otherwise null.
+            </returns>
+        </member>
+        <member name="M:MiCore.Entity.Get``1">
+            <summary>
+              Gets the component with the given type.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              The component with the given type or null if it does not exist.
+            </returns>
+        </member>
+        <member name="M:MiCore.Entity.Add(MiCore.Component,System.Boolean)">
+            <summary>
+              Adds a component to the entity.
+            </summary>
+            <param name="comp">
+              The component to add.
+            </param>
+            <param name="replace">
+              If an already existing component should be replaced.
+            </param>
+            <returns>
+              True if the component was added successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.Entity.Add``1(System.Boolean)">
+            <summary>
+              Adds a new component to the entity.
+            </summary>
+            <typeparam name="T">
+              The component type to add.
+            </typeparam>
+            <param name="replace">
+              Should an already existing component of the same type be replaced?
+            </param>
+            <returns>
+              True if the component was added successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.Entity.Remove``1">
+            <summary>
+              Removes the component with the given type.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              True if there was a component with the given type and it was removed,
+              otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.Entity.Remove(System.Int32)">
+            <summary>
+              Removes the component at the given index.
+            </summary>
+            <param name="index">
+              The component index.
+            </param>
+            <returns>
+              True if index was in range and the component was removed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.Entity.Remove(System.String)">
+            <summary>
+              Removes the component with the given type name.
+            </summary>
+            <param name="typename">
+              The component type name.
+            </param>
+            <returns>
+              True if the component existed and was removed successfully.
+            </returns>
+        </member>
+        <member name="M:MiCore.Entity.Clear">
+            <summary>
+              Clears all components from the entity.
+            </summary>
+        </member>
+        <member name="M:MiCore.Entity.OnUpdate(System.Single)">
+            <summary>
+              Updates the entity and components.
+            </summary>
+            <param name="dt">
+              Delta time.
+            </param>
+        </member>
+        <member name="M:MiCore.Entity.OnDraw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
+            <summary>
+              Draws the entity and components.
+            </summary>
+            <param name="target">
+              The render target.
+            </param>
+            <param name="states">
+              Render states.
+            </param>
+        </member>
+        <member name="M:MiCore.Entity.Dispose">
+            <summary>
+              Disposes of the object.
+            </summary>
+        </member>
+        <member name="M:MiCore.Entity.LoadFromStream(System.IO.BinaryReader)">
+            <summary>
+              Attempts to deserialize the entity from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>  
+        </member>
+        <member name="M:MiCore.Entity.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+              Attempts to serialize the object to the stream.
+            </summary>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.Entity.LoadFromXml(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load the object from the xml element.
+            </summary>
+            <param name="element">
+              The xml element.
+            </param>
+            <returns>
+              True if the object loaded successfully or false on failure.
+            </returns>
+        </member>
+        <member name="M:MiCore.Entity.ToString">
+            <summary>
+              Gets the object xml string.
+            </summary>
+            <returns>
+              The xml string of the object.
+            </returns>
+        </member>
+        <member name="M:MiCore.Entity.GetEnumerator">
+            <summary>
+              Gets an enumerator that can be used to iterate through the components.
+            </summary>
+            <returns>
+              An enumerator that can be used to iterate through the component collection.
+            </returns>
+        </member>
+        <member name="T:MiCore.IIdentifiable`1">
+            <summary>
+              Interface for objects that are identified by an ID.
+            </summary>
+        </member>
+        <member name="P:MiCore.IIdentifiable`1.ID">
+            <summary>
+              The name of the object.
+            </summary>
+        </member>
+        <member name="T:MiCore.Identifiable">
+            <summary>
+              Contains ID and name related functionality.
+            </summary>
+        </member>
+        <member name="M:MiCore.Identifiable.IsValid(System.String)">
+            <summary>
+              If the given ID is valid.
+            </summary>
+            <param name="id">
+              The ID to check.
+            </param>
+            <returns>
+              True if the ID is valid and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.Identifiable.IsValid(MiCore.IIdentifiable{System.String})">
+            <summary>
+              If the given objects' ID is valid.
+            </summary>
+            <param name="i">
+              The object to check.
+            </param>
+            <returns>
+              True if the objects' ID is valid and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.Identifiable.AsValid(System.String)">
+            <summary>
+              Returns either the given string as a valid ID or a generated random ID if it is empty or null.
+            </summary>
+            <param name="id">
+              The invalid ID.
+            </param>
+            <returns>
+              The given string as a valid ID.
+            </returns>
+        </member>
+        <member name="M:MiCore.Identifiable.AsValid(MiCore.IIdentifiable{System.String})">
+            <summary>
+              Returns the given objects' ID as a valid ID.
+            </summary>
+            <param name="i">
+              The object.
+            </param>
+            <returns>
+              The given object' invalid ID as a valid ID.
+            </returns>
+        </member>
+        <member name="M:MiCore.Identifiable.NewStringID(System.String)">
+            <summary>
+              Creates a psuedo-new, valid ID from a given prefix.
+            </summary>
+            <param name="prefix">
+              Prefixes the ID numbers.
+            </param>
+            <returns>
+              A new ID.
+            </returns>
+        </member>
+        <member name="M:MiCore.Identifiable.NewUIntID(System.String)">
+            <summary>
+              Creates a psuedo-new ulong ID.
+            </summary>
+            <param name="prefix">
+              The prefix linked to the ID type.
+            </param>
+            <returns>
+              A new ID.
+            </returns>
+        </member>
+        <member name="M:MiCore.Identifiable.RandomStringID(System.UInt32)">
+            <summary>
+              Generates a random ID string with the given length.
+            </summary>
+            <param name="length">
+              The length of the ID.
+            </param>
+            <returns>
+              A random ID with the given length or `string.Empty` if length is zero.
+            </returns>
+        </member>
+        <member name="T:MiCore.LogType">
+            <summary>
+              Possible log message types.
+            </summary>
+        </member>
+        <member name="F:MiCore.LogType.Error">
+            <summary>
+              For logging unrecoverable errors.
+            </summary>
+        </member>
+        <member name="F:MiCore.LogType.Warning">
+            <summary>
+              For logging recoverable warnings.
+            </summary>
+        </member>
+        <member name="F:MiCore.LogType.Debug">
+            <summary>
+              For logging debug information.
+            </summary>
+        </member>
+        <member name="F:MiCore.LogType.Info">
+            <summary>
+              For logging standard messages.
+            </summary>
+        </member>
+        <member name="T:MiCore.Logger">
+            <summary>
+              Handles logging functionality.
+            </summary>
+        </member>
+        <member name="F:MiCore.Logger.DefaultLogPath">
+            <summary>
+              The default log file path.
+            </summary>
+        </member>
+        <member name="P:MiCore.Logger.LogToConsole">
+            <summary>
+              If logs should be displayed in the console.
+            </summary>
+        </member>
+        <member name="P:MiCore.Logger.LogToFile">
+            <summary>
+              If logs should be written to file.
+            </summary>
+        </member>
+        <member name="P:MiCore.Logger.LogPath">
+            <summary>
+              File path to log file.
+            </summary>
+            <remarks>
+              If this does not point to a valid file path and <see cref="P:MiCore.Logger.LogToFile"/> is true. It will be
+              set to <see cref="F:MiCore.Logger.DefaultLogPath"/> on the next call to <see cref="M:MiCore.Logger.Log(System.String,MiCore.LogType)"/>.
+            </remarks>
+        </member>
+        <member name="P:MiCore.Logger.LogFileExists">
+            <summary>
+              If a file exists at <see cref="P:MiCore.Logger.LogPath"/>.
+            </summary>
+        </member>
+        <member name="M:MiCore.Logger.Log(System.String,MiCore.LogType)">
+            <summary>
+              Logs a message with the given log type.
+            </summary>
+            <param name="msg">
+              The log message.
+            </param>
+            <param name="l">
+              The log type.
+            </param>
+        </member>
+        <member name="M:MiCore.Logger.LogReturn``1(System.String,``0,MiCore.LogType)">
+            <summary>
+              Logs a message to the log stream before returning a value.
+            </summary>
+            <typeparam name="T">
+              The type of value to return.
+            </typeparam>
+            <param name="msg">
+              The log message.
+            </param>
+            <param name="val">
+              The value to return.
+            </param>
+            <param name="l">
+              The log type.
+            </param>
+            <returns>
+              Returns <paramref name="val"/>.
+            </returns>
+        </member>
+        <member name="M:MiCore.Logger.DeleteLogFile">
+            <summary>
+              Deletes the log file.
+            </summary>
+        </member>
+        <member name="T:MiCore.IMiObject">
+            <summary>
+              Base interface for ECS objects.
+            </summary>
+        </member>
+        <member name="P:MiCore.IMiObject.Enabled">
+            <summary>
+              If the object is enabled and should be updated.
+            </summary>
+        </member>
+        <member name="P:MiCore.IMiObject.Visible">
+            <summary>
+              If the object is visible and should be drawn.
+            </summary>
+        </member>
+        <member name="M:MiCore.IMiObject.Update(System.Single)">
+            <summary>
+              Updates the object; called once per frame.
+            </summary>
+            <param name="dt">
+              Delta time.
+            </param>
+        </member>
+        <member name="T:MiCore.MiObject">
+            <summary>
+              Base class for all ECS objects.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiObject.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiObject.#ctor(MiCore.MiObject)">
+            <summary>
+              Copy constructor; "_Copy" will be appended to the end of the ID.
+            </summary>
+            <param name="obj">
+              The object to copy.
+            </param>
+        </member>
+        <member name="P:MiCore.MiObject.Enabled">
+            <summary>
+              If the object is enabled and should be updated.
+            </summary>
+        </member>
+        <member name="P:MiCore.MiObject.Visible">
+            <summary>
+              If the object is visible and should be drawn.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiObject.Update(System.Single)">
+            <summary>
+              Updates the object if enabled; called once per frame.
+            </summary>
+            <param name="dt">
+              Delta time.
+            </param>
+        </member>
+        <member name="M:MiCore.MiObject.Draw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
+            <summary>
+              Draws the object to the render target if visible.
+            </summary>
+            <param name="target">
+              Render target.
+            </param>
+            <param name="states">
+              Render states.
+            </param>
+        </member>
+        <member name="M:MiCore.MiObject.OnUpdate(System.Single)">
+            <summary>
+              Override this with the object logic.
+            </summary>
+            <param name="dt">
+              Delta time.
+            </param>
+        </member>
+        <member name="M:MiCore.MiObject.OnDraw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
+            <summary>
+              Override this to draw the object to the render target.
+            </summary>
+            <param name="target">
+              Render target.
+            </param>
+            <param name="states">
+              Render states.
+            </param>
+        </member>
+        <member name="M:MiCore.MiObject.LoadFromStream(System.IO.BinaryReader)">
+            <summary>
+              Attempts to deserialize the object from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>  
+        </member>
+        <member name="M:MiCore.MiObject.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+              Attempts to serialize the object to the stream.
+            </summary>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiObject.LoadFromXml(System.Xml.XmlElement)">
+            <summary>
+              Loads the object from xml.
+            </summary>
+            <param name="element">
+              The xml element.
+            </param>
+            <returns>
+              True on success or false on failure.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiObject.Dispose">
+            <summary>
+              Disposes of the object.
+            </summary>
+        </member>
+        <member name="T:MiCore.INamable">
+            <summary>
+              Interface for objects that have a name.
+            </summary>
+        </member>
+        <member name="P:MiCore.INamable.Name">
+            <summary>
+              The name of the object.
+            </summary>
+        </member>
+        <member name="T:MiCore.Naming">
+            <summary>
+              Contains Name related functionality.
+            </summary>
+        </member>
+        <member name="M:MiCore.Naming.IsValid(System.String)">
+            <summary>
+              If the given string is a valid name.
+            </summary>
+            <param name="name">
+              The name string.
+            </param>
+            <returns>
+              True if the name is valid and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.Naming.IsValid(MiCore.IIdentifiable{System.String})">
+            <summary>
+              If the name of the given object is valid.
+            </summary>
+            <param name="i">
+              The object to check.
+            </param>
+            <returns>
+              True if the name of the object is valid and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.Naming.AsValid(System.String,System.Char)">
+            <summary>
+              Returns the given string as a valid name.
+            </summary>
+            <param name="name">
+              The possibly invalid name.
+            </param>
+            <param name="repl">
+              The character used to replace invalid characters.
+            </param>
+            <returns>
+              The given string as a valid name.
+            </returns>
+        </member>
+        <member name="M:MiCore.Naming.AsValid(MiCore.IIdentifiable{System.String})">
+            <summary>
+              Returns the given objects' name as a valid name.
+            </summary>
+            <param name="i">
+              The identifiable object.
+            </param>
+            <returns>
+              The given object' invalid name as a valid ID.
+            </returns>
+        </member>
+        <member name="M:MiCore.Naming.NewName(System.String)">
+            <summary>
+              Creates a psuedo-new, valid name with a given prefix.
+            </summary>
+            <param name="prefix">
+              Prefixes the name numbers.
+            </param>
+            <returns>
+              A new name.
+            </returns>
+        </member>
+        <member name="M:MiCore.Naming.RandomName(System.UInt32)">
+            <summary>
+              Generates a random name string with the given length.
+            </summary>
+            <param name="length">
+              The length of the name.
+            </param>
+            <returns>
+              A random name with the given length or `string.Empty` if length is zero.
+            </returns>
+        </member>
+        <member name="T:MiCore.ISerializable`3">
+            <summary>
+              Interface for objects that can be serialized/deserialized to/from a file.
+            </summary>
+            <typeparam name="DataT">
+              The data type the object is serialized into.
+            </typeparam>
+            <typeparam name="ReadT">
+              The stream reader type used to deserialize the object from a stream.
+            </typeparam>
+            <typeparam name="WriteT">
+              The stream writer type used to serialize the object to a stream.
+            </typeparam>
+        </member>
+        <member name="P:MiCore.ISerializable`3.FileData">
+            <summary>
+              The object serialized into its file data.
+            </summary>
+        </member>
+        <member name="M:MiCore.ISerializable`3.LoadFromStream(`1)">
+            <summary>
+              Attempts to deserialize the object from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.ISerializable`3.SaveToStream(`2)">
+            <summary>
+              Attempts to serialize the object to the stream.
+            </summary>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="T:MiCore.ITextSerializable">
+            <summary>
+              Interface for objects that can be serialized/deserialized to/from text files.
+            </summary>
+        </member>
+        <member name="T:MiCore.IBinarySerializable">
+            <summary>
+              Interface for objects that are be serialized/deserialized to/from binary files.
+            </summary>
+        </member>
+        <member name="T:MiCore.IXmlLoadable">
+            <summary>
+              Interface for objects that can be loaded from an xml element.
+            </summary>
+        </member>
+        <member name="M:MiCore.IXmlLoadable.LoadFromXml(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load the object from the xml element.
+            </summary>
+            <param name="element">
+              The xml element.
+            </param>
+            <returns>
+              True if the object was successfully loaded, otherwise false.
+            </returns>
+        </member>
+        <member name="T:MiCore.TextSerializable">
+            <summary>
+              Base class for objects that are be serialized/deserialized to/from text files.
+            </summary>
+        </member>
+        <member name="P:MiCore.TextSerializable.FileData">
+            <summary>
+              The object serialized into file data.
+            </summary>
+            <remarks>
+              Used by the default implementation of <see cref="M:MiCore.TextSerializable.SaveToStream(System.IO.StreamWriter)"/>.
+              Throws <see cref="T:System.InvalidOperationException"/> by default so either override this or, 
+              <see cref="M:MiCore.TextSerializable.SaveToStream(System.IO.StreamWriter)"/>.
+            </remarks>
+        </member>
+        <member name="M:MiCore.TextSerializable.LoadFromStream(System.IO.StreamReader)">
+            <summary>
+              Attempts to deserialize the object from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.TextSerializable.SaveToStream(System.IO.StreamWriter)">
+            <summary>
+              Attempts to serialize the object to the stream.
+            </summary>
+            <remarks>
+              Default implementation attempts to write <see cref="P:MiCore.TextSerializable.FileData"/> to stream so either override this or
+              <see cref="P:MiCore.TextSerializable.FileData"/>.
+            </remarks>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.TextSerializable.FromFile``1(System.String)">
+            <summary>
+              Constructs an object of type T and attempts to deserialize it from file.
+            </summary>
+            <typeparam name="T">
+              The type of object to deserialize.
+            </typeparam>
+            <param name="path">
+              The file path.
+            </param>
+            <returns>
+              A new object of type T deserialzed from file on success, otherwise null.
+            </returns>
+        </member>
+        <member name="M:MiCore.TextSerializable.ToFile``1(``0,System.String,System.Boolean)">
+            <summary>
+              Attempts to serialize the object to file.
+            </summary>
+            <param name="t">
+              The object to save to file.
+            </param>
+            <param name="path">
+              The file path.
+            </param>
+            <param name="replace">
+              If a file already exists at <paramref name="path"/>, should it be replaced?
+            </param>
+            <returns>
+              True if <paramref name="path"/> is valid and data is successfully written to file, otherwise false. Also
+              returns false if a file already exists at <paramref name="path"/> and <paramref name="replace"/> is false.
+            </returns>
+        </member>
+        <member name="T:MiCore.BinarySerializable">
+            <summary>
+              Base class for objects that are be serialized/deserialized to/from 
+              binary files.
+            </summary>
+        </member>
+        <member name="P:MiCore.BinarySerializable.FileData">
+            <summary>
+              The object serialized into file data.
+            </summary>
+            <remarks>
+              Used by the default implementation of <see cref="M:MiCore.BinarySerializable.SaveToStream(System.IO.BinaryWriter)"/>.
+              Throws <see cref="T:System.InvalidOperationException"/> by default so either override this or, 
+              <see cref="M:MiCore.BinarySerializable.SaveToStream(System.IO.BinaryWriter)"/>.
+            </remarks>
+        </member>
+        <member name="M:MiCore.BinarySerializable.LoadFromStream(System.IO.BinaryReader)">
+            <summary>
+              Attempts to deserialize the object from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.BinarySerializable.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+              Attempts to serialize the object to the stream.
+            </summary>
+            <remarks>
+              Default implementation attempts to write <see cref="P:MiCore.BinarySerializable.FileData"/> to stream so either override this or
+              <see cref="P:MiCore.BinarySerializable.FileData"/>.
+            </remarks>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.BinarySerializable.FromFile``1(System.String)">
+            <summary>
+              Constructs an object of type T and attempts to deserialize from file.
+            </summary>
+            <typeparam name="T">
+              The type of object to deserialize.
+            </typeparam>
+            <param name="path">
+              The file path.
+            </param>
+            <returns>
+              A new object of type T deserialzed from file on success, otherwise null.
+            </returns>
+        </member>
+        <member name="M:MiCore.BinarySerializable.ToFile``1(``0,System.String,System.Boolean)">
+            <summary>
+              Attempts to serialize an object to file.
+            </summary>
+            <param name="t">
+              The object to save to file.
+            </param>
+            <param name="path">
+              The file path.
+            </param>
+            <param name="replace">
+              If a file already exists at <paramref name="path"/>, should it be replaced?
+            </param>
+            <returns>
+              True if <paramref name="path"/> is valid and data is successfully written to file, otherwise false. Also
+              returns false if a file already exists at <paramref name="path"/> and <paramref name="replace"/> is false.
+            </returns>
+        </member>
+        <member name="T:MiCore.XmlLoadable">
+            <summary>
+              Base class for objects that can be loaded from an xml element.
+            </summary>
+        </member>
+        <member name="M:MiCore.XmlLoadable.LoadFromXml(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load the object from the xml element.
+            </summary>
+            <param name="element">
+              The xml element.
+            </param>
+            <returns>
+              True if the object was successfully loaded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.XmlLoadable.ToString">
+            <summary>
+              Converts the object to an xml string.
+            </summary>
+            <returns>
+              Returns the object to an xml string.
+            </returns>
+        </member>
+        <member name="M:MiCore.XmlLoadable.ToString(System.UInt32)">
+            <summary>
+              Converts the object to an xml string with the given indentation level.
+            </summary>
+            <param name="indent">
+              Indentation level.
+            </param>
+            <returns>
+              Returns the object to an xml string with the given indentation level.
+            </returns>
+        </member>
+        <member name="M:MiCore.XmlLoadable.ToString(MiCore.IXmlLoadable,System.UInt32)">
+            <summary>
+              Converts the object to an xml string with optional indentation.
+            </summary>
+            <param name="xl">
+              The object.
+            </param>
+            <param name="indent">
+              Indentation level.
+            </param>
+            <returns>
+              Returns the object to an xml string with the given indentation level.
+            </returns>
+        </member>
+        <member name="M:MiCore.XmlLoadable.FromElement``1(System.Xml.XmlElement)">
+            <summary>
+              Attempts to create a new object from the xml element.
+            </summary>
+            <typeparam name="T">
+              The type of object to load.
+            </typeparam>
+            <param name="element">
+              The xml element.
+            </param>
+            <returns>
+              A valid object of type T loaded from the xml element on success and null on failure.
+            </returns>
+        </member>
+        <member name="M:MiCore.XmlLoadable.FromFile``1(System.String,System.String,System.Xml.XmlNamespaceManager)">
+            <summary>
+              Attempts to create a new object loaded from xml at the given path.
+            </summary>
+            <typeparam name="T">
+              The type to load.
+            </typeparam>
+            <param name="path">
+              The path of the xml document.
+            </param>
+            <param name="xpath">
+              Optional xpath expression to select a single node to load from.
+            </param>
+            <param name="nsm">
+              Optional xml namespace manager.
+            </param>
+            <returns>
+              A valid object of type T on success and null on failure.
+            </returns>
+        </member>
+        <member name="M:MiCore.XmlLoadable.FromXml``1(System.String,System.String,System.Xml.XmlNamespaceManager)">
+            <summary>
+              Attempts to create a new object from a string.
+            </summary>
+            <typeparam name="T">
+              The type to load.
+            </typeparam>
+            <param name="xml">
+              The xml string.
+            </param>
+            <param name="xpath">
+              Optional xpath expression to select a single node to load from.
+            </param>
+            <param name="nsm">
+              Optional xml namespace manager.
+            </param>
+            <returns>
+              A valid object of type T on success and null on failure.
+            </returns>
+        </member>
+        <member name="M:MiCore.XmlLoadable.ToFile(MiCore.IXmlLoadable,System.String,System.Boolean)">
+            <summary>
+              Attempts to save XmlLoadable object to file.
+            </summary>
+            <remarks>
+              Please note <see cref="F:MiCore.Xml.Header"/> will be written at the beginning of the file
+              before the file data.
+            </remarks>
+            <param name="x">
+              The object to save.
+            </param>
+            <param name="path">
+              The path to save the object to.
+            </param>
+            <param name="overwrite">
+              If an already existing file should be overwritten.
+            </param>
+            <returns>
+              True if the object was written to file successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="T:MiCore.TestModule">
+            <summary>
+              Base class for test modules.
+            </summary>
+        </member>
+        <member name="M:MiCore.TestModule.RunTest(SFML.Graphics.RenderWindow)">
+            <summary>
+              Run module tests.
+            </summary>
+            <returns>
+              True if tests succeeded, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.TestModule.OnTest">
+            <summary>
+              Override this to run your module tests.
+            </summary>
+            <returns>
+              True if tests succeeded, otherwise false.
+            </returns>
+        </member>
+        <member name="T:MiCore.VisualTestModule">
+            <summary>
+              Base class for test modules that also require a visual test.
+            </summary>
+        </member>
+        <member name="M:MiCore.VisualTestModule.RunTest(SFML.Graphics.RenderWindow)">
+            <summary>
+              Run module tests.
+            </summary>
+            <returns>
+              True if tests succeeded, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.VisualTestModule.OnVisualTest(SFML.Graphics.RenderWindow)">
+            <summary>
+              Run visual module tests.
+            </summary>
+            <param name="window">
+              The render window.
+            </param>
+            <returns>
+              True if tests succeeded, otherwise false.
+            </returns>
+        </member>
+        <member name="T:MiCore.Testing">
+            <summary>
+              Contains test related functionality.
+            </summary>
+        </member>
+        <member name="M:MiCore.Testing.Test``1(SFML.Graphics.RenderWindow)">
+            <summary>
+              Runs a test module by type.
+            </summary>
+            <typeparam name="T">
+              The type of test module to run.
+            </typeparam>
+            <param name="window">
+              The render window.
+            </param>
+            <returns>
+              True if tests succeeded, otherwise false.
+            </returns>
+        </member>
+        <member name="T:MiCore.Xml">
+            <summary>
+              Contains xml helper functionality.
+            </summary>
+        </member>
+        <member name="F:MiCore.Xml.Header">
+            <summary>
+              Standard xml header.
+            </summary>
+        </member>
+        <member name="M:MiCore.Xml.ToString(SFML.System.Vector2f,System.String,System.UInt32)">
+            <summary>
+              Gets the vectors' xml string.
+            </summary>
+            <param name="vec">
+              The vector.
+            </param>
+            <param name="name">
+              Xml element name.
+            </param>
+            <param name="indent">
+              Indentation level.
+            </param>
+            <returns>
+              The given vector as an xml string.
+            </returns>
+        </member>
+        <member name="M:MiCore.Xml.ToString(SFML.System.Vector2i,System.String,System.UInt32)">
+            <summary>
+              Gets the vectors' xml string.
+            </summary>
+            <param name="vec">
+              The vector.
+            </param>
+            <param name="name">
+              Xml element name.
+            </param>
+            <param name="indent">
+              Indentation level.
+            </param>
+            <returns>
+              The given vector as an xml string.
+            </returns>
+        </member>
+        <member name="M:MiCore.Xml.ToString(SFML.System.Vector2u,System.String,System.UInt32)">
+            <summary>
+              Gets the vectors' xml string.
+            </summary>
+            <param name="vec">
+              The vector.
+            </param>
+            <param name="name">
+              Xml element name.
+            </param>
+            <param name="indent">
+              Indentation level.
+            </param>
+            <returns>
+              The given vector as an xml string.
+            </returns>
+        </member>
+        <member name="M:MiCore.Xml.ToString(SFML.Graphics.FloatRect,System.String,System.UInt32)">
+            <summary>
+              Gets the rects' xml string.
+            </summary>
+            <param name="rect">
+              The rect.
+            </param>
+            <param name="name">
+              Xml element name.
+            </param>
+            <param name="indent">
+              Indentation level.
+            </param>
+            <returns>
+              The given rect as an xml string.
+            </returns>
+        </member>
+        <member name="M:MiCore.Xml.ToString(SFML.Graphics.IntRect,System.String,System.UInt32)">
+            <summary>
+              Gets the rects' xml string.
+            </summary>
+            <param name="rect">
+              The rect.
+            </param>
+            <param name="name">
+              Xml element name.
+            </param>
+            <param name="indent">
+              Indentation level.
+            </param>
+            <returns>
+              The given rect as an xml string.
+            </returns>
+        </member>
+        <member name="M:MiCore.Xml.ToString(SFML.Graphics.Color,System.String,System.UInt32)">
+            <summary>
+              Gets the rects' xml string.
+            </summary>
+            <param name="col">
+              The rect.
+            </param>
+            <param name="name">
+              Xml element name.
+            </param>
+            <param name="indent">
+              Indentation level.
+            </param>
+            <returns>
+              The given rect as an xml string.
+            </returns>
+        </member>
+        <member name="M:MiCore.Xml.ToString(SFML.Window.VideoMode,System.String,System.UInt32)">
+            <summary>
+              Gets the video modes' xml string.
+            </summary>
+            <param name="vm">
+              The video mode.
+            </param>
+            <param name="name">
+              Xml element name.
+            </param>
+            <param name="indent">
+              Indentation level.
+            </param>
+            <returns>
+              The given video mode as an xml string.
+            </returns>
+        </member>
+        <member name="M:MiCore.Xml.ToVec2f(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load a vector from an xml element.
+            </summary>
+            <param name="ele">
+              The element to load from.
+            </param>
+            <returns>
+              A valid vector on success or null on failure.
+            </returns>
+        </member>
+        <member name="M:MiCore.Xml.ToVec2i(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load a vector from an xml element.
+            </summary>
+            <param name="ele">
+              The element to load from.
+            </param>
+            <returns>
+              A valid vector on success or null on failure.
+            </returns>
+        </member>
+        <member name="M:MiCore.Xml.ToVec2u(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load a vector from an xml element.
+            </summary>
+            <param name="ele">
+              The element to load from.
+            </param>
+            <returns>
+              A valid vector on success or null on failure.
+            </returns>
+        </member>
+        <member name="M:MiCore.Xml.ToFRect(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load a rect from an xml element.
+            </summary>
+            <param name="ele">
+              The element to load from.
+            </param>
+            <returns>
+              A valid rect on success or null on failure.
+            </returns>
+        </member>
+        <member name="M:MiCore.Xml.ToIRect(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load a rect from an xml element.
+            </summary>
+            <param name="ele">
+              The element to load from.
+            </param>
+            <returns>
+              A valid rect on success or null on failure.
+            </returns>
+        </member>
+        <member name="M:MiCore.Xml.ToColor(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load a color from an xml element.
+            </summary>
+            <param name="ele">
+              The element to load from.
+            </param>
+            <returns>
+              A valid color on success or null on failure.
+            </returns>
+        </member>
+        <member name="M:MiCore.Xml.ToVideoMode(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load a color from an xml element.
+            </summary>
+            <param name="ele">
+              The element to load from.
+            </param>
+            <returns>
+              A valid color on success or null on failure.
+            </returns>
+        </member>
+        <member name="M:MiCore.Xml.Indent(System.String,System.UInt32)">
+            <summary>
+              Indents each line of the string a set amount of times.
+            </summary>
+            <param name="lines">
+              The string to indent.
+            </param>
+            <param name="indent">
+              The amount of tabs to use for indentation.
+            </param>
+            <returns>
+              The given string indented with the given amount of tabs, or just tabs if the string is
+              null or empty.
+            </returns>
+        </member>
+    </members>
+</doc>

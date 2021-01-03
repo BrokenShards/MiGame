@@ -2,8 +2,8 @@
 // AssemblyInfo.cs 
 ////////////////////////////////////////////////////////////////////////////////
 //
-// SharpGame - A simple game framework for use with SFML.Net.
-// Copyright (C) 2020 Michael Furlong <michaeljfurlong@outlook.com>
+// MiGame - A simple game framework for use with SFML.Net.
+// Copyright (C) 2021 Michael Furlong <michaeljfurlong@outlook.com>
 //
 // This program is free software: you can redistribute it and/or modify it 
 // under the terms of the GNU General Public License as published by the Free 
@@ -26,12 +26,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle( "SharpGameTest" )]
-[assembly: AssemblyDescription( "SharpGame testing application." )]
+[assembly: AssemblyTitle( "MiGame Test" )]
+[assembly: AssemblyDescription( "MiGame testing application." )]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "Michael Furlong" )]
-[assembly: AssemblyProduct( "SharpGameTest" )]
-[assembly: AssemblyCopyright( "Copyright © Michael Furlong 2020" )]
+[assembly: AssemblyProduct( "MiGame Test" )]
+[assembly: AssemblyCopyright( "Copyright © Michael Furlong 2021" )]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]
 

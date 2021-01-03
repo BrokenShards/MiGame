@@ -2,8 +2,8 @@
 // WindowSettings.cs 
 ////////////////////////////////////////////////////////////////////////////////
 //
-// SharpGame - A simple game framework for use with SFML.Net.
-// Copyright (C) 2020 Michael Furlong <michaeljfurlong@outlook.com>
+// MiGame - A simple game framework for use with SFML.Net.
+// Copyright (C) 2021 Michael Furlong <michaeljfurlong@outlook.com>
 //
 // This program is free software: you can redistribute it and/or modify it 
 // under the terms of the GNU General Public License as published by the Free 
@@ -23,11 +23,11 @@
 using System;
 using System.Text;
 using System.Xml;
-using SFML.Window;
-using SharpLogger;
-using SharpSerial;
 
-namespace SharpGame
+using SFML.Window;
+using MiCore;
+
+namespace MiGame
 {
 	/// <summary>
 	///   Contains settings used to construct a window.
@@ -62,6 +62,29 @@ namespace SharpGame
 			Height     = ws.Height;
 			Fullscreen = ws.Fullscreen;
 			TargetFps  = ws.TargetFps;
+		}
+
+		/// <summary>
+		///   Constructor taking a width, height, fullscreen option and target fps.
+		/// </summary>
+		/// <param name="w">
+		///   Window width.
+		/// </param>
+		/// <param name="h">
+		///   Window height.
+		/// </param>
+		/// <param name="f">
+		///   Fullscreen enabled?
+		/// </param>
+		/// <param name="fps">
+		///   Target FPS.
+		/// </param>
+		public WindowSettings( uint w, uint h, bool f = false, float fps = 60.0f )
+		{
+			Width      = w;
+			Height     = h;
+			Fullscreen = f;
+			TargetFps  = fps;
 		}
 
 		/// <summary>
