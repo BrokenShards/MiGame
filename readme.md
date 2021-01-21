@@ -2,7 +2,7 @@
 A basic game library for use with SFML.Net.
 
 ## Dependencies
-- SFML.Net `https://github.com/graphnode/SFML.Net.git`
+- SFML.Net `https://github.com/SFML/SFML.Net.git`
 - MiCore `https://github.com/BrokenShards/MiCore.git`
 - MiGfx `https://github.com/BrokenShards/MiGfx.git`
 - MiInput `https://github.com/BrokenShards/MiInput.git`
@@ -41,6 +41,12 @@ check the documentation for more information.
 Please see `MiGameTest/Test.cs` in the test project for usage examples.
 
 ## Changelog
+
+### Version 0.5.0
+- Changed SFML source to latest official SFML.Net repository.
+- Updated MiCore to version 0.5.0.
+- Updated MiInput to version 0.9.0.
+- Updated MiGfx to version 0.9.0.
 
 ### Version 0.4.0
 - Renamed to `MiGame` and updated to depend on `MiCore`, `MiGfx` and `MiInput`.

@@ -4,100 +4,6 @@
         <name>MiGfx</name>
     </assembly>
     <members>
-        <member name="T:MiGfx.AnimatedSprite">
-            <summary>
-              An animated sprite.
-            </summary>
-        </member>
-        <member name="M:MiGfx.AnimatedSprite.#ctor">
-            <summary>
-              Constructor.
-            </summary>
-        </member>
-        <member name="M:MiGfx.AnimatedSprite.#ctor(MiGfx.AnimatedSprite)">
-            <summary>
-              Copy constructor.
-            </summary>
-            <param name="a">
-              The sprite to copy from.
-            </param>
-        </member>
-        <member name="M:MiGfx.AnimatedSprite.#ctor(MiGfx.ImageInfo,MiGfx.Animator)">
-            <summary>
-              Constructs the sprite with the given image info and optional animator.
-            </summary>
-            <param name="i">
-              Image info.
-            </param>
-            /// <param name="a">
-              Animator for sprite animation.
-            </param>
-        </member>
-        <member name="P:MiGfx.AnimatedSprite.Animator">
-            <summary>
-              The animator that controls the sprite's animations.
-            </summary>
-        </member>
-        <member name="M:MiGfx.AnimatedSprite.Update(System.Single)">
-            <summary>
-              Updates the animated sprite. Call before drawing.
-            </summary>
-            <param name="dt">
-              Delta time.
-            </param>
-        </member>
-        <member name="M:MiGfx.AnimatedSprite.LoadFromStream(System.IO.BinaryReader)">
-            <summary>
-              Loads the object from the stream.
-            </summary>
-            <param name="br">
-              The stream reader
-            </param>
-            <returns>
-              True if the sprite was successfully loaded from the stream and false otherwise.
-            </returns>
-        </member>
-        <member name="M:MiGfx.AnimatedSprite.SaveToStream(System.IO.BinaryWriter)">
-            <summary>
-              Writes the object to the stream.
-            </summary>
-            <param name="bw">
-              The stream writer.
-            </param>
-            <returns>
-              True if the sprite was successfully written to the stream and false otherwise.
-            </returns>
-        </member>
-        <member name="M:MiGfx.AnimatedSprite.LoadFromXml(System.Xml.XmlElement)">
-            <summary>
-              Attempts to load the object from the xml element.
-            </summary>
-            <param name="element">
-              The xml element.
-            </param>
-            <returns>
-              True if the object was successfully loaded, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiGfx.AnimatedSprite.ToString">
-            <summary>
-              Converts the object to an xml string.
-            </summary>
-            <returns>
-              Returns the object to an xml string.
-            </returns>
-        </member>
-        <member name="M:MiGfx.AnimatedSprite.Equals(MiGfx.AnimatedSprite)">
-            <summary>
-              If this object has the same values of the other object.
-            </summary>
-            <param name="other">
-              The other object to check against.
-            </param>
-            <returns>
-              True if both objects are concidered equal and false if they are not.
-            </returns>
-        </member>
         <member name="T:MiGfx.Animation">
             <summary>
               A sprite-based animation.
@@ -475,117 +381,95 @@
               True if both objects are concidered equal and false if they are not.
             </returns>
         </member>
-        <member name="T:MiGfx.Animator">
+        <member name="T:MiGfx.ClickableState">
             <summary>
-              Runs and manages animations and animation sets.
+              Possible clickable state.
             </summary>
         </member>
-        <member name="M:MiGfx.Animator.#ctor">
+        <member name="F:MiGfx.ClickableState.Idle">
+            <summary>
+              If clickable is not being interacted with.
+            </summary>
+        </member>
+        <member name="F:MiGfx.ClickableState.Hover">
+            <summary>
+              If the mouse is hovering over the clickable.
+            </summary>
+        </member>
+        <member name="F:MiGfx.ClickableState.Click">
+            <summary>
+              If the clickable has been clicked.
+            </summary>
+        </member>
+        <member name="T:MiGfx.Clickable">
+            <summary>
+              A component that makes entities clickable.
+            </summary>
+        </member>
+        <member name="M:MiGfx.Clickable.#ctor">
             <summary>
               Constructor.
             </summary>
         </member>
-        <member name="M:MiGfx.Animator.#ctor(MiGfx.Animator)">
+        <member name="M:MiGfx.Clickable.#ctor(MiGfx.Clickable)">
             <summary>
               Copy constructor.
             </summary>
-            <param name="a"></param>
-        </member>
-        <member name="P:MiGfx.Animator.Animations">
-            <summary>
-              The animation set.
-            </summary>
-        </member>
-        <member name="P:MiGfx.Animator.Playing">
-            <summary>
-              If the animator is playing.
-            </summary>
-        </member>
-        <member name="P:MiGfx.Animator.Loop">
-            <summary>
-              If animations should loop.
-            </summary>
-        </member>
-        <member name="P:MiGfx.Animator.Multiplier">
-            <summary>
-              Frame length multiplier.
-            </summary>
-            <remarks>
-              The frame length is multiplied by this number, so a value of 2.0 will make each frame take twice the time
-              and 0.5 will make each frame take half the time. Setting this to 0.0 will have the same effect as pausing
-              the animation.
-            </remarks>
-        </member>
-        <member name="P:MiGfx.Animator.Selected">
-            <summary>
-              The selected animation ID.
-            </summary>
-        </member>
-        <member name="P:MiGfx.Animator.FrameIndex">
-            <summary>
-              The index of the current frame.
-            </summary>
-        </member>
-        <member name="P:MiGfx.Animator.CurrentAnimation">
-            <summary>
-              Gets the current animation.
-            </summary>
-        </member>
-        <member name="P:MiGfx.Animator.CurrentFrame">
-            <summary>
-              Gets the current frame of the current animation.
-            </summary>
-        </member>
-        <member name="M:MiGfx.Animator.Play(System.String)">
-            <summary>
-              Play the given animation from the beginning, restarting the
-              current animation if the ID is invalid.
-            </summary>
-            <param name="id">
-              The ID of the animation to play.
+            <param name="c">
+              The object to copy.
             </param>
         </member>
-        <member name="M:MiGfx.Animator.Pause">
+        <member name="P:MiGfx.Clickable.TypeName">
             <summary>
-              Pauses the animation if it is playing.
+              The component type name.
             </summary>
         </member>
-        <member name="M:MiGfx.Animator.Stop">
+        <member name="P:MiGfx.Clickable.ClickState">
             <summary>
-              Stops the currently playing animation on the first frame.
+              Current clickable state.
             </summary>
         </member>
-        <member name="M:MiGfx.Animator.Update(System.Single)">
+        <member name="P:MiGfx.Clickable.Hovering">
             <summary>
-              Updates the animator.
+              If the mouse is hovering over the entity.
+            </summary>
+        </member>
+        <member name="P:MiGfx.Clickable.Clicked">
+            <summary>
+              If the entity is being clicked.
+            </summary>
+        </member>
+        <member name="M:MiGfx.Clickable.OnUpdate(System.Single)">
+            <summary>
+              Updates the component logic.
             </summary>
             <param name="dt">
               Delta time.
             </param>
         </member>
-        <member name="M:MiGfx.Animator.LoadFromStream(System.IO.BinaryReader)">
+        <member name="M:MiGfx.Clickable.LoadFromStream(System.IO.BinaryReader)">
             <summary>
-              Loads the object from the stream.
+              Attempts to deserialize the object from the stream.
             </summary>
-            <param name="br">
-              The stream reader.
+            <param name="sr">
+              Stream reader.
             </param>
             <returns>
-              True if the object was successfully loaded from the stream and false otherwise.
+              True if deserialization succeeded and false otherwise.
             </returns>
         </member>
-        <member name="M:MiGfx.Animator.SaveToStream(System.IO.BinaryWriter)">
+        <member name="M:MiGfx.Clickable.SaveToStream(System.IO.BinaryWriter)">
             <summary>
-              Writes the object to the stream.
+              Attempts to serialize the object to the stream.
             </summary>
-            <param name="bw">
-              The stream writer.
+            <param name="sw">
+              Stream writer.
             </param>
             <returns>
-              True if the object was successfully written to the stream and false otherwise.
+              True if serialization succeeded and false otherwise.
             </returns>
         </member>
-        <member name="M:MiGfx.Animator.LoadFromXml(System.Xml.XmlElement)">
+        <member name="M:MiGfx.Clickable.LoadFromXml(System.Xml.XmlElement)">
             <summary>
               Attempts to load the object from the xml element.
             </summary>
@@ -596,7 +480,7 @@
               True if the object was successfully loaded, otherwise false.
             </returns>
         </member>
-        <member name="M:MiGfx.Animator.ToString">
+        <member name="M:MiGfx.Clickable.ToString">
             <summary>
               Converts the object to an xml string.
             </summary>
@@ -604,7 +488,7 @@
               Returns the object to an xml string.
             </returns>
         </member>
-        <member name="M:MiGfx.Animator.Equals(MiGfx.Animator)">
+        <member name="M:MiGfx.Clickable.Equals(MiGfx.Clickable)">
             <summary>
               If this object has the same values of the other object.
             </summary>
@@ -613,6 +497,467 @@
             </param>
             <returns>
               True if both objects are concidered equal and false if they are not.
+            </returns>
+        </member>
+        <member name="M:MiGfx.Clickable.Clone">
+            <summary>
+              Clones this object.
+            </summary>
+            <returns>
+              A clone of this object.
+            </returns>
+        </member>
+        <member name="T:MiGfx.FilePaths">
+            <summary>
+              Contains file paths.
+            </summary>
+        </member>
+        <member name="F:MiGfx.FilePaths.FillBarTexture">
+            <summary>
+              Default FillBar texture.
+            </summary>
+        </member>
+        <member name="F:MiGfx.FilePaths.FillBarPadding">
+            <summary>
+              Fill image padding for default FillBar texture.
+            </summary>
+        </member>
+        <member name="F:MiGfx.FilePaths.ButtonTexture">
+            <summary>
+              Default button texture.
+            </summary>
+        </member>
+        <member name="F:MiGfx.FilePaths.CheckBoxTexture">
+            <summary>
+              Default check box texture.
+            </summary>
+        </member>
+        <member name="F:MiGfx.FilePaths.DefaultFont">
+            <summary>
+              Default font path.
+            </summary>
+        </member>
+        <member name="F:MiGfx.FilePaths.TextBoxTexture">
+            <summary>
+              Default path to text box texture.
+            </summary>
+        </member>
+        <member name="T:MiGfx.FillBar">
+            <summary>
+              A bar that fills up with progress.
+            </summary>
+        </member>
+        <member name="M:MiGfx.FillBar.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiGfx.FillBar.#ctor(MiGfx.FillBar)">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="s">
+              The object to copy.
+            </param>
+        </member>
+        <member name="M:MiGfx.FillBar.#ctor(System.Single)">
+            <summary>
+              Constructor setting direction.
+            </summary>
+            <param name="progress">
+              Initial progress.
+            </param>
+        </member>
+        <member name="P:MiGfx.FillBar.Progress">
+            <summary>
+              Bar progress (between 0 and 1).
+            </summary>
+        </member>
+        <member name="P:MiGfx.FillBar.Background">
+            <summary>
+              The background image.
+            </summary>
+        </member>
+        <member name="P:MiGfx.FillBar.Fill">
+            <summary>
+              The fill image.
+            </summary>
+        </member>
+        <member name="P:MiGfx.FillBar.FillPadding">
+            <summary>
+              Padding around fill image to keep it alligned with the background.
+            </summary>
+        </member>
+        <member name="P:MiGfx.FillBar.TypeName">
+            <summary>
+              The component type name
+            </summary>
+        </member>
+        <member name="M:MiGfx.FillBar.SetTexture(System.String,SFML.System.Vector2f)">
+            <summary>
+              Sets up the progress bar with the given texture and fill padding.
+            </summary>
+            <param name="path">
+              The path of the texture.
+            </param>
+            <param name="padding">
+              The padding around the fill section of the texture.
+            </param>
+            <returns>
+              True if the texture loaded successfully and all values were set, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiGfx.FillBar.OnUpdate(System.Single)">
+            <summary>
+              Updates the progress bar.
+            </summary>
+            <param name="dt">
+              Delta time.
+            </param>
+        </member>
+        <member name="M:MiGfx.FillBar.OnDraw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
+            <summary>
+              Draws the object to the render target.
+            </summary>
+            <param name="target">
+              Render target.
+            </param>
+            <param name="states">
+              Render states.
+            </param>
+        </member>
+        <member name="M:MiGfx.FillBar.OnDispose">
+            <summary>
+              Disposes of the object.
+            </summary>
+        </member>
+        <member name="M:MiGfx.FillBar.LoadFromStream(System.IO.BinaryReader)">
+            <summary>
+              Loads the object from the stream.
+            </summary>
+            <param name="sr">
+              The stream reader
+            </param>
+            <returns>
+              True if the sprite was successfully loaded from the stream and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiGfx.FillBar.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+              Writes the object to the stream.
+            </summary>
+            <param name="sw">
+              The stream writer.
+            </param>
+            <returns>
+              True if the sprite was successfully written to the stream and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiGfx.FillBar.LoadFromXml(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load the object from the xml element.
+            </summary>
+            <param name="element">
+              The xml element.
+            </param>
+            <returns>
+              True if the object was successfully loaded, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiGfx.FillBar.ToString">
+            <summary>
+              Converts the object to an xml string.
+            </summary>
+            <returns>
+              Returns the object to an xml string.
+            </returns>
+        </member>
+        <member name="M:MiGfx.FillBar.Clone">
+            <summary>
+              Clones this object.
+            </summary>
+            <returns>
+              A clone of this object.
+            </returns>
+        </member>
+        <member name="M:MiGfx.FillBar.Equals(MiGfx.FillBar)">
+            <summary>
+              If this object is considered equal to the other object.
+            </summary>
+            <param name="other">
+              The object to compare to.
+            </param>
+            <returns>
+              True if this object is considered equal to the other object, otherwise false.
+            </returns>
+        </member>
+        <member name="T:MiGfx.Selector">
+            <summary>
+              A component making an entity selectable.
+            </summary>
+        </member>
+        <member name="M:MiGfx.Selector.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiGfx.Selector.#ctor(MiGfx.Selector)">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="s">
+              The object to copy.
+            </param>
+        </member>
+        <member name="P:MiGfx.Selector.SelectedChild">
+            <summary>
+              The index of the selected child.
+            </summary>
+        </member>
+        <member name="P:MiGfx.Selector.TypeName">
+            <summary>
+              The component type name
+            </summary>
+        </member>
+        <member name="M:MiGfx.Selector.Select(System.Int32)">
+            <summary>
+              Selects the child at the given index.
+            </summary>
+            <param name="index">
+              The index of the child to select or a negative value to deselect everything.
+            </param>
+            <returns>
+              True if the parent entity is valid, has a child with a Selectable component at the 
+              given index (if index is positive) and was selected (or deselected) successfully.
+            </returns>
+        </member>
+        <member name="M:MiGfx.Selector.SelectNext">
+            <summary>
+              Selects the next selctable child entity.
+            </summary>
+            <returns>
+              True on success or false if no child to select.
+            </returns>
+        </member>
+        <member name="M:MiGfx.Selector.SelectPrevious">
+            <summary>
+              Selects the previous selctable child entity.
+            </summary>
+            <returns>
+              True on success or false if no child to select.
+            </returns>
+        </member>
+        <member name="M:MiGfx.Selector.LoadFromStream(System.IO.BinaryReader)">
+            <summary>
+              Loads the object from the stream.
+            </summary>
+            <param name="sr">
+              The stream reader
+            </param>
+            <returns>
+              True if the sprite was successfully loaded from the stream and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiGfx.Selector.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+              Writes the object to the stream.
+            </summary>
+            <param name="sw">
+              The stream writer.
+            </param>
+            <returns>
+              True if the sprite was successfully written to the stream and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiGfx.Selector.LoadFromXml(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load the object from the xml element.
+            </summary>
+            <param name="element">
+              The xml element.
+            </param>
+            <returns>
+              True if the object was successfully loaded, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiGfx.Selector.ToString">
+            <summary>
+              Converts the object to an xml string.
+            </summary>
+            <returns>
+              Returns the object as an xml string.
+            </returns>
+        </member>
+        <member name="M:MiGfx.Selector.Clone">
+            <summary>
+              Clones this object.
+            </summary>
+            <returns>
+              A clone of this object.
+            </returns>
+        </member>
+        <member name="T:MiGfx.SpriteAnimator">
+            <summary>
+              Runs and manages animations and animation sets on sprites.
+            </summary>
+        </member>
+        <member name="M:MiGfx.SpriteAnimator.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiGfx.SpriteAnimator.#ctor(MiGfx.SpriteAnimator)">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="a"></param>
+        </member>
+        <member name="M:MiGfx.SpriteAnimator.#ctor(MiGfx.AnimationSet,System.String)">
+            <summary>
+              Constructor setting the initial animation set.
+            </summary>
+            <param name="set">
+              Initial animation set.
+            </param>
+            <param name="selected">
+              The initially selected animation.
+            </param>
+        </member>
+        <member name="P:MiGfx.SpriteAnimator.TypeName">
+            <summary>
+              Component type name.
+            </summary>
+        </member>
+        <member name="P:MiGfx.SpriteAnimator.Animations">
+            <summary>
+              The animation set.
+            </summary>
+        </member>
+        <member name="P:MiGfx.SpriteAnimator.Playing">
+            <summary>
+              If the animator is playing.
+            </summary>
+        </member>
+        <member name="P:MiGfx.SpriteAnimator.Loop">
+            <summary>
+              If animations should loop.
+            </summary>
+        </member>
+        <member name="P:MiGfx.SpriteAnimator.Multiplier">
+            <summary>
+              Frame length multiplier.
+            </summary>
+            <remarks>
+              The frame length is multiplied by this number, so a value of 2.0 will make each frame take twice the time
+              and 0.5 will make each frame take half the time. Setting this to 0.0 will have the same effect as pausing
+              the animation.
+            </remarks>
+        </member>
+        <member name="P:MiGfx.SpriteAnimator.Selected">
+            <summary>
+              The selected animation ID.
+            </summary>
+        </member>
+        <member name="P:MiGfx.SpriteAnimator.FrameIndex">
+            <summary>
+              The index of the current frame.
+            </summary>
+        </member>
+        <member name="P:MiGfx.SpriteAnimator.CurrentAnimation">
+            <summary>
+              Gets the current animation.
+            </summary>
+        </member>
+        <member name="P:MiGfx.SpriteAnimator.CurrentFrame">
+            <summary>
+              Gets the current frame of the current animation.
+            </summary>
+        </member>
+        <member name="M:MiGfx.SpriteAnimator.Play(System.String)">
+            <summary>
+              Play the given animation from the beginning, restarting the
+              current animation if the ID is invalid.
+            </summary>
+            <param name="id">
+              The ID of the animation to play.
+            </param>
+        </member>
+        <member name="M:MiGfx.SpriteAnimator.Pause">
+            <summary>
+              Pauses the animation if it is playing.
+            </summary>
+        </member>
+        <member name="M:MiGfx.SpriteAnimator.Stop">
+            <summary>
+              Stops the currently playing animation on the first frame.
+            </summary>
+        </member>
+        <member name="M:MiGfx.SpriteAnimator.OnUpdate(System.Single)">
+            <summary>
+              Updates the animator.
+            </summary>
+            <param name="dt">
+              Delta time.
+            </param>
+        </member>
+        <member name="M:MiGfx.SpriteAnimator.LoadFromStream(System.IO.BinaryReader)">
+            <summary>
+              Loads the object from the stream.
+            </summary>
+            <param name="br">
+              The stream reader.
+            </param>
+            <returns>
+              True if the object was successfully loaded from the stream and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiGfx.SpriteAnimator.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+              Writes the object to the stream.
+            </summary>
+            <param name="bw">
+              The stream writer.
+            </param>
+            <returns>
+              True if the object was successfully written to the stream and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiGfx.SpriteAnimator.LoadFromXml(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load the object from the xml element.
+            </summary>
+            <param name="element">
+              The xml element.
+            </param>
+            <returns>
+              True if the object was successfully loaded, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiGfx.SpriteAnimator.ToString">
+            <summary>
+              Converts the object to an xml string.
+            </summary>
+            <returns>
+              Returns the object to an xml string.
+            </returns>
+        </member>
+        <member name="M:MiGfx.SpriteAnimator.Equals(MiGfx.SpriteAnimator)">
+            <summary>
+              If this object has the same values of the other object.
+            </summary>
+            <param name="other">
+              The other object to check against.
+            </param>
+            <returns>
+              True if both objects are concidered equal and false if they are not.
+            </returns>
+        </member>
+        <member name="M:MiGfx.SpriteAnimator.Clone">
+            <summary>
+              Clones this object.
+            </summary>
+            <returns>
+              A clone of this object.
             </returns>
         </member>
         <member name="T:MiGfx.AssetManager`1">
@@ -696,7 +1041,7 @@
               True if the asset existed and was unloaded and removed successfully, otherwise false.
             </returns>
         </member>
-        <member name="M:MiGfx.AssetManager`1.UnloadAll">
+        <member name="M:MiGfx.AssetManager`1.Clear">
             <summary>
               Unloads all assets.
             </summary>
@@ -734,6 +1079,11 @@
         <member name="P:MiGfx.Assets.Texture">
             <summary>
               Texture manager.
+            </summary>
+        </member>
+        <member name="P:MiGfx.Assets.Disposed">
+            <summary>
+              If the asset managers have been disposed.
             </summary>
         </member>
         <member name="M:MiGfx.Assets.IsLoaded``1(System.String)">
@@ -777,9 +1127,14 @@
               The asset type to unload.
             </typeparam>
         </member>
-        <member name="M:MiGfx.Assets.UnloadAll">
+        <member name="M:MiGfx.Assets.Clear">
             <summary>
               Unloads all assets of all types.
+            </summary>
+        </member>
+        <member name="M:MiGfx.Assets.Recreate">
+            <summary>
+              Recreates the asset managers after being disposed so they can be used again.
             </summary>
         </member>
         <member name="M:MiGfx.Assets.Dispose">
@@ -915,31 +1270,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:MiGfx.FilePaths">
-            <summary>
-              Contains file paths.
-            </summary>
-        </member>
-        <member name="F:MiGfx.FilePaths.ButtonTexture">
-            <summary>
-              Default button texture.
-            </summary>
-        </member>
-        <member name="F:MiGfx.FilePaths.CheckBoxTexture">
-            <summary>
-              Default check box texture.
-            </summary>
-        </member>
-        <member name="F:MiGfx.FilePaths.DefaultFont">
-            <summary>
-              Default font path.
-            </summary>
-        </member>
-        <member name="F:MiGfx.FilePaths.TextBoxTexture">
-            <summary>
-              Default path to text box texture.
-            </summary>
-        </member>
         <member name="T:MiGfx.SoundManager">
             <summary>
               Manages sounds.
@@ -1000,6 +1330,158 @@
               otherwise.
             </returns>
         </member>
+        <member name="T:MiGfx.Components">
+            <summary>
+              Handles component related functionality.
+            </summary>
+        </member>
+        <member name="M:MiGfx.Components.Register">
+            <summary>
+              Register MiGfx components with the component register.
+            </summary>
+            <returns>
+              True if all components were registered successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="T:MiGfx.TextListener">
+            <summary>
+              A component that listens for text input events.
+            </summary>
+        </member>
+        <member name="M:MiGfx.TextListener.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiGfx.TextListener.#ctor(MiGfx.TextListener)">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="t">
+              The object to copy.
+            </param>
+        </member>
+        <member name="M:MiGfx.TextListener.#ctor(System.String)">
+            <summary>
+              Constructor setting initial entered text.
+            </summary>
+            <param name="text">
+              Initial entered text.
+            </param>
+        </member>
+        <member name="P:MiGfx.TextListener.TypeName">
+            <summary>
+              Type string unique to each UI element type.
+            </summary>
+        </member>
+        <member name="P:MiGfx.TextListener.EnteredText">
+            <summary>
+              Entered text.
+            </summary>
+        </member>
+        <member name="P:MiGfx.TextListener.Listen">
+            <summary>
+              If the component should listen for text entered events.
+            </summary>
+        </member>
+        <member name="P:MiGfx.TextListener.AllowLetters">
+            <summary>
+              If letters should be added to the entered text.
+            </summary>
+        </member>
+        <member name="P:MiGfx.TextListener.AllowNumbers">
+            <summary>
+              If numbers should be added to the entered text (allows one '.').
+            </summary>
+        </member>
+        <member name="P:MiGfx.TextListener.AllowSymbols">
+            <summary>
+              If symbols should be added to the entered text.
+            </summary>
+        </member>
+        <member name="P:MiGfx.TextListener.AllowPunctuation">
+            <summary>
+              If punctuation should be added to the entered text.
+            </summary>
+        </member>
+        <member name="P:MiGfx.TextListener.AllowSpace">
+            <summary>
+              If the space character should be added to the entered text.
+            </summary>
+        </member>
+        <member name="P:MiGfx.TextListener.AllowNewline">
+            <summary>
+              If entered text can contain newlines.
+            </summary>
+        </member>
+        <member name="M:MiGfx.TextListener.OnTextEntered(SFML.Window.TextEventArgs)">
+            <summary>
+              Text entered event.
+            </summary>
+            <param name="e">
+              Event arguments.
+            </param>
+        </member>
+        <member name="M:MiGfx.TextListener.LoadFromStream(System.IO.BinaryReader)">
+            <summary>
+              Attempts to deserialize the object from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiGfx.TextListener.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+              Attempts to serialize the object to the stream.
+            </summary>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiGfx.TextListener.LoadFromXml(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load the object from the xml element.
+            </summary>
+            <param name="element">
+              The xml element.
+            </param>
+            <returns>
+              True if the object was successfully loaded, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiGfx.TextListener.ToString">
+            <summary>
+              Converts the object to an xml string.
+            </summary>
+            <returns>
+              Returns the object to an xml string.
+            </returns>
+        </member>
+        <member name="M:MiGfx.TextListener.Equals(MiGfx.TextListener)">
+            <summary>
+              If this object has the same values of the other object.
+            </summary>
+            <param name="other">
+              The other object to check against.
+            </param>
+            <returns>
+              True if both objects are concidered equal and false if they are not.
+            </returns>
+        </member>
+        <member name="M:MiGfx.TextListener.Clone">
+            <summary>
+              Clones this object.
+            </summary>
+            <returns>
+              A clone of this object.
+            </returns>
+        </member>
         <member name="T:MiGfx.Frame">
             <summary>
               A sprite-based animation frame.
@@ -1010,7 +1492,7 @@
               Constructor.
             </summary>
         </member>
-        <member name="M:MiGfx.Frame.#ctor(SFML.Graphics.FloatRect,System.Nullable{SFML.System.Time})">
+        <member name="M:MiGfx.Frame.#ctor(SFML.Graphics.FloatRect,System.Nullable{SFML.System.Time},System.Nullable{SFML.Graphics.Color})">
             <summary>
               Constructor assigning the texture rect and frame length.
             </summary>
@@ -1019,6 +1501,9 @@
             </param>
             <param name="len">
               The length of time the frame lasts; defaults to 1.0 if null.
+            </param>
+            <param name="col">
+              The texture modifier color.
             </param>
         </member>
         <member name="M:MiGfx.Frame.#ctor(MiGfx.Frame)">
@@ -1037,6 +1522,11 @@
         <member name="P:MiGfx.Frame.Length">
             <summary>
               The length of time the frame is displayed.
+            </summary>
+        </member>
+        <member name="P:MiGfx.Frame.Color">
+            <summary>
+              The texture color modifier.
             </summary>
         </member>
         <member name="M:MiGfx.Frame.LoadFromStream(System.IO.BinaryReader)">
@@ -1101,6 +1591,11 @@
               Up direction.
             </summary>
         </member>
+        <member name="F:MiGfx.Direction.Right">
+            <summary>
+              Right direction.
+            </summary>
+        </member>
         <member name="F:MiGfx.Direction.Down">
             <summary>
               Down direction.
@@ -1109,11 +1604,6 @@
         <member name="F:MiGfx.Direction.Left">
             <summary>
               Left direction.
-            </summary>
-        </member>
-        <member name="F:MiGfx.Direction.Right">
-            <summary>
-              Right direction.
             </summary>
         </member>
         <member name="T:MiGfx.ImageInfo">
@@ -1154,11 +1644,6 @@
               Texture color modifier.
             </param>
         </member>
-        <member name="P:MiGfx.ImageInfo.IsTextureValid">
-            <summary>
-              If a valid texture exists at <see cref="P:MiGfx.ImageInfo.Path"/>.
-            </summary>
-        </member>
         <member name="P:MiGfx.ImageInfo.Path">
             <summary>
               Texture path.
@@ -1177,6 +1662,16 @@
         <member name="P:MiGfx.ImageInfo.Orientation">
             <summary>
               Texture orientation modifier.
+            </summary>
+        </member>
+        <member name="P:MiGfx.ImageInfo.IsTextureValid">
+            <summary>
+              If a valid texture exists at <see cref="P:MiGfx.ImageInfo.Path"/>.
+            </summary>
+        </member>
+        <member name="P:MiGfx.ImageInfo.TextureSize">
+            <summary>
+              Gets the size of the texture if valid.
             </summary>
         </member>
         <member name="M:MiGfx.ImageInfo.SetFullRect">
@@ -1280,17 +1775,17 @@
               Image info.
             </param>
         </member>
+        <member name="P:MiGfx.Sprite.TypeName">
+            <summary>
+              Component type name.
+            </summary>
+        </member>
         <member name="P:MiGfx.Sprite.Image">
             <summary>
               Image info.
             </summary>
         </member>
-        <member name="P:MiGfx.Sprite.Transform">
-            <summary>
-              Transform.
-            </summary>
-        </member>
-        <member name="M:MiGfx.Sprite.Update(System.Single)">
+        <member name="M:MiGfx.Sprite.OnUpdate(System.Single)">
             <summary>
               Updates the sprite geometry. Call this before drawing.
             </summary>
@@ -1301,7 +1796,7 @@
               If <see cref="P:MiGfx.Sprite.Image"/> is null.
             </exception>
         </member>
-        <member name="M:MiGfx.Sprite.Draw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
+        <member name="M:MiGfx.Sprite.OnDraw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
             <summary>
               Draws the sprite to the render target.
             </summary>
@@ -1353,7 +1848,7 @@
               Returns the object to an xml string.
             </returns>
         </member>
-        <member name="M:MiGfx.Sprite.Dispose">
+        <member name="M:MiGfx.Sprite.OnDispose">
             <summary>
               Disposes of managed resources.
             </summary>
@@ -1367,6 +1862,14 @@
             </param>
             <returns>
               True if both objects are concidered equal and false if they are not.
+            </returns>
+        </member>
+        <member name="M:MiGfx.Sprite.Clone">
+            <summary>
+              Clones this object.
+            </summary>
+            <returns>
+              A clone of this object.
             </returns>
         </member>
         <member name="T:MiGfx.TextStyle">
@@ -1739,6 +2242,11 @@
               Transform scale.
             </param>
         </member>
+        <member name="P:MiGfx.Transform.TypeName">
+            <summary>
+              Component type name.
+            </summary>
+        </member>
         <member name="P:MiGfx.Transform.Position">
             <summary>
               Position.
@@ -1752,6 +2260,21 @@
         <member name="P:MiGfx.Transform.Scale">
             <summary>
               Scale.
+            </summary>
+        </member>
+        <member name="P:MiGfx.Transform.LockPosition">
+            <summary>
+              Prevents position from being modified if true.
+            </summary>
+        </member>
+        <member name="P:MiGfx.Transform.LockSize">
+            <summary>
+              Prevents size from being modified if true.
+            </summary>
+        </member>
+        <member name="P:MiGfx.Transform.LockScale">
+            <summary>
+              Prevents scale from being modified if true.
             </summary>
         </member>
         <member name="P:MiGfx.Transform.Center">
@@ -1821,425 +2344,25 @@
               True if both objects are concidered equal and false if they are not.
             </returns>
         </member>
-        <member name="T:MiGfx.UI.AnimatedImage">
+        <member name="M:MiGfx.Transform.Clone">
             <summary>
-              An animated UI image.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.AnimatedImage.#ctor">
-            <summary>
-              Constructor.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.AnimatedImage.#ctor(MiGfx.UI.AnimatedImage)">
-            <summary>
-              Copy constructor.
-            </summary>
-            <param name="e">
-              The object to copy.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.AnimatedImage.#ctor(System.String)">
-            <summary>
-              Constructs the object with the given ID.
-            </summary>
-            <param name="id"></param>
-        </member>
-        <member name="P:MiGfx.UI.AnimatedImage.TypeName">
-            <summary>
-              Type string unique to each UI element type.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.AnimatedImage.Sprite">
-            <summary>
-              The animated sprite.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.AnimatedImage.OnUpdate(System.Single)">
-            <summary>
-              Updates the elements' logic.
-            </summary>
-            <param name="dt">
-              Delta time.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.AnimatedImage.OnDraw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
-            <summary>
-              Draws the element.
-            </summary>
-            <param name="target">
-              The render target to draw to.
-            </param>
-            <param name="states">
-              Render states.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.AnimatedImage.OnDispose">
-            <summary>
-              Called when disposing of the object.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.AnimatedImage.LoadFromStream(System.IO.BinaryReader)">
-            <summary>
-              Attempts to deserialize the object from the stream.
-            </summary>
-            <param name="sr">
-              Stream reader.
-            </param>
-            <returns>
-              True if deserialization succeeded and false otherwise.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.AnimatedImage.SaveToStream(System.IO.BinaryWriter)">
-            <summary>
-              Attempts to serialize the object to the stream.
-            </summary>
-            <param name="sw">
-              Stream writer.
-            </param>
-            <returns>
-              True if serialization succeeded and false otherwise.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.AnimatedImage.LoadFromXml(System.Xml.XmlElement)">
-            <summary>
-              Attempts to load the object from the xml element.
-            </summary>
-            <param name="element">
-              The xml element.
-            </param>
-            <returns>
-              True if the object was successfully loaded, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.AnimatedImage.ToString">
-            <summary>
-              Converts the object to an xml string.
+              Clones this object.
             </summary>
             <returns>
-              Returns the object to an xml string.
+              A clone of this object.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.AnimatedImage.Equals(MiGfx.UI.AnimatedImage)">
-            <summary>
-              If this object has the same values of the other object.
-            </summary>
-            <param name="other">
-              The other object to check against.
-            </param>
-            <returns>
-              True if both objects are concidered equal and false if they are not.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.AnimatedImage.GetTypeName">
-            <summary>
-              Gets the type name.
-            </summary>
-            <returns>
-              The type name.
-            </returns>
-        </member>
-        <member name="T:MiGfx.UI.ButtonState">
-            <summary>
-              Possible button state.
-            </summary>
-        </member>
-        <member name="F:MiGfx.UI.ButtonState.Idle">
-            <summary>
-              If button is not being interacted with.
-            </summary>
-        </member>
-        <member name="F:MiGfx.UI.ButtonState.Hover">
-            <summary>
-              If the button is selected or the mouse is hovering over it.
-            </summary>
-        </member>
-        <member name="F:MiGfx.UI.ButtonState.Click">
-            <summary>
-              If the button is being clicked.
-            </summary>
-        </member>
-        <member name="T:MiGfx.UI.ButtonData">
+        <member name="T:MiGfx.ButtonData">
             <summary>
               Contains visual button info.
             </summary>
         </member>
-        <member name="M:MiGfx.UI.ButtonData.#ctor">
+        <member name="M:MiGfx.ButtonData.#ctor">
             <summary>
               Constructor.
             </summary>
         </member>
-        <member name="M:MiGfx.UI.ButtonData.#ctor(MiGfx.UI.ButtonData)">
-            <summary>
-              Copy constructor.
-            </summary>
-            <param name="b"></param>
-        </member>
-        <member name="P:MiGfx.UI.ButtonData.Image">
-            <summary>
-              The image info.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.ButtonData.Text">
-            <summary>
-              The text style.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.ButtonData.TextOffset">
-            <summary>
-              The text offset.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.ButtonData.LoadFromStream(System.IO.BinaryReader)">
-            <summary>
-              Attempts to deserialize the object from the stream.
-            </summary>
-            <param name="sr">
-              Stream reader.
-            </param>
-            <returns>
-              True if deserialization succeeded and false otherwise.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.ButtonData.SaveToStream(System.IO.BinaryWriter)">
-            <summary>
-              Attempts to serialize the object to the stream.
-            </summary>
-            <param name="sw">
-              Stream writer.
-            </param>
-            <returns>
-              True if serialization succeeded and false otherwise.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.ButtonData.LoadFromXml(System.Xml.XmlElement)">
-            <summary>
-              Attempts to load the object from the xml element.
-            </summary>
-            <param name="element">
-              The xml element.
-            </param>
-            <returns>
-              True if the object was successfully loaded, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.ButtonData.ToString">
-            <summary>
-              Converts the object to an xml string.
-            </summary>
-            <returns>
-              Returns the object to an xml string.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.ButtonData.Equals(MiGfx.UI.ButtonData)">
-            <summary>
-              If this object has the same values of the other object.
-            </summary>
-            <param name="other">
-              The other object to check against.
-            </param>
-            <returns>
-              True if both objects are concidered equal and false if they are not.
-            </returns>
-        </member>
-        <member name="T:MiGfx.UI.Button">
-            <summary>
-              UI Button.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.Button.#ctor">
-            <summary>
-              Constructor.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.Button.#ctor(MiGfx.UI.Button)">
-            <summary>
-             Copy constructor.
-            </summary>
-            <param name="u">
-              The object to copy.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.Button.#ctor(System.String,System.String)">
-            <summary>
-              Constructor setting object name and optionally display text.
-            </summary>
-            <param name="id">
-              The object ID.
-            </param>
-            <param name="text">
-              The display text.
-            </param>
-        </member>
-        <member name="P:MiGfx.UI.Button.TypeName">
-            <summary>
-              Type string unique to each UI element type.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.Button.IsSelectable">
-            <summary>
-              If the object is selectable.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.Button.Data">
-            <summary>
-              Data for each state of the button.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.Button.String">
-            <summary>
-              Button display string.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.Button.State">
-            <summary>
-              Current button state.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.Button.Hovering">
-            <summary>
-              If the mouse is hovering over the button.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.Button.Clicked">
-            <summary>
-              if the button was clicked.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.Button.OnUpdate(System.Single)">
-            <summary>
-              Updates the elements' logic.
-            </summary>
-            <param name="dt">
-              Delta time.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.Button.OnDraw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
-            <summary>
-              Draws the element.
-            </summary>
-            <param name="target">
-              The render target to draw to.
-            </param>
-            <param name="states">
-              Render states.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.Button.OnDispose">
-            <summary>
-              Called when disposing of the object.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.Button.LoadFromStream(System.IO.BinaryReader)">
-            <summary>
-              Attempts to deserialize the object from the stream.
-            </summary>
-            <param name="sr">
-              Stream reader.
-            </param>
-            <returns>
-              True if deserialization succeeded and false otherwise.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.Button.SaveToStream(System.IO.BinaryWriter)">
-            <summary>
-              Attempts to serialize the object to the stream.
-            </summary>
-            <param name="sw">
-              Stream writer.
-            </param>
-            <returns>
-              True if serialization succeeded and false otherwise.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.Button.LoadFromXml(System.Xml.XmlElement)">
-            <summary>
-              Attempts to load the object from the xml element.
-            </summary>
-            <param name="element">
-              The xml element.
-            </param>
-            <returns>
-              True if the object was successfully loaded, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.Button.ToString">
-            <summary>
-              Converts the object to an xml string.
-            </summary>
-            <returns>
-              Returns the object to an xml string.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.Button.Equals(MiGfx.UI.Button)">
-            <summary>
-              If this object has the same values of the other object.
-            </summary>
-            <param name="other">
-              The other object to check against.
-            </param>
-            <returns>
-              True if both objects are concidered equal and false if they are not.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.Button.GetTypeName">
-            <summary>
-              Gets the type name.
-            </summary>
-            <returns>
-              The type name.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.Button.Default(System.String,System.String)">
-            <summary>
-              Constructs a button with default values and the given name and display text.
-            </summary>
-            <param name="id">
-              Object ID.
-            </param>
-            <param name="text">
-              Display text.
-            </param>
-            <returns>
-              A button with default values and the given name and display text.
-            </returns>
-        </member>
-        <member name="T:MiGfx.UI.CheckBoxState">
-            <summary>
-              Possible state of check box.
-            </summary>
-        </member>
-        <member name="F:MiGfx.UI.CheckBoxState.Unchecked">
-            <summary>
-              If not selected and not checked.
-            </summary>
-        </member>
-        <member name="F:MiGfx.UI.CheckBoxState.Checked">
-            <summary>
-              If not selected and checked.
-            </summary>
-        </member>
-        <member name="F:MiGfx.UI.CheckBoxState.SelectedUnchecked">
-            <summary>
-              If selected and unchecked.
-            </summary>
-        </member>
-        <member name="F:MiGfx.UI.CheckBoxState.SelectedChecked">
-            <summary>
-              If selected and checked.
-            </summary>
-        </member>
-        <member name="T:MiGfx.UI.CheckBox">
-            <summary>
-              Toggling check box.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.CheckBox.#ctor">
-            <summary>
-              Constructor.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.CheckBox.#ctor(MiGfx.UI.CheckBox)">
+        <member name="M:MiGfx.ButtonData.#ctor(MiGfx.ButtonData)">
             <summary>
               Copy constructor.
             </summary>
@@ -2247,69 +2370,283 @@
               The object to copy.
             </param>
         </member>
-        <member name="M:MiGfx.UI.CheckBox.#ctor(System.String)">
+        <member name="M:MiGfx.ButtonData.#ctor(MiGfx.TextStyle,SFML.System.Vector2f,System.Nullable{SFML.Graphics.Color})">
             <summary>
-              Constructor setting the initial name.
+              Constructor setting text style, offset and texture color.
             </summary>
-            <param name="id">
-              The object ID.
+            <param name="txt">
+              The text style.
+            </param>
+            <param name="off">
+              The text offset.
+            </param>
+            <param name="col">
+              The texture color modifier.
             </param>
         </member>
-        <member name="P:MiGfx.UI.CheckBox.TypeName">
+        <member name="P:MiGfx.ButtonData.Color">
+            <summary>
+              The texture color modifier.
+            </summary>
+        </member>
+        <member name="P:MiGfx.ButtonData.Text">
+            <summary>
+              The text style.
+            </summary>
+        </member>
+        <member name="P:MiGfx.ButtonData.TextOffset">
+            <summary>
+              The text offset.
+            </summary>
+        </member>
+        <member name="M:MiGfx.ButtonData.LoadFromStream(System.IO.BinaryReader)">
+            <summary>
+              Attempts to deserialize the object from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiGfx.ButtonData.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+              Attempts to serialize the object to the stream.
+            </summary>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiGfx.ButtonData.LoadFromXml(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load the object from the xml element.
+            </summary>
+            <param name="element">
+              The xml element.
+            </param>
+            <returns>
+              True if the object was successfully loaded, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiGfx.ButtonData.ToString">
+            <summary>
+              Converts the object to an xml string.
+            </summary>
+            <returns>
+              Returns the object to an xml string.
+            </returns>
+        </member>
+        <member name="M:MiGfx.ButtonData.Equals(MiGfx.ButtonData)">
+            <summary>
+              If this object has the same values of the other object.
+            </summary>
+            <param name="other">
+              The other object to check against.
+            </param>
+            <returns>
+              True if both objects are concidered equal and false if they are not.
+            </returns>
+        </member>
+        <member name="T:MiGfx.Button">
+            <summary>
+              Button component.
+            </summary>
+        </member>
+        <member name="M:MiGfx.Button.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiGfx.Button.#ctor(MiGfx.Button)">
+            <summary>
+             Copy constructor.
+            </summary>
+            <param name="b">
+              The object to copy.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+              Inherited from <see cref="M:MiCore.MiComponent.#ctor(MiCore.MiComponent)"/>.
+            </exception>
+        </member>
+        <member name="P:MiGfx.Button.TypeName">
             <summary>
               Type string unique to each UI element type.
             </summary>
         </member>
-        <member name="P:MiGfx.UI.CheckBox.IsSelectable">
+        <member name="P:MiGfx.Button.Data">
             <summary>
-              If check boxes can be selected.
+              Data for each state of the button.
             </summary>
         </member>
-        <member name="P:MiGfx.UI.CheckBox.State">
+        <member name="M:MiGfx.Button.OnUpdate(System.Single)">
+            <summary>
+              Updates the elements' logic.
+            </summary>
+            <param name="dt">
+              Delta time.
+            </param>
+        </member>
+        <member name="M:MiGfx.Button.LoadFromStream(System.IO.BinaryReader)">
+            <summary>
+              Attempts to deserialize the object from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiGfx.Button.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+              Attempts to serialize the object to the stream.
+            </summary>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiGfx.Button.LoadFromXml(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load the object from the xml element.
+            </summary>
+            <param name="element">
+              The xml element.
+            </param>
+            <returns>
+              True if the object was successfully loaded, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiGfx.Button.ToString">
+            <summary>
+              Converts the object to an xml string.
+            </summary>
+            <returns>
+              Returns the object to an xml string.
+            </returns>
+        </member>
+        <member name="M:MiGfx.Button.Equals(MiGfx.Button)">
+            <summary>
+              If this object has the same values of the other object.
+            </summary>
+            <param name="other">
+              The other object to check against.
+            </param>
+            <returns>
+              True if both objects are concidered equal and false if they are not.
+            </returns>
+        </member>
+        <member name="M:MiGfx.Button.Clone">
+            <summary>
+              Clones this object.
+            </summary>
+            <returns>
+              A clone of this object.
+            </returns>
+        </member>
+        <member name="M:MiGfx.Button.Create(System.String,SFML.Graphics.RenderWindow,System.String)">
+            <summary>
+              Creates an entity and sets it up with a default button and an optional label string.
+            </summary>
+            <param name="id">
+              The entity id.
+            </param>
+            <param name="window">
+              The render window.
+            </param>
+            <param name="str">
+              The label string or null to not add a label.
+            </param>
+            <returns>
+              A valid entity containing the button on success or null on failure.
+            </returns>
+        </member>
+        <member name="T:MiGfx.CheckBoxState">
+            <summary>
+              Possible state of check box.
+            </summary>
+        </member>
+        <member name="F:MiGfx.CheckBoxState.Unchecked">
+            <summary>
+              If not selected and not checked.
+            </summary>
+        </member>
+        <member name="F:MiGfx.CheckBoxState.Checked">
+            <summary>
+              If not selected and checked.
+            </summary>
+        </member>
+        <member name="F:MiGfx.CheckBoxState.SelectedUnchecked">
+            <summary>
+              If selected and unchecked.
+            </summary>
+        </member>
+        <member name="F:MiGfx.CheckBoxState.SelectedChecked">
+            <summary>
+              If selected and checked.
+            </summary>
+        </member>
+        <member name="T:MiGfx.CheckBox">
+            <summary>
+              A toggling check box component.
+            </summary>
+        </member>
+        <member name="M:MiGfx.CheckBox.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiGfx.CheckBox.#ctor(MiGfx.CheckBox)">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="b">
+              The object to copy.
+            </param>
+        </member>
+        <member name="M:MiGfx.CheckBox.#ctor(System.Boolean)">
+            <summary>
+              Constructor setting the initial checked value.
+            </summary>
+            <param name="check">
+              The initial check state of the checkbox.
+            </param>
+        </member>
+        <member name="P:MiGfx.CheckBox.TypeName">
+            <summary>
+              The component type name.
+            </summary>
+        </member>
+        <member name="P:MiGfx.CheckBox.State">
             <summary>
               Current state of the object.
             </summary>
         </member>
-        <member name="P:MiGfx.UI.CheckBox.Images">
+        <member name="P:MiGfx.CheckBox.Colors">
             <summary>
-              Array of images for each checkbox state.
+              Array of texture modifier colors for each checkbox state.
             </summary>
         </member>
-        <member name="P:MiGfx.UI.CheckBox.Checked">
+        <member name="P:MiGfx.CheckBox.Checked">
             <summary>
               If the box is checked.
             </summary>
         </member>
-        <member name="P:MiGfx.UI.CheckBox.Hovering">
+        <member name="M:MiGfx.CheckBox.OnUpdate(System.Single)">
             <summary>
-              If the mouse is hovering over.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.CheckBox.Clicked">
-            <summary>
-              If the object was clicked.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.CheckBox.OnUpdate(System.Single)">
-            <summary>
-              Updates the elements' logic.
+              Updates the component logic.
             </summary>
             <param name="dt">
               Delta time.
             </param>
         </member>
-        <member name="M:MiGfx.UI.CheckBox.OnDraw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
-            <summary>
-              Draws the element.
-            </summary>
-            <param name="target">
-              The render target to draw to.
-            </param>
-            <param name="states">
-              Render states.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.CheckBox.LoadFromStream(System.IO.BinaryReader)">
+        <member name="M:MiGfx.CheckBox.LoadFromStream(System.IO.BinaryReader)">
             <summary>
               Attempts to deserialize the object from the stream.
             </summary>
@@ -2320,7 +2657,7 @@
               True if deserialization succeeded and false otherwise.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.CheckBox.SaveToStream(System.IO.BinaryWriter)">
+        <member name="M:MiGfx.CheckBox.SaveToStream(System.IO.BinaryWriter)">
             <summary>
               Attempts to serialize the object to the stream.
             </summary>
@@ -2331,7 +2668,7 @@
               True if serialization succeeded and false otherwise.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.CheckBox.LoadFromXml(System.Xml.XmlElement)">
+        <member name="M:MiGfx.CheckBox.LoadFromXml(System.Xml.XmlElement)">
             <summary>
               Attempts to load the object from the xml element.
             </summary>
@@ -2342,7 +2679,7 @@
               True if the object was successfully loaded, otherwise false.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.CheckBox.ToString">
+        <member name="M:MiGfx.CheckBox.ToString">
             <summary>
               Converts the object to an xml string.
             </summary>
@@ -2350,7 +2687,7 @@
               Returns the object to an xml string.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.CheckBox.Equals(MiGfx.UI.CheckBox)">
+        <member name="M:MiGfx.CheckBox.Equals(MiGfx.CheckBox)">
             <summary>
               If this object has the same values of the other object.
             </summary>
@@ -2361,172 +2698,90 @@
               True if both objects are concidered equal and false if they are not.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.CheckBox.GetTypeName">
+        <member name="M:MiGfx.CheckBox.Clone">
             <summary>
-              Gets the type name.
+              Clones this object.
             </summary>
             <returns>
-              The type name.
+              A clone of this object.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.CheckBox.Default(System.String,System.Boolean)">
+        <member name="M:MiGfx.CheckBox.Create(System.String,SFML.Graphics.RenderWindow,System.Boolean)">
             <summary>
-              Constructs a checkbox with default values.
+              Creates an entity and sets it up with a default checkbox.
             </summary>
-            <param name="name">
-              The object name.
+            <param name="id">
+              The entity id.
+            </param>
+            <param name="window">
+              The render window.
             </param>
             <param name="check">
-              If the checkbox is checked.
+              If the box should be checked.
             </param>
             <returns>
-              A new checkbox set up with default values and the given name and checked state.
+              A valid entity containing the checkbox on success or null on failure.
             </returns>
         </member>
-        <member name="T:MiGfx.UI.UIElement">
+        <member name="T:MiGfx.Selectable">
             <summary>
-              Base class for GUI elements.
+              A component making an entity selectable.
             </summary>
         </member>
-        <member name="F:MiGfx.UI.UIElement.EmbeddedID">
-            <summary>
-              ID given to elements embedded within elements.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.UIElement.#ctor">
+        <member name="M:MiGfx.Selectable.#ctor">
             <summary>
               Constructor.
             </summary>
         </member>
-        <member name="M:MiGfx.UI.UIElement.#ctor(MiGfx.UI.UIElement)">
+        <member name="M:MiGfx.Selectable.#ctor(MiGfx.Selectable)">
             <summary>
               Copy constructor.
             </summary>
-            <param name="e">
-              The element to copy from.
+            <param name="s">
+              The object to copy.
             </param>
         </member>
-        <member name="M:MiGfx.UI.UIElement.#ctor(System.String)">
+        <member name="M:MiGfx.Selectable.#ctor(System.Boolean)">
             <summary>
-              Constructs the element with the given ID.
+              Constructor setting selected status.
             </summary>
-            <param name="id">
-              The desired element ID.
+            <param name="selected">
+              Selected status.
             </param>
         </member>
-        <member name="P:MiGfx.UI.UIElement.TypeName">
+        <member name="P:MiGfx.Selectable.Selected">
             <summary>
-              Type string unique to each UI element type.
+              If currently selected.
             </summary>
         </member>
-        <member name="P:MiGfx.UI.UIElement.Disposed">
+        <member name="P:MiGfx.Selectable.TypeName">
             <summary>
-              If the element has been disposed.
+              The component type name
             </summary>
         </member>
-        <member name="P:MiGfx.UI.UIElement.IsSelectable">
+        <member name="M:MiGfx.Selectable.LoadFromStream(System.IO.BinaryReader)">
             <summary>
-              If the element can be selected.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.UIElement.IsContainer">
-            <summary>
-              If the element is a container.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.UIElement.ID">
-            <summary>
-              The name of the element. Used to identify the object.
-            </summary>
-            <remarks>
-              If set to an invalid name, it will be corrected.
-              <see cref="M:MiCore.Identifiable.IsValid(System.String)"/> and
-              <see cref="M:MiCore.Identifiable.AsValid(System.String)"/>.
-            </remarks>
-        </member>
-        <member name="P:MiGfx.UI.UIElement.Transform">
-            <summary>
-              The elements' transform.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.UIElement.Visible">
-            <summary>
-              If the element is visible and should be drawn.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.UIElement.Enabled">
-            <summary>
-              If the element is enabled and should be updated.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.UIElement.Selected">
-            <summary>
-              If the element is currently selected.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.UIElement.Manager">
-            <summary>
-              The object managing the element.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.UIElement.Update(System.Single)">
-            <summary>
-              Updates the element logic.
-            </summary>
-            <remarks>
-              Calls <see cref="M:MiGfx.UI.UIElement.OnUpdate(System.Single)"/> if the element is enabled.
-            </remarks>
-            <param name="dt">
-              Delta time.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.UIElement.Draw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
-            <summary>
-              Draws the element.
-            </summary>
-            <remarks>
-              Calls <see cref="M:MiGfx.UI.UIElement.OnDraw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)"/> if the 
-              element is visible.
-            </remarks>
-            <param name="target">
-              The render target to draw to.
-            </param>
-            <param name="states">
-              Render states.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.UIElement.Dispose">
-            <summary>
-              Disposes of the element.
-            </summary>
-            <remarks>
-              Makes sure to call <see cref="M:MiGfx.UI.UIElement.OnDispose"/> only once and updates
-              the <see cref="P:MiGfx.UI.UIElement.Disposed"/> field.
-            </remarks>
-        </member>
-        <member name="M:MiGfx.UI.UIElement.LoadFromStream(System.IO.BinaryReader)">
-            <summary>
-              Attempts to deserialize the object from the stream.
+              Loads the object from the stream.
             </summary>
             <param name="sr">
-              Stream reader.
+              The stream reader
             </param>
             <returns>
-              True if deserialization succeeded and false otherwise.
+              True if the sprite was successfully loaded from the stream and false otherwise.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.UIElement.SaveToStream(System.IO.BinaryWriter)">
+        <member name="M:MiGfx.Selectable.SaveToStream(System.IO.BinaryWriter)">
             <summary>
-              Attempts to serialize the object to the stream.
+              Writes the object to the stream.
             </summary>
             <param name="sw">
-              Stream writer.
+              The stream writer.
             </param>
             <returns>
-              True if serialization succeeded and false otherwise.
+              True if the sprite was successfully written to the stream and false otherwise.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.UIElement.LoadFromXml(System.Xml.XmlElement)">
+        <member name="M:MiGfx.Selectable.LoadFromXml(System.Xml.XmlElement)">
             <summary>
               Attempts to load the object from the xml element.
             </summary>
@@ -2537,171 +2792,7 @@
               True if the object was successfully loaded, otherwise false.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.UIElement.TextEntered(SFML.Window.TextEventArgs)">
-            <summary>
-              Called when the game window recieves a TextEntered event for 
-              enabled and selected elements.
-            </summary>
-            <remarks>
-              Calls <see cref="M:MiGfx.UI.UIElement.OnTextEntered(SFML.Window.TextEventArgs)"/> if the element is
-              enabled and selected.
-            </remarks>
-            <param name="e">
-              Event arguments.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.UIElement.Equals(MiGfx.UI.UIElement)">
-            <summary>
-              If this object has the same values of the other object.
-            </summary>
-            <param name="other">
-              The other object to check against.
-            </param>
-            <returns>
-              True if both objects are concidered equal and false if they are not.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.UIElement.OnUpdate(System.Single)">
-            <summary>
-              Override to update the elements' logic.
-            </summary>
-            <param name="dt">
-              Delta time.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.UIElement.OnDraw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
-            <summary>
-              Override to draw the element.
-            </summary>
-            <param name="target">
-              The render target to draw to.
-            </param>
-            <param name="states">
-              Render states.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.UIElement.OnTextEntered(SFML.Window.TextEventArgs)">
-            <summary>
-              Override to respond to TextEntered events.
-            </summary>
-            <param name="e">
-              Event arguments.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.UIElement.OnSelectionChanged">
-            <summary>
-              Called when selected or deselected.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.UIElement.OnEnableChanged">
-            <summary>
-              Called when enabled or disabled.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.UIElement.OnVisibilityChanged">
-            <summary>
-              Called when visibility is changed.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.UIElement.OnDispose">
-            <summary>
-              Override to dispose of any resources if needed.
-            </summary>
-        </member>
-        <member name="T:MiGfx.UI.Image">
-            <summary>
-              Image UI element.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.Image.#ctor">
-            <summary>
-              Constructor.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.Image.#ctor(MiGfx.UI.Image)">
-            <summary>
-              Copy constructor.
-            </summary>
-            <param name="e">
-              The image to copy from.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.Image.#ctor(System.String)">
-            <summary>
-              Constructs the image with an ID.
-            </summary>
-            <param name="id">
-              The image ID.
-            </param>
-        </member>
-        <member name="P:MiGfx.UI.Image.TypeName">
-            <summary>
-              Type string unique to each UI element type.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.Image.DisplayImage">
-            <summary>
-              Info on the image to display.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.Image.OnDispose">
-            <summary>
-              Called when disposing of the object.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.Image.OnUpdate(System.Single)">
-            <summary>
-              Updates the elements' logic.
-            </summary>
-            <param name="dt">
-              Delta time.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.Image.OnDraw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
-            <summary>
-              Draws the element.
-            </summary>
-            <param name="target">
-              The render target to draw to.
-            </param>
-            <param name="states">
-              Render states.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.Image.LoadFromStream(System.IO.BinaryReader)">
-            <summary>
-              Attempts to deserialize the object from the stream.
-            </summary>
-            <param name="sr">
-              Stream reader.
-            </param>
-            <returns>
-              True if deserialization succeeded and false otherwise.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.Image.SaveToStream(System.IO.BinaryWriter)">
-            <summary>
-              Attempts to serialize the object to the stream.
-            </summary>
-            <param name="sw">
-              Stream writer.
-            </param>
-            <returns>
-              True if serialization succeeded and false otherwise.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.Image.LoadFromXml(System.Xml.XmlElement)">
-            <summary>
-              Attempts to load the object from the xml element.
-            </summary>
-            <param name="element">
-              The xml element.
-            </param>
-            <returns>
-              True if the object was successfully loaded, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.Image.ToString">
+        <member name="M:MiGfx.Selectable.ToString">
             <summary>
               Converts the object to an xml string.
             </summary>
@@ -2709,36 +2800,75 @@
               Returns the object to an xml string.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.Image.Equals(MiGfx.UI.Image)">
+        <member name="M:MiGfx.Selectable.Clone">
             <summary>
-              If this object has the same values of the other object.
-            </summary>
-            <param name="other">
-              The other object to check against.
-            </param>
-            <returns>
-              True if both objects are concidered equal and false if they are not.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.Image.GetTypeName">
-            <summary>
-              Gets the type name.
+              Clones this object.
             </summary>
             <returns>
-              The type name.
+              A clone of this object.
             </returns>
         </member>
-        <member name="T:MiGfx.UI.Label">
+        <member name="T:MiGfx.Allignment">
             <summary>
-              A text label UI element.
+              Possible transform allignments.
             </summary>
         </member>
-        <member name="M:MiGfx.UI.Label.#ctor">
+        <member name="F:MiGfx.Allignment.TopLeft">
+            <summary>
+              Allign to the top left of the transform.
+            </summary>
+        </member>
+        <member name="F:MiGfx.Allignment.Top">
+            <summary>
+              Allign to the top middle of the transform.
+            </summary>
+        </member>
+        <member name="F:MiGfx.Allignment.TopRight">
+            <summary>
+              Allign to the top right of the transform.
+            </summary>
+        </member>
+        <member name="F:MiGfx.Allignment.MiddleLeft">
+            <summary>
+              Allign to the middle left of the transform.
+            </summary>
+        </member>
+        <member name="F:MiGfx.Allignment.Middle">
+            <summary>
+              Allign to the middle of the transform.
+            </summary>
+        </member>
+        <member name="F:MiGfx.Allignment.MiddleRight">
+            <summary>
+              Allign to the middle right of the transform.
+            </summary>
+        </member>
+        <member name="F:MiGfx.Allignment.BottomLeft">
+            <summary>
+              Allign to the bottom left of the transform.
+            </summary>
+        </member>
+        <member name="F:MiGfx.Allignment.Bottom">
+            <summary>
+              Allign to the bottom of the transform.
+            </summary>
+        </member>
+        <member name="F:MiGfx.Allignment.BottomRight">
+            <summary>
+              Allign to the bottom right of the transform.
+            </summary>
+        </member>
+        <member name="T:MiGfx.Label">
+            <summary>
+              A text label component.
+            </summary>
+        </member>
+        <member name="M:MiGfx.Label.#ctor">
             <summary>
               Constructor.
             </summary>
         </member>
-        <member name="M:MiGfx.UI.Label.#ctor(MiGfx.UI.Label)">
+        <member name="M:MiGfx.Label.#ctor(MiGfx.Label)">
             <summary>
               Copy constructor.
             </summary>
@@ -2746,19 +2876,18 @@
               The label to copy from.
             </param>
         </member>
-        <member name="M:MiGfx.UI.Label.#ctor(System.String,System.String)">
+        <member name="M:MiGfx.Label.#ctor(System.String,MiGfx.Allignment)">
             <summary>
-              Constructs the label and sets its ID.
+              Constructs the label and sets its display string.
             </summary>
-            <param name="id">
-              The label ID.
-            </param>
             <param name="str">
-              Display string. If null or whitespace it will be replaced with an
-              empty string.
+              Display string. If null or whitespace it will be replaced with an empty string.
+            </param>
+            <param name="allign">
+              Text allignment.
             </param>
         </member>
-        <member name="M:MiGfx.UI.Label.#ctor(MiGfx.TextStyle,System.String)">
+        <member name="M:MiGfx.Label.#ctor(MiGfx.TextStyle,System.String,MiGfx.Allignment)">
             <summary>
               Constructs the label with a text style and an optional string.
             </summary>
@@ -2769,59 +2898,57 @@
               Display string. If null or whitespace it will be replaced with an
               empty string.
             </param>
-        </member>
-        <member name="M:MiGfx.UI.Label.#ctor(System.String,MiGfx.TextStyle,System.String)">
-            <summary>
-              Constructs the label with an ID, text style and optional string.
-            </summary>
-            <param name="id">
-              The label ID.
-            </param>
-            <param name="text">
-              Text style.
-            </param>
-            <param name="str">
-              Display string. If null or whitespace it will be replaced with an
-              empty string.
+            <param name="allign">
+              Text allignment.
             </param>
         </member>
-        <member name="P:MiGfx.UI.Label.TypeName">
+        <member name="P:MiGfx.Label.TypeName">
             <summary>
-              Type string unique to each UI element type.
+              The component type name.
             </summary>
         </member>
-        <member name="P:MiGfx.UI.Label.Text">
+        <member name="P:MiGfx.Label.Text">
             <summary>
               Text style.
             </summary>
         </member>
-        <member name="P:MiGfx.UI.Label.String">
+        <member name="P:MiGfx.Label.String">
             <summary>
               Display string.
             </summary>
         </member>
-        <member name="M:MiGfx.UI.Label.GetTextBounds">
+        <member name="P:MiGfx.Label.Offset">
             <summary>
-              Gets the global bounds from the internal text object. (Use when 
-              <see cref="M:MiGfx.UI.UIElement.Update(System.Single)"/> has not yet been called).
+              Text offset.
+            </summary>
+        </member>
+        <member name="P:MiGfx.Label.Allign">
+            <summary>
+              Text allignment.
+            </summary>
+        </member>
+        <member name="M:MiGfx.Label.GetTextBounds">
+            <summary>
+              Gets the global bounds from the internal text object. (For use before
+              <see cref="M:MiCore.MiObject.Update(System.Single)"/> has is called).
             </summary>
             <remarks>
-              Only needed before the first call to <see cref="M:MiGfx.UI.UIElement.Update(System.Single)"/>.
+              Only needed before the first call to <see cref="M:MiCore.MiObject.Update(System.Single)"/>.
               The use <see cref="P:MiGfx.Transform.GlobalBounds"/>.
             </remarks>
             <returns></returns>
         </member>
-        <member name="M:MiGfx.UI.Label.OnUpdate(System.Single)">
+        <member name="M:MiGfx.Label.OnUpdate(System.Single)">
             <summary>
-              Updates the elements' logic.
+              Updates the component logic.
             </summary>
             <param name="dt">
               Delta time.
             </param>
         </member>
-        <member name="M:MiGfx.UI.Label.OnDraw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
+        <member name="M:MiGfx.Label.OnDraw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
             <summary>
-              Draws the element.
+              Draws the component.
             </summary>
             <param name="target">
               The render target to draw to.
@@ -2830,12 +2957,12 @@
               Render states.
             </param>
         </member>
-        <member name="M:MiGfx.UI.Label.OnDispose">
+        <member name="M:MiGfx.Label.OnDispose">
             <summary>
               Called when disposing of the object.
             </summary>
         </member>
-        <member name="M:MiGfx.UI.Label.LoadFromStream(System.IO.BinaryReader)">
+        <member name="M:MiGfx.Label.LoadFromStream(System.IO.BinaryReader)">
             <summary>
               Attempts to deserialize the object from the stream.
             </summary>
@@ -2846,7 +2973,7 @@
               True if deserialization succeeded and false otherwise.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.Label.SaveToStream(System.IO.BinaryWriter)">
+        <member name="M:MiGfx.Label.SaveToStream(System.IO.BinaryWriter)">
             <summary>
               Attempts to serialize the object to the stream.
             </summary>
@@ -2857,7 +2984,7 @@
               True if serialization succeeded and false otherwise.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.Label.LoadFromXml(System.Xml.XmlElement)">
+        <member name="M:MiGfx.Label.LoadFromXml(System.Xml.XmlElement)">
             <summary>
               Attempts to load the object from the xml element.
             </summary>
@@ -2868,7 +2995,7 @@
               True if the object was successfully loaded, otherwise false.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.Label.ToString">
+        <member name="M:MiGfx.Label.ToString">
             <summary>
               Converts the object to an xml string.
             </summary>
@@ -2876,7 +3003,7 @@
               Returns the object to an xml string.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.Label.Equals(MiGfx.UI.Label)">
+        <member name="M:MiGfx.Label.Equals(MiGfx.Label)">
             <summary>
               If this object has the same values of the other object.
             </summary>
@@ -2887,7 +3014,7 @@
               True if both objects are concidered equal and false if they are not.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.Label.GetTypeName">
+        <member name="M:MiGfx.Label.GetTypeName">
             <summary>
               Gets the type name.
             </summary>
@@ -2895,251 +3022,25 @@
               The type name.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.Label.Default(System.String,System.String)">
+        <member name="M:MiGfx.Label.Clone">
             <summary>
-              Creates a default label with the given ID and optional string.
-            </summary>
-            <param name="id">
-              The label ID.
-            </param>
-            <param name="str">
-              The display string.
-            </param>
-            <returns>
-              A new default label with the given ID and optional string.
-            </returns>
-        </member>
-        <member name="T:MiGfx.UI.Interaction">
-            <summary>
-              Possible UI user interactions.
-            </summary>
-        </member>
-        <member name="F:MiGfx.UI.Interaction.Mouse">
-            <summary>
-              Interaction using the mouse.
-            </summary>
-        </member>
-        <member name="F:MiGfx.UI.Interaction.Control">
-            <summary>
-              Interaction using the keyboard or joystick.
-            </summary>
-        </member>
-        <member name="T:MiGfx.UI.UIManager">
-            <summary>
-              Used for managing UI elements.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.UIManager.#ctor(SFML.Graphics.RenderWindow)">
-            <summary>
-              Constructor that sets the target render window.
-            </summary>
-            <param name="window">
-              The target render window.
-            </param>
-        </member>
-        <member name="P:MiGfx.UI.UIManager.Empty">
-            <summary>
-              If the manager contains no elements.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.UIManager.Count">
-            <summary>
-              The amount of elements contained by the manager.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.UIManager.HasSelectable">
-            <summary>
-              If the manager contains at least one selectable element.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.UIManager.Window">
-            <summary>
-              Target render window.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.UIManager.Selected">
-            <summary>
-              Currently selected element ID.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.UIManager.LastInteraction">
-            <summary>
-              The most recent input interaction type.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.UIManager.Contains(System.String)">
-            <summary>
-              Checks if the manager contains an element with the given ID.
-            </summary>
-            <param name="id">
-              The element ID.
-            </param>
-            <returns>
-              True if the manager contains an element with the given ID and false otherwise.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.UIManager.Contains(MiGfx.UI.UIElement)">
-            <summary>
-              Checks if the manager contains the given element.
-            </summary>
-            <param name="e">
-              The element.
-            </param>
-            <returns>
-              True if the element is valid and is contained by the manager, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.UIManager.Get``1(System.String)">
-            <summary>
-              Gets the element with the given type and ID.
-            </summary>
-            <typeparam name="T">
-              The type of the element.
-            </typeparam>
-            <param name="id">
-              The element ID.
-            </param>
-            <returns>
-              The element with the given ID if it exists within the manager otherwise null.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.UIManager.Add(MiGfx.UI.UIElement,System.Boolean)">
-            <summary>
-              Adds a new element to the manager.
-            </summary>
-            <param name="e">
-              The element to add.
-            </param>
-            <param name="replace">
-              If an element already exists with the same ID, should it be replaced?
-            </param>
-            <returns>
-              True if the element was successfully added to the manager and false otherwise.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.UIManager.Add(MiGfx.UI.UIElement[])">
-            <summary>
-              Adds multiple elements to the manager.
-            </summary>
-            <param name="ele">
-              The elements to add.
-            </param>
-            <returns>
-              True if all elements were added successfull, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.UIManager.Remove(System.String)">
-            <summary>
-              Removes the element with the given ID from the manager.
-            </summary>
-            <param name="id">
-              The element ID.
-            </param>
-            <returns>
-              True if an element existed with the given ID and was removed successfully, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.UIManager.Remove(System.String[])">
-            <summary>
-              Removes multiple elements by ID from the manager.
-            </summary>
-            <param name="ids">
-              The element IDs to remove.
-            </param>
-            <returns>
-              The amount of elements that were successfully removed.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.UIManager.RemoveAll">
-            <summary>
-              Removes all elements from the manager.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.UIManager.Select(System.String)">
-            <summary>
-              Selects the element with the given ID and deselects all others. If the ID is null or 
-              empty, all elements will just be deselected.
-            </summary>
-            <param name="id">
-              The element ID.
-            </param>
-            <returns>
-              True if an element exists with the given ID and was selected.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.UIManager.SelectNext">
-            <summary>
-              Selects the next element in the manager.
+              Clones this object.
             </summary>
             <returns>
-              True on success or false on failure.
+              A clone of this object.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.UIManager.SelectPrevious">
-            <summary>
-              Selects the previous element in the manager.
-            </summary>
-            <returns>
-              True on success or false on failure.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.UIManager.TextEntered(SFML.Window.TextEventArgs)">
-            <summary>
-              Text entered event.
-            </summary>
-            <param name="e">
-              Event arguments.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.UIManager.Draw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
-            <summary>
-              Draws visible elements in the manager.
-            </summary>
-            <param name="target">
-              Render target.
-            </param>
-            <param name="states">
-              Render states.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.UIManager.Update(System.Single)">
-            <summary>
-              Updates enabled elements in the manager.
-            </summary>
-            <param name="dt"></param>
-        </member>
-        <member name="M:MiGfx.UI.UIManager.Dispose">
-            <summary>
-              Disposes of all elements in the manager.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.UIManager.GetEnumerator">
-            <summary>
-              Returns an enumerator that iterates through the collection.
-            </summary>
-            <returns>
-              An enumerator that can be used to iterate through the collection.
-            </returns>
-        </member>
-        <member name="M:MiGfx.UI.UIManager.System#Collections#IEnumerable#GetEnumerator">
-            <summary>
-              Returns an enumerator that iterates through the collection.
-            </summary>
-            <returns>
-              An enumerator that can be used to iterate through the collection.
-            </returns>
-        </member>
-        <member name="T:MiGfx.UI.TextBoxData">
+        <member name="T:MiGfx.TextBoxData">
             <summary>
               Textbox state info.
             </summary>
         </member>
-        <member name="M:MiGfx.UI.TextBoxData.#ctor">
+        <member name="M:MiGfx.TextBoxData.#ctor">
             <summary>
               Constructor.
             </summary>
         </member>
-        <member name="M:MiGfx.UI.TextBoxData.#ctor(MiGfx.UI.TextBoxData)">
+        <member name="M:MiGfx.TextBoxData.#ctor(MiGfx.TextBoxData)">
             <summary>
               Copy constructor.
             </summary>
@@ -3147,7 +3048,7 @@
               Object to copy.
             </param>
         </member>
-        <member name="M:MiGfx.UI.TextBoxData.#ctor(MiGfx.ImageInfo,MiGfx.TextStyle,System.Nullable{SFML.System.Vector2f})">
+        <member name="M:MiGfx.TextBoxData.#ctor(MiGfx.ImageInfo,MiGfx.TextStyle,System.Nullable{SFML.System.Vector2f})">
             <summary>
               Constructor setting image, text style and text offset.
             </summary>
@@ -3161,22 +3062,22 @@
               The text offset.
             </param>
         </member>
-        <member name="P:MiGfx.UI.TextBoxData.Image">
+        <member name="P:MiGfx.TextBoxData.Image">
             <summary>
               Background image.
             </summary>
         </member>
-        <member name="P:MiGfx.UI.TextBoxData.Text">
+        <member name="P:MiGfx.TextBoxData.Text">
             <summary>
               Text style.
             </summary>
         </member>
-        <member name="P:MiGfx.UI.TextBoxData.TextOffset">
+        <member name="P:MiGfx.TextBoxData.TextOffset">
             <summary>
               Text offset.
             </summary>
         </member>
-        <member name="M:MiGfx.UI.TextBoxData.LoadFromStream(System.IO.BinaryReader)">
+        <member name="M:MiGfx.TextBoxData.LoadFromStream(System.IO.BinaryReader)">
             <summary>
               Attempts to deserialize the object from the stream.
             </summary>
@@ -3187,7 +3088,7 @@
               True if deserialization succeeded and false otherwise.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.TextBoxData.SaveToStream(System.IO.BinaryWriter)">
+        <member name="M:MiGfx.TextBoxData.SaveToStream(System.IO.BinaryWriter)">
             <summary>
               Attempts to serialize the object to the stream.
             </summary>
@@ -3198,7 +3099,7 @@
               True if serialization succeeded and false otherwise.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.TextBoxData.LoadFromXml(System.Xml.XmlElement)">
+        <member name="M:MiGfx.TextBoxData.LoadFromXml(System.Xml.XmlElement)">
             <summary>
               Attempts to load the object from the xml element.
             </summary>
@@ -3209,7 +3110,7 @@
               True if the object was successfully loaded, otherwise false.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.TextBoxData.ToString">
+        <member name="M:MiGfx.TextBoxData.ToString">
             <summary>
               Converts the object to an xml string.
             </summary>
@@ -3217,7 +3118,7 @@
               Returns the object to an xml string.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.TextBoxData.Equals(MiGfx.UI.TextBoxData)">
+        <member name="M:MiGfx.TextBoxData.Equals(MiGfx.TextBoxData)">
             <summary>
               If this object has the same values of the other object.
             </summary>
@@ -3228,17 +3129,17 @@
               True if both objects are concidered equal and false if they are not.
             </returns>
         </member>
-        <member name="T:MiGfx.UI.TextBox">
+        <member name="T:MiGfx.TextBox">
             <summary>
               A UI text box.
             </summary>
         </member>
-        <member name="M:MiGfx.UI.TextBox.#ctor">
+        <member name="M:MiGfx.TextBox.#ctor">
             <summary>
               Constructor.
             </summary>
         </member>
-        <member name="M:MiGfx.UI.TextBox.#ctor(MiGfx.UI.TextBox)">
+        <member name="M:MiGfx.TextBox.#ctor(MiGfx.TextBox)">
             <summary>
               Copy constructor.
             </summary>
@@ -3246,60 +3147,41 @@
               The object to copy.
             </param>
         </member>
-        <member name="M:MiGfx.UI.TextBox.#ctor(System.String)">
+        <member name="M:MiGfx.TextBox.#ctor(MiGfx.TextBoxData,MiGfx.TextBoxData)">
             <summary>
-              Constructor setting 
+              Constructs a text box with selected and/or deselected data.
             </summary>
-            <param name="id">
-              The object ID.
+            <param name="s">
+              Selected data.
+            </param>
+            <param name="d">
+              Deselected data, will use selected data if null.
             </param>
         </member>
-        <member name="P:MiGfx.UI.TextBox.TypeName">
+        <member name="P:MiGfx.TextBox.TypeName">
             <summary>
               Type string unique to each UI element type.
             </summary>
         </member>
-        <member name="P:MiGfx.UI.TextBox.IsSelectable">
-            <summary>
-              If the element type is selectable.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.TextBox.Hovering">
-            <summary>
-              If the mouse is hovering over.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.TextBox.Clicked">
-            <summary>
-              If the box has just been clicked.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.TextBox.DeselectedData">
+        <member name="P:MiGfx.TextBox.DeselectedData">
             <summary>
               Visual data for when deselected.
             </summary>
         </member>
-        <member name="P:MiGfx.UI.TextBox.SelectedData">
+        <member name="P:MiGfx.TextBox.SelectedData">
             <summary>
               Visual data for when selected.
             </summary>
         </member>
-        <member name="P:MiGfx.UI.TextBox.String">
+        <member name="M:MiGfx.TextBox.SetString(System.String)">
             <summary>
-              Content of the textbox.
+              Sets the displayed string keeping both the Label and TextListener components updated.
             </summary>
+            <param name="str">
+              The string to set.
+            </param>
         </member>
-        <member name="P:MiGfx.UI.TextBox.CenterText">
-            <summary>
-              If text should be centered.
-            </summary>
-        </member>
-        <member name="P:MiGfx.UI.TextBox.Multiline">
-            <summary>
-              If textbox can span multiple lines.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.TextBox.OnUpdate(System.Single)">
+        <member name="M:MiGfx.TextBox.OnUpdate(System.Single)">
             <summary>
               Updates the elements' logic.
             </summary>
@@ -3307,31 +3189,7 @@
               Delta time.
             </param>
         </member>
-        <member name="M:MiGfx.UI.TextBox.OnDraw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
-            <summary>
-              Draws the element.
-            </summary>
-            <param name="target">
-              The render target to draw to.
-            </param>
-            <param name="states">
-              Render states.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.TextBox.OnDispose">
-            <summary>
-              Called when disposing of the object.
-            </summary>
-        </member>
-        <member name="M:MiGfx.UI.TextBox.OnTextEntered(SFML.Window.TextEventArgs)">
-            <summary>
-              Text entered event.
-            </summary>
-            <param name="e">
-              Event arguments.
-            </param>
-        </member>
-        <member name="M:MiGfx.UI.TextBox.LoadFromStream(System.IO.BinaryReader)">
+        <member name="M:MiGfx.TextBox.LoadFromStream(System.IO.BinaryReader)">
             <summary>
               Attempts to deserialize the object from the stream.
             </summary>
@@ -3342,7 +3200,7 @@
               True if deserialization succeeded and false otherwise.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.TextBox.SaveToStream(System.IO.BinaryWriter)">
+        <member name="M:MiGfx.TextBox.SaveToStream(System.IO.BinaryWriter)">
             <summary>
               Attempts to serialize the object to the stream.
             </summary>
@@ -3353,7 +3211,7 @@
               True if serialization succeeded and false otherwise.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.TextBox.LoadFromXml(System.Xml.XmlElement)">
+        <member name="M:MiGfx.TextBox.LoadFromXml(System.Xml.XmlElement)">
             <summary>
               Attempts to load the object from the xml element.
             </summary>
@@ -3364,7 +3222,7 @@
               True if the object was successfully loaded, otherwise false.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.TextBox.ToString">
+        <member name="M:MiGfx.TextBox.ToString">
             <summary>
               Converts the object to an xml string.
             </summary>
@@ -3372,7 +3230,7 @@
               Returns the object to an xml string.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.TextBox.Equals(MiGfx.UI.TextBox)">
+        <member name="M:MiGfx.TextBox.Equals(MiGfx.TextBox)">
             <summary>
               If this object has the same values of the other object.
             </summary>
@@ -3383,23 +3241,26 @@
               True if both objects are concidered equal and false if they are not.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.TextBox.GetTypeName">
+        <member name="M:MiGfx.TextBox.Clone">
             <summary>
-              Gets the type name.
+              Clones this object.
             </summary>
             <returns>
-              The type name.
+              A clone of this object.
             </returns>
         </member>
-        <member name="M:MiGfx.UI.TextBox.Default(System.String,System.Boolean,System.Boolean)">
+        <member name="M:MiGfx.TextBox.Create(System.String,SFML.Graphics.RenderWindow,MiGfx.Allignment,System.Boolean)">
             <summary>
               Constructs a textbox with default values.
             </summary>
             <param name="id">
               The object ID.
             </param>
-            <param name="center">
-              If text should be centered.
+            <param name="window">
+              The render window.
+            </param>
+            <param name="allign">
+              Text allignment.
             </param>
             <param name="multi">
               If text can be multiline.

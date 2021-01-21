@@ -4,26 +4,219 @@
         <name>MiCore</name>
     </assembly>
     <members>
-        <member name="T:MiCore.Component">
+        <member name="T:MiCore.JobList">
+            <summary>
+              A list of jobs that share the same priority.
+            </summary>
+        </member>
+        <member name="M:MiCore.JobList.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiCore.JobList.#ctor(MiCore.JobList)">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="list">
+              The object to copy.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+              If list is null.
+            </exception>
+        </member>
+        <member name="M:MiCore.JobList.#ctor(MiCore.MiJob[])">
+            <summary>
+              Constructs the object with one or multiple jobs.
+            </summary>
+            <param name="list">
+              List of jobs to add.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+              If list is null.
+            </exception>
+        </member>
+        <member name="P:MiCore.JobList.Item(System.Int32)">
+            <summary>
+              Job accessor by index.
+            </summary>
+            <param name="index">
+              Job index.
+            </param>
+            <returns>
+              The job at the given index or null if index is invalid.
+            </returns>
+        </member>
+        <member name="P:MiCore.JobList.Empty">
+            <summary>
+              If the list contains no jobs.
+            </summary>
+        </member>
+        <member name="P:MiCore.JobList.Count">
+            <summary>
+              The amount of jobs in the list.
+            </summary>
+        </member>
+        <member name="P:MiCore.JobList.Jobs">
+            <summary>
+              An array containing all jobs in the list.
+            </summary>
+        </member>
+        <member name="M:MiCore.JobList.Contains(MiCore.MiJob)">
+            <summary>
+              If the list contains the given job.
+            </summary>
+            <param name="job">
+              The job to check.
+            </param>
+            <returns>
+              True if the job exists within the list.
+            </returns>
+        </member>
+        <member name="M:MiCore.JobList.IndexOf(MiCore.MiJob)">
+            <summary>
+              Gets the index of a job contained in the list.
+            </summary>
+            <param name="job">
+              The job to check.
+            </param>
+            <returns>
+              The index of the job if it exists within the list, otherwise -1.
+            </returns>
+        </member>
+        <member name="M:MiCore.JobList.Get(System.Int32)">
+            <summary>
+              Gets the job at the given index.
+            </summary>
+            <param name="index">
+              Job index.
+            </param>
+            <returns>
+              The job at the given index or null if the index is out of range.
+            </returns>
+        </member>
+        <member name="M:MiCore.JobList.Set(System.Int32,MiCore.MiJob)">
+            <summary>
+              Replaces the job at the index with the given job.
+            </summary>
+            <remarks>
+              If index == Count, <see cref="M:MiCore.JobList.Add(MiCore.MiJob[])"/> will be called instead.
+              If job == null, <see cref="M:MiCore.JobList.Remove(System.Int32)"/> will be called instead.
+            </remarks>
+            <param name="index">
+              The job index.
+            </param>
+            <param name="job">
+              The job to add or null to remove an existing job.
+            </param>
+            <returns>
+              True if index is within range, job is valid or null and was added/removed 
+              successfully, or if the job already existed at the index, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.JobList.Insert(System.Int32,MiCore.MiJob)">
+            <summary>
+              Inserts the given job at the given index. If the job already exists within the list,
+              it will be removed first.
+            </summary>
+            <remarks>
+              If index == Count, <see cref="M:MiCore.JobList.Add(MiCore.MiJob[])"/> is called instead.
+            </remarks>
+            <param name="index">
+              The job index.
+            </param>
+            <param name="job">
+              The job to insert.
+            </param>
+            <returns>
+              True if index is within range, job is valid and was added successfully, otherwise
+              false.
+            </returns>
+        </member>
+        <member name="M:MiCore.JobList.Add(MiCore.MiJob[])">
+            <summary>
+              Adds one or multiple jobs to the list.
+            </summary>
+            <param name="jobs">
+              The jobs to add.
+            </param>
+            <returns>
+              True if jobs was valid and all jobs were added successfully.
+            </returns>
+        </member>
+        <member name="M:MiCore.JobList.Remove(System.Int32)">
+            <summary>
+              Removes the job at the given index.
+            </summary>
+            <param name="index">
+              The job index.
+            </param>
+            <returns>
+              True if index was within range and the job was removed successfully.
+            </returns>
+        </member>
+        <member name="M:MiCore.JobList.Remove(MiCore.MiJob[])">
+            <summary>
+              Removes one or multiple jobs.
+            </summary>
+            <param name="jobs">
+              The job(s) to remove.
+            </param>
+            <returns>
+              The amount of jobs that were successfully removed.
+            </returns>
+        </member>
+        <member name="M:MiCore.JobList.RemoveAll">
+            <summary>
+              Removes all jobs from the list.
+            </summary>
+        </member>
+        <member name="M:MiCore.JobList.Run(MiCore.MiEntity)">
+            <summary>
+              Runs all jobs in the list on the entity.
+            </summary>
+            <param name="e">
+              The entity to run the job list on.
+            </param>
+        </member>
+        <member name="M:MiCore.JobList.RunASync(MiCore.MiEntity)">
+            <summary>
+              Runs all jobs asyncronously in the list on the entity.
+            </summary>
+            <param name="e">
+              The entity to run the job list on.
+            </param>
+        </member>
+        <member name="M:MiCore.JobList.Equals(MiCore.JobList)">
+            <summary>
+              Checks if this object is equal to another.
+            </summary>
+            <param name="list">
+              The object to check against.
+            </param>
+            <returns>
+              True if the given object is concidered equal to this object, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.JobList.GetEnumerator">
+            <summary>
+              Gets an enumerator that can be used to iterate through the collection.
+            </summary>
+            <returns>
+              An enumerator that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="T:MiCore.MiComponent">
             <summary>
               Base class for components.
             </summary>
         </member>
-        <member name="M:MiCore.Component.#ctor">
+        <member name="M:MiCore.MiComponent.#ctor">
             <summary>
               Constructor.
             </summary>
         </member>
-        <member name="M:MiCore.Component.#ctor(System.String[],System.String[])">
-            <summary>
-              Constructor.
-            </summary>
-            <exception cref="T:System.InvalidOperationException">
-              If any strings in required or incompatible are not registered component type names.
-              If required and incompatible contain any of the same type names.
-            </exception>
-        </member>
-        <member name="M:MiCore.Component.#ctor(MiCore.Component)">
+        <member name="M:MiCore.MiComponent.#ctor(MiCore.MiComponent)">
             <summary>
               Copy constructor.
             </summary>
@@ -31,27 +224,32 @@
               The object to copy.
             </param>
         </member>
-        <member name="P:MiCore.Component.RequiredComponents">
+        <member name="P:MiCore.MiComponent.RequiredComponents">
             <summary>
               Contains the types of components required by this component type.
             </summary>
         </member>
-        <member name="P:MiCore.Component.IncompatibleComponents">
+        <member name="P:MiCore.MiComponent.IncompatibleComponents">
             <summary>
               Contains the types of components incompatible with this component type.
             </summary>
         </member>
-        <member name="P:MiCore.Component.TypeName">
+        <member name="P:MiCore.MiComponent.TypeName">
             <summary>
               The component type name.
             </summary>
         </member>
-        <member name="P:MiCore.Component.Parent">
+        <member name="P:MiCore.MiComponent.Stack">
             <summary>
-              The entity that owns the component.
+              The component stack that owns the component.
             </summary>
         </member>
-        <member name="M:MiCore.Component.Requires(System.String)">
+        <member name="P:MiCore.MiComponent.Parent">
+            <summary>
+              The entity that owns the component stack.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiComponent.Requires(System.String)">
             <summary>
               Checks if the component requires a component with the given component name.
             </summary>
@@ -62,7 +260,7 @@
               True if the component requires on the given component type name.
             </returns>
         </member>
-        <member name="M:MiCore.Component.Requires(System.Type)">
+        <member name="M:MiCore.MiComponent.Requires(System.Type)">
             <summary>
               Checks if the component requires a component of the given type.
             </summary>
@@ -73,7 +271,7 @@
               True if the component requires on the given component type.
             </returns>
         </member>
-        <member name="M:MiCore.Component.Requires``1">
+        <member name="M:MiCore.MiComponent.Requires``1">
             <summary>
               Checks if the component requires a component of the given type.
             </summary>
@@ -84,7 +282,7 @@
               True if the component requires on the given component type.
             </returns>
         </member>
-        <member name="M:MiCore.Component.Incompatible(System.String)">
+        <member name="M:MiCore.MiComponent.Incompatible(System.String)">
             <summary>
               Checks if the component is incompatible with a component with the given component name.
             </summary>
@@ -95,7 +293,7 @@
               True if the component is incompatible with the given component type name.
             </returns>
         </member>
-        <member name="M:MiCore.Component.Incompatible(System.Type)">
+        <member name="M:MiCore.MiComponent.Incompatible(System.Type)">
             <summary>
               Checks if the component is incompatible with a component of the given type.
             </summary>
@@ -106,7 +304,7 @@
               True if the component is incompatible with the given component type.
             </returns>
         </member>
-        <member name="M:MiCore.Component.Incompatible``1">
+        <member name="M:MiCore.MiComponent.Incompatible``1">
             <summary>
               Checks if the component is incompatible with a component of the given type.
             </summary>
@@ -117,9 +315,25 @@
               True if the component is incompatible with the given component type.
             </returns>
         </member>
+        <member name="M:MiCore.MiComponent.TextEntered(SFML.Window.TextEventArgs)">
+            <summary>
+              Called on TextEntered event.
+            </summary>
+            <param name="e">
+              The event args.
+            </param>
+        </member>
+        <member name="M:MiCore.MiComponent.OnTextEntered(SFML.Window.TextEventArgs)">
+            <summary>
+              Override this with your TextEntered logic.
+            </summary>
+            <param name="e">
+              The event args.
+            </param>
+        </member>
         <member name="T:MiCore.ComponentRegister">
             <summary>
-              Used for registering components.
+              Used for registering and creating components.
             </summary>
         </member>
         <member name="M:MiCore.ComponentRegister.#ctor">
@@ -129,7 +343,7 @@
         </member>
         <member name="P:MiCore.ComponentRegister.Manager">
             <summary>
-              The singleton object.
+              The register object.
             </summary>
         </member>
         <member name="P:MiCore.ComponentRegister.Empty">
@@ -175,7 +389,7 @@
               True if the given component type is registered, otherwise false.
             </returns>
         </member>
-        <member name="M:MiCore.ComponentRegister.Register``1">
+        <member name="M:MiCore.ComponentRegister.Register``1(System.Boolean)">
             <summary>
               Registers a component type.
             </summary>
@@ -183,7 +397,8 @@
               The component type.
             </typeparam>
             <returns>
-              True if the component type was registered successfully and false otherwise.
+              True if the component type was registered successfully and false otherwise. This will
+              only fail if `T.TypeName` is not a valid ID.
             </returns>
         </member>
         <member name="M:MiCore.ComponentRegister.Create``1">
@@ -208,17 +423,6 @@
               A new component if the type name was registered, otherwise false.
             </returns>
         </member>
-        <member name="M:MiCore.ComponentRegister.Create(System.Type)">
-            <summary>
-              Creates a component from a given type if it is registered.
-            </summary>
-            <param name="type">
-              The component type.
-            </param>
-            <returns>
-             A new component if the type was registered, otherwise null.
-            </returns>
-        </member>
         <member name="M:MiCore.ComponentRegister.GetEnumerator">
             <summary>
               Gets an enumerator to iterate through the collection.
@@ -227,15 +431,491 @@
               An enumerator to iterate through the collection.
             </returns>
         </member>
-        <member name="T:MiCore.IDatabase`4">
+        <member name="T:MiCore.ComponentStack">
+            <summary>
+              Container for storing related components.
+            </summary>
+        </member>
+        <member name="M:MiCore.ComponentStack.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiCore.ComponentStack.#ctor(MiCore.ComponentStack)">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="cs">
+              The object to copy.
+            </param>
+            <exception cref="T:System.InvalidOperationException">
+              If unable to add cloned components.
+            </exception>
+        </member>
+        <member name="M:MiCore.ComponentStack.#ctor(MiCore.MiEntity)">
+            <summary>
+              Constructor setting parent entity.
+            </summary>
+            <param name="parent">
+              The owning parent entity
+            </param>
+        </member>
+        <member name="P:MiCore.ComponentStack.Parent">
+            <summary>
+              The owning parent entity.
+            </summary>
+        </member>
+        <member name="P:MiCore.ComponentStack.Empty">
+            <summary>
+              If the stack contains any components.
+            </summary>
+        </member>
+        <member name="P:MiCore.ComponentStack.Count">
+            <summary>
+              The amount of components the stack contains.
+            </summary>
+        </member>
+        <member name="M:MiCore.ComponentStack.GetIncompatibleComponents">
+            <summary>
+              Creates an array containing the names of all components incompatible with the existing
+              components.
+            </summary>
+        </member>
+        <member name="M:MiCore.ComponentStack.IsCompatible``1">
+            <summary>
+              Checks if a given component type is compatible with the current components.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              True if the component type is registered, compatible and can be added, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.IsCompatible(System.String)">
+            <summary>
+              Checks if a given component type name is compatible with the current components.
+            </summary>
+            <param name="typename">
+              The component type name.
+            </param>
+            <returns>
+              True if the component type is registered, compatible and can be added, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.IsCompatible(MiCore.MiComponent)">
+            <summary>
+              Checks if a given component and its required components are compatible with the 
+              current components.
+            </summary>
+            <param name="comp">
+              The component.
+            </param>
+            <returns>
+              True if the component and its requirements are registered, compatible and can be 
+              added, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.Contains``1">
+            <summary>
+              Checks if the stack contains a component of the given type.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              True if the stack contains a component with the given type, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.Contains(System.String)">
+            <summary>
+              Checks if the stack contains a component with the given type name.
+            </summary>
+            <param name="type">
+              The component type name.
+            </param>
+            <returns>
+              True if the stack contains a component with the given type name, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.IndexOf``1">
+            <summary>
+              Gets the index of the component with the given type.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              A non-negative index if the stack contains a component with the given type,
+              otherwise -1.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.IndexOf(System.String)">
+            <summary>
+              Gets the index of the component with the given type name.
+            </summary>
+            <param name="type">
+              The component type name.
+            </param>
+            <returns>
+              A non-negative index if the stack contains a component with the given type name,
+              otherwise -1.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.Get(System.Int32)">
+            <summary>
+              Gets the component at the given index.
+            </summary>
+            <param name="index">
+              The component index.
+            </param>
+            <returns>
+              The component at the given index or null if the index is out of range.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.Get(System.String)">
+            <summary>
+              Gets the component with the given type name.
+            </summary>
+            <param name="typename">
+              The component type name.
+            </param>
+            <returns>
+              The component with the given type name if it exists, otherwise null.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.Get``1">
+            <summary>
+              Gets the component with the given type.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              The component with the given type or null if it does not exist.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.AddNew``1(System.Boolean)">
+            <summary>
+              Adds a new component to the stack.
+            </summary>
+            <typeparam name="T">
+              The component type to add.
+            </typeparam>
+            <param name="replace">
+              Should an already existing component of the same type be replaced?
+            </param>
+            <returns>
+              True if the component was added successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.Add``1(``0,System.Boolean)">
+            <summary>
+              Adds a new existing component to the stack.
+            </summary>
+            <typeparam name="T">
+              The component type to add.
+            </typeparam>
+            <param name="comp">
+              The component to add.
+            </param>
+            <param name="replace">
+              Should an already existing component of the same type be replaced?
+            </param>
+            <returns>
+              True if the component was added successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.Add(MiCore.MiComponent,System.Boolean)">
+            <summary>
+              Adds a component to the stack.
+            </summary>
+            <param name="comp">
+              The component to add.
+            </param>
+            <param name="replace">
+              If an already existing component should be replaced.
+            </param>
+            <returns>
+              True if the component was added successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.AddRange(System.Collections.Generic.IEnumerable{MiCore.MiComponent},System.Boolean)">
+            <summary>
+              Adds a range of components to the stack.
+            </summary>
+            <param name="comps">
+              The component range to add.
+            </param>
+            <param name="replace">
+              If an already existing component should be replaced.
+            </param>
+            <returns>
+              True if comps is not null and all componenta were added successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.AddRange(MiCore.ComponentStack,System.Boolean)">
+            <summary>
+              Clones and adds a range of components from another stack.
+            </summary>
+            <param name="stack">
+              The component stack to add.
+            </param>
+            <param name="replace">
+              If an already existing component should be replaced.
+            </param>
+            <returns>
+              True if stack is not null and all componenta were added successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.Insert(System.Int32,MiCore.MiComponent,System.Boolean)">
+            <summary>
+              Inserts a component at the given index in the stack.
+            </summary>
+            <param name="index">
+              The index to insert the component. <see cref="M:MiCore.ComponentStack.Add(MiCore.MiComponent,System.Boolean)"/> will be called
+              instead if equals to <see cref="P:MiCore.ComponentStack.Count"/>.
+            </param>
+            <param name="comp">
+              The component to add.
+            </param>
+            <param name="replace">
+              Should an alreadu existing component of the same type be replaced?
+            </param>
+            <returns>
+              True if the component was inserted successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.Insert``1(System.Int32,``0,System.Boolean)">
+            <summary>
+              Inserts a component at the given index in the stack.
+            </summary>
+            <typeparam name="T">
+              The component type to add.
+            </typeparam>
+            <param name="index">
+              The index to insert the component.
+            </param>
+            <param name="comp">
+              The component to add.
+            </param>
+            <param name="replace">
+              Should an already existing component of the same type be replaced?
+            </param>
+            <returns>
+              True if the component was added successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.InsertNew``1(System.Int32,System.Boolean)">
+            <summary>
+              Inserts a component at the given index in the stack.
+            </summary>
+            <typeparam name="T">
+              The component type to add.
+            </typeparam>
+            <param name="index">
+              The index to insert the component.
+            </param>
+            <param name="replace">
+              Should an already existing component of the same type be replaced?
+            </param>
+            <returns>
+              True if the component was added successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.InsertRange(System.Int32,System.Collections.Generic.IEnumerable{MiCore.MiComponent},System.Boolean)">
+            <summary>
+              Inserts a range of components to the stack at the given index.
+            </summary>
+            <param name="index">
+              The index to insert the components.
+            </param>
+            <param name="comps">
+              The component range to add.
+            </param>
+            <param name="replace">
+              If an already existing component should be replaced.
+            </param>
+            <returns>
+              True if comps is not null and all componenta were added successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.InsertRange(System.Int32,MiCore.ComponentStack,System.Boolean)">
+            <summary>
+              Inserts a range of components from another stack at the given index.
+            </summary>
+            <param name="index">
+              The index to insert the components.
+            </param>
+            <param name="stack">
+              The component stack to add.
+            </param>
+            <param name="replace">
+              If an already existing component should be replaced.
+            </param>
+            <returns>
+              True if stack is not null and all componenta were added successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.Remove``1">
+            <summary>
+              Removes the component with the given type.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              True if there was a component with the given type and it was removed,
+              otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.Remove(System.Int32)">
+            <summary>
+              Removes the component at the given index.
+            </summary>
+            <param name="index">
+              The component index.
+            </param>
+            <returns>
+              True if index was in range and the component was removed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.Remove(System.String)">
+            <summary>
+              Removes the component with the given type name.
+            </summary>
+            <param name="typename">
+              The component type name.
+            </param>
+            <returns>
+              True if the component existed and was removed successfully.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.Release``1">
+            <summary>
+              Releases the component with the given type without disposing it.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              The released component or null if nothing was removed.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.Release(System.Int32)">
+            <summary>
+              Releases the component at the given index.
+            </summary>
+            <param name="index">
+              The component index.
+            </param>
+            <returns>
+              The released component or null if index is out of range.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.Release(System.String)">
+            <summary>
+              Removes the component with the given type name.
+            </summary>
+            <param name="typename">
+              The component type name.
+            </param>
+            <returns>
+              True if the component existed and was removed successfully.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.Clear">
+            <summary>
+              Clears all components from the stack.
+            </summary>
+        </member>
+        <member name="M:MiCore.ComponentStack.OnUpdate(System.Single)">
+            <summary>
+              Updates the stack and components.
+            </summary>
+            <param name="dt">
+              Delta time.
+            </param>
+        </member>
+        <member name="M:MiCore.ComponentStack.OnDraw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
+            <summary>
+              Draws the stack and components.
+            </summary>
+            <param name="target">
+              The render target.
+            </param>
+            <param name="states">
+              Render states.
+            </param>
+        </member>
+        <member name="M:MiCore.ComponentStack.OnDispose">
+            <summary>
+              Disposes of the object.
+            </summary>
+        </member>
+        <member name="M:MiCore.ComponentStack.LoadFromStream(System.IO.BinaryReader)">
+            <summary>
+              Attempts to deserialize the object from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>  
+        </member>
+        <member name="M:MiCore.ComponentStack.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+              Attempts to serialize the object to the stream.
+            </summary>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.LoadFromXml(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load the object from the xml element.
+            </summary>
+            <param name="element">
+              The xml element.
+            </param>
+            <returns>
+              True if the object loaded successfully or false on failure.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.ToString">
+            <summary>
+              Gets the object xml string.
+            </summary>
+            <returns>
+              The xml string of the object.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.Clone">
+            <summary>
+              Returns a copy of this object.
+            </summary>
+            <returns>
+              A copy of this object.
+            </returns>
+        </member>
+        <member name="M:MiCore.ComponentStack.GetEnumerator">
+            <summary>
+              Gets an enumerator that can be used to iterate through the components.
+            </summary>
+            <returns>
+              An enumerator that can be used to iterate through the component collection.
+            </returns>
+        </member>
+        <member name="T:MiCore.IDatabase`3">
             <summary>
               Interface for databases.
             </summary>
             <typeparam name="T">
               Data type.
-            </typeparam>
-            <typeparam name="SerialDataT">
-              Serialization data type.
             </typeparam>
             <typeparam name="ReadT">
               The type used to deserialize from a stream.
@@ -244,12 +924,12 @@
               The type used to serialize to a stream.
             </typeparam>
         </member>
-        <member name="P:MiCore.IDatabase`4.FilePath">
+        <member name="P:MiCore.IDatabase`3.FilePath">
             <summary>
               File path used for serialization.
             </summary>
         </member>
-        <member name="P:MiCore.IDatabase`4.Item(System.String)">
+        <member name="P:MiCore.IDatabase`3.Item(System.String)">
             <summary>
               Element accessor.
             </summary>
@@ -257,22 +937,22 @@
               The key of the element to access.
             </param>
         </member>
-        <member name="P:MiCore.IDatabase`4.Empty">
+        <member name="P:MiCore.IDatabase`3.Empty">
             <summary>
               If the database is empty.
             </summary>
         </member>
-        <member name="P:MiCore.IDatabase`4.Count">
+        <member name="P:MiCore.IDatabase`3.Count">
             <summary>
               The amount of elements the database contains.
             </summary>
         </member>
-        <member name="P:MiCore.IDatabase`4.Keys">
+        <member name="P:MiCore.IDatabase`3.Keys">
             <summary>
               List of element keys.
             </summary>
         </member>
-        <member name="M:MiCore.IDatabase`4.Contains(System.String)">
+        <member name="M:MiCore.IDatabase`3.Contains(System.String)">
             <summary>
               If the database contains an element with the given key.
             </summary>
@@ -284,7 +964,7 @@
               false otherwise.
             </returns>
         </member>
-        <member name="M:MiCore.IDatabase`4.Get(System.String)">
+        <member name="M:MiCore.IDatabase`3.Get(System.String)">
             <summary>
               Gets the element with the given key.
             </summary>
@@ -295,7 +975,7 @@
               The element with the given key or null if one does not exist.
             </returns>
         </member>
-        <member name="M:MiCore.IDatabase`4.Set(System.String,`0)">
+        <member name="M:MiCore.IDatabase`3.Set(System.String,`0)">
             <summary>
               Replaces the element with the given key.
             </summary>
@@ -310,7 +990,7 @@
               it was successfully replaced, otherwise false.
             </returns>
         </member>
-        <member name="M:MiCore.IDatabase`4.Add(System.String,`0,System.Boolean)">
+        <member name="M:MiCore.IDatabase`3.Add(System.String,`0,System.Boolean)">
             <summary>
               Adds an element to the database, optionally replacing an existing
               element with the same key.
@@ -330,7 +1010,7 @@
               otherwise false.
             </returns>
         </member>
-        <member name="M:MiCore.IDatabase`4.Remove(System.String)">
+        <member name="M:MiCore.IDatabase`3.Remove(System.String)">
             <summary>
               Removes the element with the given key from the database.
             </summary>
@@ -342,23 +1022,23 @@
               it was removed successfully, otherwise false.
             </returns>
         </member>
-        <member name="M:MiCore.IDatabase`4.Clear">
+        <member name="M:MiCore.IDatabase`3.Clear">
             <summary>
               Removes all elements from the database.
             </summary>
         </member>
-        <member name="M:MiCore.IDatabase`4.LoadFromFile">
+        <member name="M:MiCore.IDatabase`3.LoadFromFile">
             <summary>
-              Loads the database from <see cref="P:MiCore.IDatabase`4.FilePath"/>.
+              Loads the database from <see cref="P:MiCore.IDatabase`3.FilePath"/>.
             </summary>
             <returns>
               True if the database was loaded successfully from file and false
               otherwise.
             </returns>
         </member>
-        <member name="M:MiCore.IDatabase`4.SaveToFile(System.Boolean)">
+        <member name="M:MiCore.IDatabase`3.SaveToFile(System.Boolean)">
             <summary>
-              Saves the database to <see cref="P:MiCore.IDatabase`4.FilePath"/>.
+              Saves the database to <see cref="P:MiCore.IDatabase`3.FilePath"/>.
             </summary>
             <param name="overwrite">
               If an already existing file should be overwritten.
@@ -368,15 +1048,12 @@
               otherwise.
             </returns>
         </member>
-        <member name="T:MiCore.IDisposableDatabase`4">
+        <member name="T:MiCore.IDisposableDatabase`3">
             <summary>
               Interface for disposable databases.
             </summary>
             <typeparam name="T">
               Disposable data type.
-            </typeparam>
-            <typeparam name="SerialDataT">
-              Serialization data type.
             </typeparam>
             <typeparam name="ReadT">
               The type used to deserialize from a stream.
@@ -417,15 +1094,12 @@
               Disposable data type.
             </typeparam>
         </member>
-        <member name="T:MiCore.Database`4">
+        <member name="T:MiCore.Database`3">
             <summary>
               Base class for databases.
             </summary>
             <typeparam name="T">
               Data type.
-            </typeparam>
-            <typeparam name="SerialDataT">
-              Serialization data type.
             </typeparam>
             <typeparam name="ReadT">
               The type used to deserialize from a stream.
@@ -434,12 +1108,12 @@
               The type used to serialize to a stream.
             </typeparam>
         </member>
-        <member name="M:MiCore.Database`4.#ctor">
+        <member name="M:MiCore.Database`3.#ctor">
             <summary>
               Constructor
             </summary>
         </member>
-        <member name="M:MiCore.Database`4.#ctor(MiCore.Database{`0,`1,`2,`3})">
+        <member name="M:MiCore.Database`3.#ctor(MiCore.Database{`0,`1,`2})">
             <summary>
               Copy constructor.
             </summary>
@@ -447,12 +1121,12 @@
               The database to copy from.
             </param>
         </member>
-        <member name="P:MiCore.Database`4.FilePath">
+        <member name="P:MiCore.Database`3.FilePath">
             <summary>
               File path used for serialization.
             </summary>
         </member>
-        <member name="P:MiCore.Database`4.Item(System.String)">
+        <member name="P:MiCore.Database`3.Item(System.String)">
             <summary>
               Element accessor.
             </summary>
@@ -460,27 +1134,22 @@
               The key of the element to access.
             </param>
         </member>
-        <member name="P:MiCore.Database`4.Empty">
+        <member name="P:MiCore.Database`3.Empty">
             <summary>
               If the database is empty.
             </summary>
         </member>
-        <member name="P:MiCore.Database`4.Count">
+        <member name="P:MiCore.Database`3.Count">
             <summary>
               The amount of elements the database contains.
             </summary>
         </member>
-        <member name="P:MiCore.Database`4.Keys">
+        <member name="P:MiCore.Database`3.Keys">
             <summary>
               List of element keys.
             </summary>
         </member>
-        <member name="P:MiCore.Database`4.FileData">
-            <summary>
-              The object serialized into its data type.
-            </summary>
-        </member>
-        <member name="M:MiCore.Database`4.Contains(System.String)">
+        <member name="M:MiCore.Database`3.Contains(System.String)">
             <summary>
               If the database contains an element with the given key.
             </summary>
@@ -492,7 +1161,7 @@
               false otherwise.
             </returns>
         </member>
-        <member name="M:MiCore.Database`4.Get(System.String)">
+        <member name="M:MiCore.Database`3.Get(System.String)">
             <summary>
               Gets the element with the given key.
             </summary>
@@ -503,7 +1172,7 @@
               The element with the given key or null if one does not exist.
             </returns>
         </member>
-        <member name="M:MiCore.Database`4.Set(System.String,`0)">
+        <member name="M:MiCore.Database`3.Set(System.String,`0)">
             <summary>
               Replaces the element with the given key.
             </summary>
@@ -518,7 +1187,7 @@
               it was successfully replaced, otherwise false.
             </returns>
         </member>
-        <member name="M:MiCore.Database`4.Add(System.String,`0,System.Boolean)">
+        <member name="M:MiCore.Database`3.Add(System.String,`0,System.Boolean)">
             <summary>
               Adds an element to the database, optionally replacing an existing
               element with the same key.
@@ -538,7 +1207,7 @@
               otherwise false.
             </returns>
         </member>
-        <member name="M:MiCore.Database`4.Remove(System.String)">
+        <member name="M:MiCore.Database`3.Remove(System.String)">
             <summary>
               Removes the element with the given key from the database.
             </summary>
@@ -550,12 +1219,12 @@
               it was removed successfully, otherwise false.
             </returns>
         </member>
-        <member name="M:MiCore.Database`4.Clear">
+        <member name="M:MiCore.Database`3.Clear">
             <summary>
               Removes all elements from the database.
             </summary>
         </member>
-        <member name="M:MiCore.Database`4.LoadFromStream(`2)">
+        <member name="M:MiCore.Database`3.LoadFromStream(`1)">
             <summary>
               Attempts to deserialize the object from the stream.
             </summary>
@@ -566,7 +1235,7 @@
               True if deserialization succeeded and false otherwise.
             </returns>
         </member>
-        <member name="M:MiCore.Database`4.SaveToStream(`3)">
+        <member name="M:MiCore.Database`3.SaveToStream(`2)">
             <summary>
               Attempts to serialize the object to the stream.
             </summary>
@@ -577,18 +1246,18 @@
               True if serialization succeeded and false otherwise.
             </returns>
         </member>
-        <member name="M:MiCore.Database`4.LoadFromFile">
+        <member name="M:MiCore.Database`3.LoadFromFile">
             <summary>
-              Loads the database from <see cref="P:MiCore.Database`4.FilePath"/>.
+              Loads the database from <see cref="P:MiCore.Database`3.FilePath"/>.
             </summary>
             <returns>
               True if the database was loaded successfully from file and false
               otherwise.
             </returns>
         </member>
-        <member name="M:MiCore.Database`4.SaveToFile(System.Boolean)">
+        <member name="M:MiCore.Database`3.SaveToFile(System.Boolean)">
             <summary>
-              Saves the database to <see cref="P:MiCore.Database`4.FilePath"/>.
+              Saves the database to <see cref="P:MiCore.Database`3.FilePath"/>.
             </summary>
             <param name="overwrite">
               If an already existing file should be overwritten.
@@ -598,7 +1267,7 @@
               otherwise.
             </returns>
         </member>
-        <member name="M:MiCore.Database`4.GetEnumerator">
+        <member name="M:MiCore.Database`3.GetEnumerator">
             <summary>
               Returns an enumerator that iterates through the collection.
             </summary>
@@ -606,7 +1275,7 @@
               An enumerator that iterates through the collection.
             </returns>
         </member>
-        <member name="M:MiCore.Database`4.System#Collections#IEnumerable#GetEnumerator">
+        <member name="M:MiCore.Database`3.System#Collections#IEnumerable#GetEnumerator">
             <summary>
               Returns an enumerator that iterates through the collection.
             </summary>
@@ -614,20 +1283,17 @@
               An enumerator that iterates through the collection.
             </returns>
         </member>
-        <member name="F:MiCore.Database`4.m_db">
+        <member name="F:MiCore.Database`3.m_db">
             <summary>
               Collection of database elements indexed by their string key.
             </summary>
         </member>
-        <member name="T:MiCore.DisposableDatabase`4">
+        <member name="T:MiCore.DisposableDatabase`3">
             <summary>
               Base class for disposable databases.
             </summary>
             <typeparam name="T">
               Disposable data type.
-            </typeparam>
-            <typeparam name="SerialDataT">
-              Serialization data type.
             </typeparam>
             <typeparam name="ReadT">
               The type used to deserialize from a stream.
@@ -636,12 +1302,12 @@
               The type used to serialize to a stream.
             </typeparam>
         </member>
-        <member name="M:MiCore.DisposableDatabase`4.#ctor">
+        <member name="M:MiCore.DisposableDatabase`3.#ctor">
             <summary>
               Constructor.
             </summary>
         </member>
-        <member name="M:MiCore.DisposableDatabase`4.#ctor(MiCore.DisposableDatabase{`0,`1,`2,`3})">
+        <member name="M:MiCore.DisposableDatabase`3.#ctor(MiCore.DisposableDatabase{`0,`1,`2})">
             <summary>
               Copy constructor.
             </summary>
@@ -649,7 +1315,7 @@
               The database to copy from.
             </param>
         </member>
-        <member name="M:MiCore.DisposableDatabase`4.Remove(System.String)">
+        <member name="M:MiCore.DisposableDatabase`3.Remove(System.String)">
             <summary>
               Disposes and removes the element with the given key from the
               database.
@@ -662,12 +1328,12 @@
               it was removed successfully, otherwise false.
             </returns>
         </member>
-        <member name="M:MiCore.DisposableDatabase`4.Clear">
+        <member name="M:MiCore.DisposableDatabase`3.Clear">
             <summary>
               Removes all elements from the database.
             </summary>
         </member>
-        <member name="M:MiCore.DisposableDatabase`4.Dispose">
+        <member name="M:MiCore.DisposableDatabase`3.Dispose">
             <summary>
               Performs application-defined tasks associated with freeing, 
               releasing, or resetting unmanaged resources.
@@ -992,197 +1658,90 @@
               The singleton instance.
             </summary>
         </member>
-        <member name="T:MiCore.Entity">
+        <member name="T:MiCore.MiEntity">
             <summary>
               Base class for all game objects.
             </summary>
         </member>
-        <member name="M:MiCore.Entity.#ctor">
+        <member name="M:MiCore.MiEntity.#ctor">
             <summary>
               Constructor.
             </summary>
         </member>
-        <member name="M:MiCore.Entity.#ctor(System.String)">
+        <member name="M:MiCore.MiEntity.#ctor(MiCore.MiEntity)">
             <summary>
-              Constructor setting the object ID.
+              Copy constructor.
+            </summary>
+            <param name="ent">
+              Entity to copy.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+              Inherited from <see cref="M:MiCore.MiObject.#ctor(MiCore.MiObject)"/>.
+            </exception>
+        </member>
+        <member name="M:MiCore.MiEntity.#ctor(SFML.Graphics.RenderWindow)">
+            <summary>
+              Constructor setting the target render window.
+            </summary>
+            <param name="window">
+              The target window.
+            </param>
+        </member>
+        <member name="M:MiCore.MiEntity.#ctor(System.String,SFML.Graphics.RenderWindow)">
+            <summary>
+              Constructor setting the object ID and optionally the target render window.
             </summary>
             <param name="id">
-              The object ID. Will be converted to a valid ID if needed.
-            </param>
-        </member>
-        <member name="P:MiCore.Entity.ID">
-            <summary>
               The object ID.
-            </summary>
-        </member>
-        <member name="P:MiCore.Entity.Empty">
-            <summary>
-              If the entity contains no components.
-            </summary>
-        </member>
-        <member name="P:MiCore.Entity.Count">
-            <summary>
-              The amount of components the entity contains.
-            </summary>
-        </member>
-        <member name="M:MiCore.Entity.Contains``1">
-            <summary>
-              Checks if the entity contains a component of the given type.
-            </summary>
-            <typeparam name="T">
-              The component type.
-            </typeparam>
-            <returns>
-              True if the entity contains a component with the given type, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.Entity.Contains(System.String)">
-            <summary>
-              Checks if the entity contains a component with the given type name.
-            </summary>
-            <param name="type">
-              The component type name.
             </param>
-            <returns>
-              True if the entity contains a component with the given type name, 
-              otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.Entity.IndexOf``1">
-            <summary>
-              Gets the index of the component with the given type.
-            </summary>
-            <typeparam name="T">
-              The component type.
-            </typeparam>
-            <returns>
-              A non-negative index if the entity contains a component with the given type,
-              otherwise -1.
-            </returns>
-        </member>
-        <member name="M:MiCore.Entity.IndexOf(System.String)">
-            <summary>
-              Gets the index of the component with the given type name.
-            </summary>
-            <param name="type">
-              The component type name.
+            <param name="window">
+              The target window.
             </param>
-            <returns>
-              A non-negative index if the entity contains a component with the given type name,
-              otherwise -1.
-            </returns>
         </member>
-        <member name="M:MiCore.Entity.Get(System.Int32)">
+        <member name="M:MiCore.MiEntity.#ctor(System.String,System.String,SFML.Graphics.RenderWindow)">
             <summary>
-              Gets the component at the given index.
+              Constructor setting the object ID, name and optionally the target render window.
             </summary>
-            <param name="index">
-              The component index.
+            <param name="id">
+              The object ID.
             </param>
-            <returns>
-              The component at the given index or null if the index is out of range.
-            </returns>
-        </member>
-        <member name="M:MiCore.Entity.Get(System.String)">
-            <summary>
-              Gets the component with the given type name.
-            </summary>
-            <param name="typename">
-              The component type name.
+            <param name="name">
+              The object name.
             </param>
-            <returns>
-              The component with the given type name if it exists, otherwise null.
-            </returns>
-        </member>
-        <member name="M:MiCore.Entity.Get``1">
-            <summary>
-              Gets the component with the given type.
-            </summary>
-            <typeparam name="T">
-              The component type.
-            </typeparam>
-            <returns>
-              The component with the given type or null if it does not exist.
-            </returns>
-        </member>
-        <member name="M:MiCore.Entity.Add(MiCore.Component,System.Boolean)">
-            <summary>
-              Adds a component to the entity.
-            </summary>
-            <param name="comp">
-              The component to add.
+            <param name="window">
+              The target window.
             </param>
-            <param name="replace">
-              If an already existing component should be replaced.
+        </member>
+        <member name="P:MiCore.MiEntity.Components">
+            <summary>
+              Entity component stack.
+            </summary>
+        </member>
+        <member name="P:MiCore.MiEntity.Window">
+            <summary>
+              A reference to the target render window.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiEntity.TextEntered(SFML.Window.TextEventArgs)">
+            <summary>
+              To be called on TextEntered event. Calls <see cref="M:MiCore.MiComponent.OnTextEntered(SFML.Window.TextEventArgs)"/>
+              for all enabled components for this entity and all child entities.
+            </summary>
+            <param name="e">
+              The event args.
             </param>
-            <returns>
-              True if the component was added successfully, otherwise false.
-            </returns>
         </member>
-        <member name="M:MiCore.Entity.Add``1(System.Boolean)">
+        <member name="M:MiCore.MiEntity.OnUpdate(System.Single)">
             <summary>
-              Adds a new component to the entity.
-            </summary>
-            <typeparam name="T">
-              The component type to add.
-            </typeparam>
-            <param name="replace">
-              Should an already existing component of the same type be replaced?
-            </param>
-            <returns>
-              True if the component was added successfully, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.Entity.Remove``1">
-            <summary>
-              Removes the component with the given type.
-            </summary>
-            <typeparam name="T">
-              The component type.
-            </typeparam>
-            <returns>
-              True if there was a component with the given type and it was removed,
-              otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.Entity.Remove(System.Int32)">
-            <summary>
-              Removes the component at the given index.
-            </summary>
-            <param name="index">
-              The component index.
-            </param>
-            <returns>
-              True if index was in range and the component was removed, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.Entity.Remove(System.String)">
-            <summary>
-              Removes the component with the given type name.
-            </summary>
-            <param name="typename">
-              The component type name.
-            </param>
-            <returns>
-              True if the component existed and was removed successfully.
-            </returns>
-        </member>
-        <member name="M:MiCore.Entity.Clear">
-            <summary>
-              Clears all components from the entity.
-            </summary>
-        </member>
-        <member name="M:MiCore.Entity.OnUpdate(System.Single)">
-            <summary>
-              Updates the entity and components.
+              Updates the component stack and children.
             </summary>
             <param name="dt">
               Delta time.
             </param>
         </member>
-        <member name="M:MiCore.Entity.OnDraw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
+        <member name="M:MiCore.MiEntity.OnDraw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
             <summary>
-              Draws the entity and components.
+              Draws the component stack and children.
             </summary>
             <param name="target">
               The render target.
@@ -1191,14 +1750,14 @@
               Render states.
             </param>
         </member>
-        <member name="M:MiCore.Entity.Dispose">
+        <member name="M:MiCore.MiEntity.OnDispose">
             <summary>
-              Disposes of the object.
+              Disposes of the object and children.
             </summary>
         </member>
-        <member name="M:MiCore.Entity.LoadFromStream(System.IO.BinaryReader)">
+        <member name="M:MiCore.MiEntity.LoadFromStream(System.IO.BinaryReader)">
             <summary>
-              Attempts to deserialize the entity from the stream.
+              Attempts to deserialize the object from the stream.
             </summary>
             <param name="sr">
               Stream reader.
@@ -1207,7 +1766,7 @@
               True if deserialization succeeded and false otherwise.
             </returns>  
         </member>
-        <member name="M:MiCore.Entity.SaveToStream(System.IO.BinaryWriter)">
+        <member name="M:MiCore.MiEntity.SaveToStream(System.IO.BinaryWriter)">
             <summary>
               Attempts to serialize the object to the stream.
             </summary>
@@ -1218,7 +1777,7 @@
               True if serialization succeeded and false otherwise.
             </returns>
         </member>
-        <member name="M:MiCore.Entity.LoadFromXml(System.Xml.XmlElement)">
+        <member name="M:MiCore.MiEntity.LoadFromXml(System.Xml.XmlElement)">
             <summary>
               Attempts to load the object from the xml element.
             </summary>
@@ -1229,7 +1788,18 @@
               True if the object loaded successfully or false on failure.
             </returns>
         </member>
-        <member name="M:MiCore.Entity.ToString">
+        <member name="M:MiCore.MiEntity.Equals(MiCore.MiEntity)">
+            <summary>
+              Checks if this object is equal to another.
+            </summary>
+            <param name="other">
+              The object to check against.
+            </param>
+            <returns>
+              True if the given object is concidered equal to this object, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.ToString">
             <summary>
               Gets the object xml string.
             </summary>
@@ -1237,12 +1807,12 @@
               The xml string of the object.
             </returns>
         </member>
-        <member name="M:MiCore.Entity.GetEnumerator">
+        <member name="M:MiCore.MiEntity.Clone">
             <summary>
-              Gets an enumerator that can be used to iterate through the components.
+              Returns a copy of this object.
             </summary>
             <returns>
-              An enumerator that can be used to iterate through the component collection.
+              A copy of this object.
             </returns>
         </member>
         <member name="T:MiCore.IIdentifiable`1">
@@ -1252,7 +1822,7 @@
         </member>
         <member name="P:MiCore.IIdentifiable`1.ID">
             <summary>
-              The name of the object.
+              The object ID.
             </summary>
         </member>
         <member name="T:MiCore.Identifiable">
@@ -1336,6 +1906,389 @@
             <returns>
               A random ID with the given length or `string.Empty` if length is zero.
             </returns>
+        </member>
+        <member name="T:MiCore.JobManager">
+            <summary>
+              Priority based job manager.
+            </summary>
+        </member>
+        <member name="F:MiCore.JobManager.MaxPriority">
+            <summary>
+              Maximum job priority.
+            </summary>
+        </member>
+        <member name="M:MiCore.JobManager.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiCore.JobManager.#ctor(MiCore.JobManager)">
+            <summary>
+              Copy constructor.
+            </summary>
+            <param name="sys">
+              Object to copy.
+            </param>
+        </member>
+        <member name="P:MiCore.JobManager.Empty">
+            <summary>
+              If the job system contains no jobs.
+            </summary>
+        </member>
+        <member name="P:MiCore.JobManager.Count">
+            <summary>
+              The amount of registered job priorities.
+            </summary>
+        </member>
+        <member name="M:MiCore.JobManager.HasJob(System.UInt32)">
+            <summary>
+              If a job is registered to the priority.
+            </summary>
+            <param name="priority">
+              The job priority.
+            </param>
+            <returns>
+              True if the system contains a job with the given priority, otherwise null.
+            </returns>
+        </member>
+        <member name="M:MiCore.JobManager.JobCount(System.UInt32)">
+            <summary>
+              Gets the amount of jobs registered to the given priority.
+            </summary>
+            <param name="priority">
+              Job priority.
+            </param>
+            <returns>
+              The amount of jobs registered to the priority.
+            </returns>
+        </member>
+        <member name="M:MiCore.JobManager.Get(System.UInt32)">
+            <summary>
+              Gets the jobs registered to the given priority.
+            </summary>
+            <param name="priority">
+              Job priority.
+            </param>
+            <returns>
+              The jobs registered to the given priority.
+            </returns>
+        </member>
+        <member name="M:MiCore.JobManager.GetUpTo(System.UInt32,System.Boolean)">
+            <summary>
+              Gets all jobs up to and optionally including the given priority.
+            </summary>
+            <param name="priority">
+              Job priority.
+            </param>
+            <param name="inclusive">
+              Include priority too?
+            </param>
+            <returns>
+              All jobs up to (and including if <paramref name="inclusive"/> is true) the given
+              priority.
+            </returns>
+        </member>
+        <member name="M:MiCore.JobManager.GetFrom(System.UInt32,System.Boolean)">
+            <summary>
+              Gets all jobs after and optionally including the given priority.
+            </summary>
+            <param name="priority">
+              The priority to start from.
+            </param>
+            <param name="inclusive">
+              Include priority too?
+            </param>
+            <returns>
+              All jobs from (and including if <paramref name="inclusive"/> is true) the given
+              priority.
+            </returns>
+        </member>
+        <member name="M:MiCore.JobManager.GetAll">
+            <summary>
+              Gets all jobs in priority order.
+            </summary>
+            <returns>
+              All jobs in priority order.
+            </returns>
+        </member>
+        <member name="M:MiCore.JobManager.Run(MiCore.MiEntity,System.UInt32)">
+            <summary>
+              Runs all jobs of a given priority on the entity and its children.
+            </summary>
+            <param name="e">
+              The entity to run the job on.
+            </param>
+            <param name="priority">
+              The job priority.
+            </param>
+        </member>
+        <member name="M:MiCore.JobManager.RunUpTo(MiCore.MiEntity,System.UInt32,System.Boolean)">
+            <summary>
+              Runs all jobs up to a given priority on the entity and its children.
+            </summary>
+            <param name="e">
+              The entity to run the job on.
+            </param>
+            <param name="priority">
+              The job priority.
+            </param>
+            <param name="inclusive">
+              Include priority too?
+            </param>
+        </member>
+        <member name="M:MiCore.JobManager.RunFrom(MiCore.MiEntity,System.UInt32,System.Boolean)">
+            <summary>
+              Runs all jobs from a given priority on the entity and its children.
+            </summary>
+            <param name="e">
+              The entity to run the job on.
+            </param>
+            <param name="priority">
+              The job priority.
+            </param>
+            <param name="inclusive">
+              Include priority too?
+            </param>
+        </member>
+        <member name="M:MiCore.JobManager.RunAll(MiCore.MiEntity)">
+            <summary>
+              Runs all jobs on the entity and its children.
+            </summary>
+            <param name="e">
+              The entity to run the job on.
+            </param>
+        </member>
+        <member name="M:MiCore.JobManager.RunASync(MiCore.MiEntity,System.UInt32)">
+            <summary>
+              Asyncronously runs all jobs of a given priority on the entity and its children.
+            </summary>
+            <param name="e">
+              The entity to run the job on.
+            </param>
+            <param name="priority">
+              The job priority.
+            </param>
+        </member>
+        <member name="M:MiCore.JobManager.RunUpToASync(MiCore.MiEntity,System.UInt32,System.Boolean)">
+            <summary>
+              Asyncronously runs all jobs up to a given priority on the entity and its children.
+            </summary>
+            <param name="e">
+              The entity to run the job on.
+            </param>
+            <param name="priority">
+              The job priority.
+            </param>
+            <param name="inclusive">
+              Include priority too?
+            </param>
+        </member>
+        <member name="M:MiCore.JobManager.RunFromASync(MiCore.MiEntity,System.UInt32,System.Boolean)">
+            <summary>
+              Asyncronously runs all jobs from a given priority on the entity and its children.
+            </summary>
+            <param name="e">
+              The entity to run the job on.
+            </param>
+            <param name="priority">
+              The job priority.
+            </param>
+            <param name="inclusive">
+              Include priority too?
+            </param>
+        </member>
+        <member name="M:MiCore.JobManager.RunAllASync(MiCore.MiEntity)">
+            <summary>
+              Asyncronously runs all jobs on the entity and its children.
+            </summary>
+            <param name="e">
+              The entity to run the job on.
+            </param>
+        </member>
+        <member name="M:MiCore.JobManager.Add(System.UInt32,MiCore.JobList)">
+            <summary>
+              Registers the given jobs to the given priority. 
+            </summary>
+            <param name="priority">
+              Job priority.
+            </param>
+            <param name="jobs">
+              The jobs to add.
+            </param>
+            <returns>
+              True if priority is within range, jobs is not null, and all jobs were registered
+              successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.JobManager.Remove(System.UInt32)">
+            <summary>
+              Removes all jobs registered to the given priority.
+            </summary>
+            <param name="priority">
+              Job priority.
+            </param>
+            <returns>
+              True if a job was registered to priority and was removed successfully.
+            </returns>
+        </member>
+        <member name="M:MiCore.JobManager.RemoveUpTo(System.UInt32,System.Boolean)">
+            <summary>
+              Removes all jobs registered up until the given priority.
+            </summary>
+            <param name="priority">
+              Job priority.
+            </param>
+            <param name="inclusive">
+              Include priority too?
+            </param>
+        </member>
+        <member name="M:MiCore.JobManager.RemoveFrom(System.UInt32,System.Boolean)">
+            <summary>
+              Removes all jobs registered after the given priority.
+            </summary>
+            <param name="priority">
+              Job priority.
+            </param>
+            <param name="inclusive">
+              Include priority too?
+            </param>
+        </member>
+        <member name="M:MiCore.JobManager.Remove(System.UInt32,MiCore.JobDelegate[])">
+            <summary>
+              Removes and unregisters the given jobs from the given priority.
+            </summary>
+            <param name="priority">
+              Job priority.
+            </param>
+            <param name="jobs">
+              Jobs to remove.
+            </param>
+        </member>
+        <member name="M:MiCore.JobManager.RemoveAll">
+            <summary>
+              Removes all jobs from all priorities.
+            </summary>
+        </member>
+        <member name="M:MiCore.JobManager.GetEnumerator">
+            <summary>
+              Gets an enumerator that can be used to iterate through the collection.
+            </summary>
+            <returns>
+              An enumerator that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="T:MiCore.JobDelegate">
+            <summary>
+              An job delegate.
+            </summary>
+            <param name="e">
+              Entity to run the job on.
+            </param>
+        </member>
+        <member name="T:MiCore.MiJob">
+            <summary>
+              An asynchronous job.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiJob.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiJob.#ctor(MiCore.MiJob)">
+            <summary>
+              Copy constructor.
+            </summary>
+            <exception cref="T:System.ArgumentNullException">
+              If job is null.
+            </exception>
+        </member>
+        <member name="M:MiCore.MiJob.#ctor(MiCore.JobDelegate)">
+            <summary>
+              Constructor setting the job delegate.
+            </summary>
+            <exception cref="T:System.ArgumentNullException">
+              If job is null.
+            </exception>
+        </member>
+        <member name="E:MiCore.MiJob.Job">
+            <summary>
+              Job event.
+            </summary>
+        </member>
+        <member name="P:MiCore.MiJob.RequiredComponents">
+            <summary>
+              Contains the types of components required by the job.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiJob.Requires(System.String)">
+            <summary>
+              Checks if the job requires a component with the given component name.
+            </summary>
+            <param name="typename">
+              The name of the component to check.
+            </param>
+            <returns>
+              True if the job requires on the given component type name.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiJob.Requires(System.Type)">
+            <summary>
+              Checks if the job requires a component of the given type.
+            </summary>
+            <param name="type">
+              The component type.
+            </param>
+            <returns>
+              True if the job requires on the given component type.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiJob.Requires``1">
+            <summary>
+              Checks if the job requires a component of the given type.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              True if the job requires on the given component type.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiJob.ContainsRequired(MiCore.MiEntity)">
+            <summary>
+              Checks if the entity contains all necessary components needed for the job.
+            </summary>
+            <param name="e">
+              The target entity.
+            </param>
+            <returns>
+              True if the entity contains all necessary components needed for the job, otherwise
+              false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiJob.Add(MiCore.MiJob)">
+            <summary>
+              Adds another jobs' requirements and job delegates to this one.
+            </summary>
+            <param name="job">
+              The job to add.
+            </param>
+        </member>
+        <member name="M:MiCore.MiJob.Run(MiCore.MiEntity)">
+            <summary>
+              Runs the job on the entity and its children.
+            </summary>
+            <param name="e">
+              The target entity.
+            </param>
+        </member>
+        <member name="M:MiCore.MiJob.RunASync(MiCore.MiEntity)">
+            <summary>
+              Runs the job on the entity and its children asyncronously.
+            </summary>
+            <param name="e">
+              The target entity.
+            </param>
         </member>
         <member name="T:MiCore.LogType">
             <summary>
@@ -1447,6 +2400,11 @@
               If the object is visible and should be drawn.
             </summary>
         </member>
+        <member name="P:MiCore.IMiObject.Disposed">
+            <summary>
+              If the object has been disposed.
+            </summary>
+        </member>
         <member name="M:MiCore.IMiObject.Update(System.Single)">
             <summary>
               Updates the object; called once per frame.
@@ -1467,11 +2425,19 @@
         </member>
         <member name="M:MiCore.MiObject.#ctor(MiCore.MiObject)">
             <summary>
-              Copy constructor; "_Copy" will be appended to the end of the ID.
+              Copy constructor.
             </summary>
             <param name="obj">
               The object to copy.
             </param>
+            <exception cref="T:System.ArgumentNullException">
+              If <paramref name="obj"/> is null
+            </exception>
+        </member>
+        <member name="P:MiCore.MiObject.Disposed">
+            <summary>
+              If the object has been disposed.
+            </summary>
         </member>
         <member name="P:MiCore.MiObject.Enabled">
             <summary>
@@ -1493,7 +2459,7 @@
         </member>
         <member name="M:MiCore.MiObject.Draw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
             <summary>
-              Draws the object to the render target if visible.
+              Draws the object to the render target if visible; called once per frame.
             </summary>
             <param name="target">
               Render target.
@@ -1504,7 +2470,7 @@
         </member>
         <member name="M:MiCore.MiObject.OnUpdate(System.Single)">
             <summary>
-              Override this with the object logic.
+              Called by <see cref="M:MiCore.MiObject.Update(System.Single)"/> if enabled. Override this with the object logic.
             </summary>
             <param name="dt">
               Delta time.
@@ -1512,7 +2478,8 @@
         </member>
         <member name="M:MiCore.MiObject.OnDraw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
             <summary>
-              Override this to draw the object to the render target.
+              Called by <see cref="M:MiCore.MiObject.Draw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)"/> if visible. Override this
+              to draw your the object to the render target.
             </summary>
             <param name="target">
               Render target.
@@ -1558,6 +2525,30 @@
             <summary>
               Disposes of the object.
             </summary>
+        </member>
+        <member name="M:MiCore.MiObject.OnDispose">
+            <summary>
+              Called by Dispose; Override with your disposing and cleanup code if needed.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiObject.Clone">
+            <summary>
+              Returns a deep copy of the object.
+            </summary>
+            <returns>
+              A deep copy of this object.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiObject.Equals(MiCore.MiObject)">
+            <summary>
+              Checks if this object is equal to another.
+            </summary>
+            <param name="other">
+              The object to check against.
+            </param>
+            <returns>
+              True if the given object is concidered equal to this object, otherwise false.
+            </returns>
         </member>
         <member name="T:MiCore.INamable">
             <summary>
@@ -1643,13 +2634,446 @@
               A random name with the given length or `string.Empty` if length is zero.
             </returns>
         </member>
-        <member name="T:MiCore.ISerializable`3">
+        <member name="T:MiCore.MiNode`1">
+            <summary>
+              Base class for tree-based node objects.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiNode`1.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiNode`1.#ctor(MiCore.MiNode{`0})">
+            <summary>
+              Copy constructor.
+            </summary>
+            <remarks>
+              The coppied ID will have "_copy" appended.
+            </remarks>
+            <param name="n">
+              The object to copy.
+            </param>
+        </member>
+        <member name="M:MiCore.MiNode`1.#ctor(System.String,System.String,`0)">
+            <summary>
+              Constructor setting the ID and optionally the name and parent.
+            </summary>
+            <param name="id">
+              Node ID.
+            </param>
+            <param name="name">
+              Node name.
+            </param>
+            <param name="parent">
+              The parent of the node.
+            </param>
+        </member>
+        <member name="P:MiCore.MiNode`1.ID">
+            <summary>
+              The object ID.
+            </summary>
+        </member>
+        <member name="P:MiCore.MiNode`1.Name">
+            <summary>
+              The object name.
+            </summary>
+        </member>
+        <member name="P:MiCore.MiNode`1.Parent">
+            <summary>
+              The owning parent.
+            </summary>
+            <exception cref="T:System.ArgumentException">
+              If trying to set parent to `this` or to a child node.
+            </exception>
+        </member>
+        <member name="P:MiCore.MiNode`1.Parents">
+            <summary>
+              An array containing a bottom-up list of each parent node.
+            </summary>
+        </member>
+        <member name="P:MiCore.MiNode`1.Children">
+            <summary>
+              Gets an array containing child nodes.
+            </summary>
+        </member>
+        <member name="P:MiCore.MiNode`1.AllChildren">
+            <summary>
+              Gets an array containing all child nodes and their children.
+            </summary>
+        </member>
+        <member name="P:MiCore.MiNode`1.HasParent">
+            <summary>
+              If the node has a parent.
+            </summary>
+        </member>
+        <member name="P:MiCore.MiNode`1.HasChildren">
+            <summary>
+              If the node has any children.
+            </summary>
+        </member>
+        <member name="P:MiCore.MiNode`1.ChildCount">
+            <summary>
+              The amount of immediate children the node has.
+            </summary>
+        </member>
+        <member name="P:MiCore.MiNode`1.TotalChildCount">
+            <summary>
+              The total amount of child entities owned by the node and its children.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiNode`1.IsParent(`0)">
+            <summary>
+              Checks up the tree if the node is a parent or a parent of a parent.
+            </summary>
+            <param name="parent">
+              The node to check.
+            </param>
+            <returns>
+              True if the node is a parent or a parent of a parent, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.HasChild(`0,System.Boolean)">
+            <summary>
+              If the node contains the given child.
+            </summary>
+            <param name="e">
+              The child node.
+            </param>
+            <param name="recursive">
+              If children of children should be checked.
+            </param>
+            <returns>
+              True if the node contains the child, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.HasChild(System.String,System.Boolean)">
+            <summary>
+              If the node contains a child with the given ID.
+            </summary>
+            <param name="id">
+              The node ID.
+            </param>
+            <param name="recursive">
+              If children of children should be checked.
+            </param>
+            <returns>
+              True if the node contains a child with the given ID, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.HasChildNamed(System.String,System.Boolean)">
+            <summary>
+              If the node contains a child with the given name.
+            </summary>
+            <param name="name">
+              The node name.
+            </param>
+            <param name="recursive">
+              If children of children should be checked.
+            </param>
+            <returns>
+              True if the node contains a child with the given name, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.GetChild(System.Int32)">
+            <summary>
+              Gets the child node at the given index.
+            </summary>
+            <param name="index">
+              node index.
+            </param>
+            <returns>
+              The node at the given index if it exists, otherwise null.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.GetChild(System.String,System.Boolean)">
+            <summary>
+              Gets the child node with the given ID.
+            </summary>
+            <param name="id">
+              node ID.
+            </param>
+            <param name="recursive">
+              Should child entities be searched recursively.
+            </param>
+            <returns>
+              The node with the given ID if it exists, otherwise null.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.GetFirstChild(System.String,System.Boolean)">
+            <summary>
+              Gets the first child node with the given name.
+            </summary>
+            <param name="name">
+              node name.
+            </param>
+            <param name="recursive">
+              Should child entities be searched recursively.
+            </param>
+            <returns>
+              The node with the given name if it exists, otherwise null.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.GetLastChild(System.String,System.Boolean)">
+            <summary>
+              Gets the last child node with the given name.
+            </summary>
+            <param name="name">
+              node name.
+            </param>
+            <param name="recursive">
+              Should child entities be searched recursively.
+            </param>
+            <returns>
+              The node with the given name if it exists, otherwise null.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.GetChildren(System.String,System.Boolean)">
+            <summary>
+              Gets all child entities with the given name.
+            </summary>
+            <param name="name">
+              node name.
+            </param>
+            <param name="recursive">
+              Should child entities be searched recursively.
+            </param>
+            <returns>
+              All child entities with the given name or an empty array if there are no matches.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.AddChild(`0,System.Boolean)">
+            <summary>
+              Sets an node as a child of this object.
+            </summary>
+            <param name="e">
+              The node to add as child.
+            </param>
+            <param name="replace">
+              If an node with the same ID should be replaced?
+            </param>
+            <returns>
+              True if e is already a child or if it was added successfully, false if e is null, 
+              this, or  e is parent or .
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.AddChildren(`0[])">
+            <summary>
+              Adds multiple child nodes.
+            </summary>
+            <param name="nodes">
+              Nodes to add as children.
+            </param>
+            <returns>
+              True if all nodes were added successfully, otherwise false. Will also return false
+              if <paramref name="nodes"/> is null.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.RemoveChild(`0,System.Boolean)">
+            <summary>
+              Removes and disposes of the node if it is a child.
+            </summary>
+            <param name="e">
+              The child node.
+            </param>
+            <param name="recursive">
+              Should child entities be searched recursively.
+            </param>
+            <returns>
+              True if e was a child and was removed successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.RemoveChild(System.Int32)">
+            <summary>
+              Removes and disposes of the child node at the given index.
+            </summary>
+            <param name="index">
+              The child index.
+            </param>
+            <returns>
+              True if a child existed at the given index and was removed successfully, otherwise
+              false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.RemoveChild(System.String,System.Boolean)">
+            <summary>
+              Removes the child with the given ID.
+            </summary>
+            <param name="id">
+              The child ID.
+            </param>
+            <param name="recursive">
+              Should child entities be searched recursively.
+            </param>
+            <returns>
+              True if a child existed and was removed successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.RemoveAllChildren">
+            <summary>
+              Removes and disposes of all child entities.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiNode`1.ReleaseChild(`0,System.Boolean)">
+            <summary>
+              Removes and returns the node if it is a child.
+            </summary>
+            <param name="ent">
+              The child node.
+            </param>
+            <param name="recursive">
+              Should child entities be searched recursively.
+            </param>
+            <returns>
+              The removed node if it exists, otherwise null.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.ReleaseChild(System.Int32)">
+            <summary>
+              Removes and returns the child node at the given index.
+            </summary>
+            <param name="index">
+              The child index.
+            </param>
+            <returns>
+              The removed node if it exists, otherwise null.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.ReleaseChild(System.String,System.Boolean)">
+            <summary>
+              Removes and returns the child node with the given ID.
+            </summary>
+            <param name="id">
+              The child ID.
+            </param>
+            <param name="recursive">
+              Should child entities be searched recursively.
+            </param>
+            <returns>
+              The removed node if it exists, otherwise null.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.ReleaseAllChildren">
+            <summary>
+              Removes and returns all child entities.
+            </summary>
+            <returns>
+              An array containing the removed child entities.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.ChildIndex(`0)">
+            <summary>
+              Returns the index of the given child node.
+            </summary>
+            <param name="e">
+              The child node.
+            </param>
+            <returns>
+              The index of the child node if it exists, otherwise -1.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.ChildIndex(System.String)">
+            <summary>
+              Returns the index of the given child node.
+            </summary>
+            <param name="id">
+              The child node id.
+            </param>
+            <returns>
+              The index of the child node if it exists, otherwise -1.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.FirstChildIndex(System.String)">
+            <summary>
+              Returns the first index of the child with the given name.
+            </summary>
+            <param name="name">
+              The child node name.
+            </param>
+            <returns>
+              The index of the child node if it exists, otherwise -1.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.LastChildIndex(System.String)">
+            <summary>
+              Returns the last index of the child with the given name.
+            </summary>
+            <param name="name">
+              The child node name.
+            </param>
+            <returns>
+              The index of the child node if it exists, otherwise -1.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.LoadFromStream(System.IO.BinaryReader)">
+            <summary>
+              Attempts to deserialize the node and its children from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>  
+        </member>
+        <member name="M:MiCore.MiNode`1.SaveToStream(System.IO.BinaryWriter)">
+            <summary>
+              Attempts to serialize the node and its chidren to the stream.
+            </summary>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.LoadFromXml(System.Xml.XmlElement)">
+            <summary>
+              Attempts to load the object from the xml element.
+            </summary>
+            <param name="element">
+              The xml element.
+            </param>
+            <returns>
+              True if the object loaded successfully or false on failure.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.ToString">
+            <summary>
+              Gets the object xml string.
+            </summary>
+            <returns>
+              The xml string of the object.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.Equals(`0)">
+            <summary>
+              Checks if this object is equal to another.
+            </summary>
+            <param name="other">
+              The object to check against.
+            </param>
+            <returns>
+              True if the given object is concidered equal to this object, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiNode`1.OnDispose">
+            <summary>
+              Disposes of the object.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiNode`1.GetEnumerator">
+            <summary>
+              Gets an enumerator that can be used to iterate through the child nodes.
+            </summary>
+            <returns>
+              An enumerator that can be used to iterate through the child collection.
+            </returns>
+        </member>
+        <member name="T:MiCore.ISerializable`2">
             <summary>
               Interface for objects that can be serialized/deserialized to/from a file.
             </summary>
-            <typeparam name="DataT">
-              The data type the object is serialized into.
-            </typeparam>
             <typeparam name="ReadT">
               The stream reader type used to deserialize the object from a stream.
             </typeparam>
@@ -1657,12 +3081,7 @@
               The stream writer type used to serialize the object to a stream.
             </typeparam>
         </member>
-        <member name="P:MiCore.ISerializable`3.FileData">
-            <summary>
-              The object serialized into its file data.
-            </summary>
-        </member>
-        <member name="M:MiCore.ISerializable`3.LoadFromStream(`1)">
+        <member name="M:MiCore.ISerializable`2.LoadFromStream(`0)">
             <summary>
               Attempts to deserialize the object from the stream.
             </summary>
@@ -1673,7 +3092,7 @@
               True if deserialization succeeded and false otherwise.
             </returns>
         </member>
-        <member name="M:MiCore.ISerializable`3.SaveToStream(`2)">
+        <member name="M:MiCore.ISerializable`2.SaveToStream(`1)">
             <summary>
               Attempts to serialize the object to the stream.
             </summary>
@@ -1692,6 +3111,12 @@
         <member name="T:MiCore.IBinarySerializable">
             <summary>
               Interface for objects that are be serialized/deserialized to/from binary files.
+            </summary>
+        </member>
+        <member name="T:MiCore.IXmlSerializable">
+            <summary>
+              Interface for objects that are be serialized/deserialized to/from xml files
+              procedurally.
             </summary>
         </member>
         <member name="T:MiCore.IXmlLoadable">
@@ -1715,16 +3140,6 @@
               Base class for objects that are be serialized/deserialized to/from text files.
             </summary>
         </member>
-        <member name="P:MiCore.TextSerializable.FileData">
-            <summary>
-              The object serialized into file data.
-            </summary>
-            <remarks>
-              Used by the default implementation of <see cref="M:MiCore.TextSerializable.SaveToStream(System.IO.StreamWriter)"/>.
-              Throws <see cref="T:System.InvalidOperationException"/> by default so either override this or, 
-              <see cref="M:MiCore.TextSerializable.SaveToStream(System.IO.StreamWriter)"/>.
-            </remarks>
-        </member>
         <member name="M:MiCore.TextSerializable.LoadFromStream(System.IO.StreamReader)">
             <summary>
               Attempts to deserialize the object from the stream.
@@ -1741,14 +3156,22 @@
               Attempts to serialize the object to the stream.
             </summary>
             <remarks>
-              Default implementation attempts to write <see cref="P:MiCore.TextSerializable.FileData"/> to stream so either override this or
-              <see cref="P:MiCore.TextSerializable.FileData"/>.
+              Default implementation attempts to write <see cref="M:MiCore.TextSerializable.ToString"/> to stream so either override this or
+              <see cref="M:MiCore.TextSerializable.ToString"/>.
             </remarks>
             <param name="sw">
               Stream writer.
             </param>
             <returns>
               True if serialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.TextSerializable.ToString">
+            <summary>
+              Returns the object string as it would be written in file.
+            </summary>
+            <returns>
+              The object string as it would be written in file.
             </returns>
         </member>
         <member name="M:MiCore.TextSerializable.FromFile``1(System.String)">
@@ -1789,16 +3212,6 @@
               binary files.
             </summary>
         </member>
-        <member name="P:MiCore.BinarySerializable.FileData">
-            <summary>
-              The object serialized into file data.
-            </summary>
-            <remarks>
-              Used by the default implementation of <see cref="M:MiCore.BinarySerializable.SaveToStream(System.IO.BinaryWriter)"/>.
-              Throws <see cref="T:System.InvalidOperationException"/> by default so either override this or, 
-              <see cref="M:MiCore.BinarySerializable.SaveToStream(System.IO.BinaryWriter)"/>.
-            </remarks>
-        </member>
         <member name="M:MiCore.BinarySerializable.LoadFromStream(System.IO.BinaryReader)">
             <summary>
               Attempts to deserialize the object from the stream.
@@ -1814,10 +3227,6 @@
             <summary>
               Attempts to serialize the object to the stream.
             </summary>
-            <remarks>
-              Default implementation attempts to write <see cref="P:MiCore.BinarySerializable.FileData"/> to stream so either override this or
-              <see cref="P:MiCore.BinarySerializable.FileData"/>.
-            </remarks>
             <param name="sw">
               Stream writer.
             </param>
@@ -1855,6 +3264,34 @@
             <returns>
               True if <paramref name="path"/> is valid and data is successfully written to file, otherwise false. Also
               returns false if a file already exists at <paramref name="path"/> and <paramref name="replace"/> is false.
+            </returns>
+        </member>
+        <member name="T:MiCore.XmlSerializable">
+            <summary>
+              Base class for objects that are be serialized/deserialized to/from 
+              xml files procedurally.
+            </summary>
+        </member>
+        <member name="M:MiCore.XmlSerializable.LoadFromStream(System.Xml.XmlReader)">
+            <summary>
+              Attempts to deserialize the object from the stream.
+            </summary>
+            <param name="sr">
+              Stream reader.
+            </param>
+            <returns>
+              True if deserialization succeeded and false otherwise.
+            </returns>
+        </member>
+        <member name="M:MiCore.XmlSerializable.SaveToStream(System.Xml.XmlWriter)">
+            <summary>
+              Attempts to serialize the object to the stream.
+            </summary>
+            <param name="sw">
+              Stream writer.
+            </param>
+            <returns>
+              True if serialization succeeded and false otherwise.
             </returns>
         </member>
         <member name="T:MiCore.XmlLoadable">
@@ -2057,7 +3494,7 @@
         </member>
         <member name="M:MiCore.Xml.ToString(SFML.System.Vector2f,System.String,System.UInt32)">
             <summary>
-              Gets the vectors' xml string.
+              Gets the vector xml string.
             </summary>
             <param name="vec">
               The vector.
@@ -2074,7 +3511,7 @@
         </member>
         <member name="M:MiCore.Xml.ToString(SFML.System.Vector2i,System.String,System.UInt32)">
             <summary>
-              Gets the vectors' xml string.
+              Gets the vector xml string.
             </summary>
             <param name="vec">
               The vector.
@@ -2091,7 +3528,7 @@
         </member>
         <member name="M:MiCore.Xml.ToString(SFML.System.Vector2u,System.String,System.UInt32)">
             <summary>
-              Gets the vectors' xml string.
+              Gets the vector xml string.
             </summary>
             <param name="vec">
               The vector.
@@ -2108,7 +3545,7 @@
         </member>
         <member name="M:MiCore.Xml.ToString(SFML.Graphics.FloatRect,System.String,System.UInt32)">
             <summary>
-              Gets the rects' xml string.
+              Gets the rect xml string.
             </summary>
             <param name="rect">
               The rect.
@@ -2125,7 +3562,7 @@
         </member>
         <member name="M:MiCore.Xml.ToString(SFML.Graphics.IntRect,System.String,System.UInt32)">
             <summary>
-              Gets the rects' xml string.
+              Gets the rect xml string.
             </summary>
             <param name="rect">
               The rect.
@@ -2142,7 +3579,7 @@
         </member>
         <member name="M:MiCore.Xml.ToString(SFML.Graphics.Color,System.String,System.UInt32)">
             <summary>
-              Gets the rects' xml string.
+              Gets the rect xml string.
             </summary>
             <param name="col">
               The rect.
@@ -2159,7 +3596,7 @@
         </member>
         <member name="M:MiCore.Xml.ToString(SFML.Window.VideoMode,System.String,System.UInt32)">
             <summary>
-              Gets the video modes' xml string.
+              Gets the video mode xml string.
             </summary>
             <param name="vm">
               The video mode.
@@ -2242,13 +3679,13 @@
         </member>
         <member name="M:MiCore.Xml.ToVideoMode(System.Xml.XmlElement)">
             <summary>
-              Attempts to load a color from an xml element.
+              Attempts to load a video mode from an xml element.
             </summary>
             <param name="ele">
               The element to load from.
             </param>
             <returns>
-              A valid color on success or null on failure.
+              A valid video mode on success or null on failure.
             </returns>
         </member>
         <member name="M:MiCore.Xml.Indent(System.String,System.UInt32)">
