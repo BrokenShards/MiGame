@@ -224,14 +224,14 @@
               The object to copy.
             </param>
         </member>
-        <member name="P:MiCore.MiComponent.RequiredComponents">
+        <member name="F:MiCore.MiComponent.RequiredComponents">
             <summary>
-              Contains the types of components required by this component type.
+              Contains the type names of components required by this component type.
             </summary>
         </member>
-        <member name="P:MiCore.MiComponent.IncompatibleComponents">
+        <member name="F:MiCore.MiComponent.IncompatibleComponents">
             <summary>
-              Contains the types of components incompatible with this component type.
+              Contains the type names of components incompatible with this component type.
             </summary>
         </member>
         <member name="P:MiCore.MiComponent.TypeName">
@@ -239,14 +239,46 @@
               The component type name.
             </summary>
         </member>
-        <member name="P:MiCore.MiComponent.Stack">
-            <summary>
-              The component stack that owns the component.
-            </summary>
-        </member>
         <member name="P:MiCore.MiComponent.Parent">
             <summary>
-              The entity that owns the component stack.
+              The entity that owns the component.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiComponent.OnAdd">
+            <summary>
+              Called when the component is added to an entity.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiComponent.OnRemove">
+            <summary>
+              Called when the component is removed from an entity.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiComponent.Refresh">
+            <summary>
+              Refreshes the components visual elements.
+            </summary>
+            <remarks>
+              This method is called before the component is updated and should only set up the
+              component to be displayed. It should contain no logic and not respond to any input.
+            </remarks>
+        </member>
+        <member name="M:MiCore.MiComponent.Update(System.Single)">
+            <summary>
+              Updates the object if enabled; called once per frame.
+            </summary>
+            <param name="dt">
+              Delta time.
+            </param>
+        </member>
+        <member name="M:MiCore.MiComponent.SubscribeEvents">
+            <summary>
+              Subscribe to window events. 
+            </summary>
+        </member>
+        <member name="M:MiCore.MiComponent.UnsubscribeEvents">
+            <summary>
+              Unsubscribe to window events. 
             </summary>
         </member>
         <member name="M:MiCore.MiComponent.Requires(System.String)">
@@ -315,21 +347,34 @@
               True if the component is incompatible with the given component type.
             </returns>
         </member>
-        <member name="M:MiCore.MiComponent.TextEntered(SFML.Window.TextEventArgs)">
+        <member name="M:MiCore.MiComponent.Equals(MiCore.MiComponent)">
             <summary>
-              Called on TextEntered event.
+              Checks if the object is considered equal to this object.
             </summary>
-            <param name="e">
-              The event args.
+            <param name="other">
+              The object to compare to.
             </param>
+            <returns>
+              True if the object is considered equal to this object, otherwise false.
+            </returns>
         </member>
-        <member name="M:MiCore.MiComponent.OnTextEntered(SFML.Window.TextEventArgs)">
+        <member name="M:MiCore.MiComponent.GetRequiredComponents">
             <summary>
-              Override this with your TextEntered logic.
+              Gets the type names of components required by this component type. Used to assign
+              <see cref="F:MiCore.MiComponent.RequiredComponents"/>.
             </summary>
-            <param name="e">
-              The event args.
-            </param>
+            <returns>
+              The type names of components required by this component type.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiComponent.GetIncompatibleComponents">
+            <summary>
+              Gets the type names of components incompatible with this component type. Used to
+              assign <see cref="F:MiCore.MiComponent.IncompatibleComponents"/>.
+            </summary>
+            <returns>
+              The type names of components incompatible with this component type.
+            </returns>
         </member>
         <member name="T:MiCore.ComponentRegister">
             <summary>
@@ -346,49 +391,6 @@
               The register object.
             </summary>
         </member>
-        <member name="P:MiCore.ComponentRegister.Empty">
-            <summary>
-              If no components are registered.
-            </summary>
-        </member>
-        <member name="P:MiCore.ComponentRegister.Count">
-            <summary>
-              The amount of components registered.
-            </summary>
-        </member>
-        <member name="M:MiCore.ComponentRegister.Registered``1">
-            <summary>
-              Checks if the given component type is registered.
-            </summary>
-            <typeparam name="T">
-              The component type.
-            </typeparam>
-            <returns>
-              True if the given component type is registered, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentRegister.Registered(System.String)">
-            <summary>
-              Checks if the given component type name is registered.
-            </summary>
-            <param name="typename">
-              The component type name.
-            </param>
-            <returns>
-              True if the given component type name is registered, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentRegister.Registered(System.Type)">
-            <summary>
-              Checks if the given component type is registered.
-            </summary>
-            <param name="type">
-              The component type.
-            </param>
-            <returns>
-              True if the given component type is registered, otherwise false.
-            </returns>
-        </member>
         <member name="M:MiCore.ComponentRegister.Register``1(System.Boolean)">
             <summary>
               Registers a component type.
@@ -396,518 +398,12 @@
             <typeparam name="T">
               The component type.
             </typeparam>
-            <returns>
-              True if the component type was registered successfully and false otherwise. This will
-              only fail if `T.TypeName` is not a valid ID.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentRegister.Create``1">
-            <summary>
-              Creates a new component of the given type.
-            </summary>
-            <typeparam name="T">
-              The component type.
-            </typeparam>
-            <returns>
-              A new component of the given type or null if unregistered or unable to create.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentRegister.Create(System.String)">
-            <summary>
-              Creates a component from a given type name.
-            </summary>
-            <param name="typename">
-              The component type name.
-            </param>
-            <returns>
-              A new component if the type name was registered, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentRegister.GetEnumerator">
-            <summary>
-              Gets an enumerator to iterate through the collection.
-            </summary>
-            <returns>
-              An enumerator to iterate through the collection.
-            </returns>
-        </member>
-        <member name="T:MiCore.ComponentStack">
-            <summary>
-              Container for storing related components.
-            </summary>
-        </member>
-        <member name="M:MiCore.ComponentStack.#ctor">
-            <summary>
-              Constructor.
-            </summary>
-        </member>
-        <member name="M:MiCore.ComponentStack.#ctor(MiCore.ComponentStack)">
-            <summary>
-              Copy constructor.
-            </summary>
-            <param name="cs">
-              The object to copy.
-            </param>
-            <exception cref="T:System.InvalidOperationException">
-              If unable to add cloned components.
-            </exception>
-        </member>
-        <member name="M:MiCore.ComponentStack.#ctor(MiCore.MiEntity)">
-            <summary>
-              Constructor setting parent entity.
-            </summary>
-            <param name="parent">
-              The owning parent entity
-            </param>
-        </member>
-        <member name="P:MiCore.ComponentStack.Parent">
-            <summary>
-              The owning parent entity.
-            </summary>
-        </member>
-        <member name="P:MiCore.ComponentStack.Empty">
-            <summary>
-              If the stack contains any components.
-            </summary>
-        </member>
-        <member name="P:MiCore.ComponentStack.Count">
-            <summary>
-              The amount of components the stack contains.
-            </summary>
-        </member>
-        <member name="M:MiCore.ComponentStack.GetIncompatibleComponents">
-            <summary>
-              Creates an array containing the names of all components incompatible with the existing
-              components.
-            </summary>
-        </member>
-        <member name="M:MiCore.ComponentStack.IsCompatible``1">
-            <summary>
-              Checks if a given component type is compatible with the current components.
-            </summary>
-            <typeparam name="T">
-              The component type.
-            </typeparam>
-            <returns>
-              True if the component type is registered, compatible and can be added, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.IsCompatible(System.String)">
-            <summary>
-              Checks if a given component type name is compatible with the current components.
-            </summary>
-            <param name="typename">
-              The component type name.
-            </param>
-            <returns>
-              True if the component type is registered, compatible and can be added, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.IsCompatible(MiCore.MiComponent)">
-            <summary>
-              Checks if a given component and its required components are compatible with the 
-              current components.
-            </summary>
-            <param name="comp">
-              The component.
-            </param>
-            <returns>
-              True if the component and its requirements are registered, compatible and can be 
-              added, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.Contains``1">
-            <summary>
-              Checks if the stack contains a component of the given type.
-            </summary>
-            <typeparam name="T">
-              The component type.
-            </typeparam>
-            <returns>
-              True if the stack contains a component with the given type, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.Contains(System.String)">
-            <summary>
-              Checks if the stack contains a component with the given type name.
-            </summary>
-            <param name="type">
-              The component type name.
-            </param>
-            <returns>
-              True if the stack contains a component with the given type name, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.IndexOf``1">
-            <summary>
-              Gets the index of the component with the given type.
-            </summary>
-            <typeparam name="T">
-              The component type.
-            </typeparam>
-            <returns>
-              A non-negative index if the stack contains a component with the given type,
-              otherwise -1.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.IndexOf(System.String)">
-            <summary>
-              Gets the index of the component with the given type name.
-            </summary>
-            <param name="type">
-              The component type name.
-            </param>
-            <returns>
-              A non-negative index if the stack contains a component with the given type name,
-              otherwise -1.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.Get(System.Int32)">
-            <summary>
-              Gets the component at the given index.
-            </summary>
-            <param name="index">
-              The component index.
-            </param>
-            <returns>
-              The component at the given index or null if the index is out of range.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.Get(System.String)">
-            <summary>
-              Gets the component with the given type name.
-            </summary>
-            <param name="typename">
-              The component type name.
-            </param>
-            <returns>
-              The component with the given type name if it exists, otherwise null.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.Get``1">
-            <summary>
-              Gets the component with the given type.
-            </summary>
-            <typeparam name="T">
-              The component type.
-            </typeparam>
-            <returns>
-              The component with the given type or null if it does not exist.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.AddNew``1(System.Boolean)">
-            <summary>
-              Adds a new component to the stack.
-            </summary>
-            <typeparam name="T">
-              The component type to add.
-            </typeparam>
             <param name="replace">
-              Should an already existing component of the same type be replaced?
+              If an already registered type should be replaced.
             </param>
             <returns>
-              True if the component was added successfully, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.Add``1(``0,System.Boolean)">
-            <summary>
-              Adds a new existing component to the stack.
-            </summary>
-            <typeparam name="T">
-              The component type to add.
-            </typeparam>
-            <param name="comp">
-              The component to add.
-            </param>
-            <param name="replace">
-              Should an already existing component of the same type be replaced?
-            </param>
-            <returns>
-              True if the component was added successfully, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.Add(MiCore.MiComponent,System.Boolean)">
-            <summary>
-              Adds a component to the stack.
-            </summary>
-            <param name="comp">
-              The component to add.
-            </param>
-            <param name="replace">
-              If an already existing component should be replaced.
-            </param>
-            <returns>
-              True if the component was added successfully, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.AddRange(System.Collections.Generic.IEnumerable{MiCore.MiComponent},System.Boolean)">
-            <summary>
-              Adds a range of components to the stack.
-            </summary>
-            <param name="comps">
-              The component range to add.
-            </param>
-            <param name="replace">
-              If an already existing component should be replaced.
-            </param>
-            <returns>
-              True if comps is not null and all componenta were added successfully, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.AddRange(MiCore.ComponentStack,System.Boolean)">
-            <summary>
-              Clones and adds a range of components from another stack.
-            </summary>
-            <param name="stack">
-              The component stack to add.
-            </param>
-            <param name="replace">
-              If an already existing component should be replaced.
-            </param>
-            <returns>
-              True if stack is not null and all componenta were added successfully, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.Insert(System.Int32,MiCore.MiComponent,System.Boolean)">
-            <summary>
-              Inserts a component at the given index in the stack.
-            </summary>
-            <param name="index">
-              The index to insert the component. <see cref="M:MiCore.ComponentStack.Add(MiCore.MiComponent,System.Boolean)"/> will be called
-              instead if equals to <see cref="P:MiCore.ComponentStack.Count"/>.
-            </param>
-            <param name="comp">
-              The component to add.
-            </param>
-            <param name="replace">
-              Should an alreadu existing component of the same type be replaced?
-            </param>
-            <returns>
-              True if the component was inserted successfully, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.Insert``1(System.Int32,``0,System.Boolean)">
-            <summary>
-              Inserts a component at the given index in the stack.
-            </summary>
-            <typeparam name="T">
-              The component type to add.
-            </typeparam>
-            <param name="index">
-              The index to insert the component.
-            </param>
-            <param name="comp">
-              The component to add.
-            </param>
-            <param name="replace">
-              Should an already existing component of the same type be replaced?
-            </param>
-            <returns>
-              True if the component was added successfully, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.InsertNew``1(System.Int32,System.Boolean)">
-            <summary>
-              Inserts a component at the given index in the stack.
-            </summary>
-            <typeparam name="T">
-              The component type to add.
-            </typeparam>
-            <param name="index">
-              The index to insert the component.
-            </param>
-            <param name="replace">
-              Should an already existing component of the same type be replaced?
-            </param>
-            <returns>
-              True if the component was added successfully, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.InsertRange(System.Int32,System.Collections.Generic.IEnumerable{MiCore.MiComponent},System.Boolean)">
-            <summary>
-              Inserts a range of components to the stack at the given index.
-            </summary>
-            <param name="index">
-              The index to insert the components.
-            </param>
-            <param name="comps">
-              The component range to add.
-            </param>
-            <param name="replace">
-              If an already existing component should be replaced.
-            </param>
-            <returns>
-              True if comps is not null and all componenta were added successfully, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.InsertRange(System.Int32,MiCore.ComponentStack,System.Boolean)">
-            <summary>
-              Inserts a range of components from another stack at the given index.
-            </summary>
-            <param name="index">
-              The index to insert the components.
-            </param>
-            <param name="stack">
-              The component stack to add.
-            </param>
-            <param name="replace">
-              If an already existing component should be replaced.
-            </param>
-            <returns>
-              True if stack is not null and all componenta were added successfully, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.Remove``1">
-            <summary>
-              Removes the component with the given type.
-            </summary>
-            <typeparam name="T">
-              The component type.
-            </typeparam>
-            <returns>
-              True if there was a component with the given type and it was removed,
-              otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.Remove(System.Int32)">
-            <summary>
-              Removes the component at the given index.
-            </summary>
-            <param name="index">
-              The component index.
-            </param>
-            <returns>
-              True if index was in range and the component was removed, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.Remove(System.String)">
-            <summary>
-              Removes the component with the given type name.
-            </summary>
-            <param name="typename">
-              The component type name.
-            </param>
-            <returns>
-              True if the component existed and was removed successfully.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.Release``1">
-            <summary>
-              Releases the component with the given type without disposing it.
-            </summary>
-            <typeparam name="T">
-              The component type.
-            </typeparam>
-            <returns>
-              The released component or null if nothing was removed.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.Release(System.Int32)">
-            <summary>
-              Releases the component at the given index.
-            </summary>
-            <param name="index">
-              The component index.
-            </param>
-            <returns>
-              The released component or null if index is out of range.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.Release(System.String)">
-            <summary>
-              Removes the component with the given type name.
-            </summary>
-            <param name="typename">
-              The component type name.
-            </param>
-            <returns>
-              True if the component existed and was removed successfully.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.Clear">
-            <summary>
-              Clears all components from the stack.
-            </summary>
-        </member>
-        <member name="M:MiCore.ComponentStack.OnUpdate(System.Single)">
-            <summary>
-              Updates the stack and components.
-            </summary>
-            <param name="dt">
-              Delta time.
-            </param>
-        </member>
-        <member name="M:MiCore.ComponentStack.OnDraw(SFML.Graphics.RenderTarget,SFML.Graphics.RenderStates)">
-            <summary>
-              Draws the stack and components.
-            </summary>
-            <param name="target">
-              The render target.
-            </param>
-            <param name="states">
-              Render states.
-            </param>
-        </member>
-        <member name="M:MiCore.ComponentStack.OnDispose">
-            <summary>
-              Disposes of the object.
-            </summary>
-        </member>
-        <member name="M:MiCore.ComponentStack.LoadFromStream(System.IO.BinaryReader)">
-            <summary>
-              Attempts to deserialize the object from the stream.
-            </summary>
-            <param name="sr">
-              Stream reader.
-            </param>
-            <returns>
-              True if deserialization succeeded and false otherwise.
-            </returns>  
-        </member>
-        <member name="M:MiCore.ComponentStack.SaveToStream(System.IO.BinaryWriter)">
-            <summary>
-              Attempts to serialize the object to the stream.
-            </summary>
-            <param name="sw">
-              Stream writer.
-            </param>
-            <returns>
-              True if serialization succeeded and false otherwise.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.LoadFromXml(System.Xml.XmlElement)">
-            <summary>
-              Attempts to load the object from the xml element.
-            </summary>
-            <param name="element">
-              The xml element.
-            </param>
-            <returns>
-              True if the object loaded successfully or false on failure.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.ToString">
-            <summary>
-              Gets the object xml string.
-            </summary>
-            <returns>
-              The xml string of the object.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.Clone">
-            <summary>
-              Returns a copy of this object.
-            </summary>
-            <returns>
-              A copy of this object.
-            </returns>
-        </member>
-        <member name="M:MiCore.ComponentStack.GetEnumerator">
-            <summary>
-              Gets an enumerator that can be used to iterate through the components.
-            </summary>
-            <returns>
-              An enumerator that can be used to iterate through the component collection.
+              True if the component type was registered successfully; false if `T.TypeName` is not a
+              valid ID or a type is already registered to the ID and replace is false.
             </returns>
         </member>
         <member name="T:MiCore.IDatabase`3">
@@ -1698,42 +1194,429 @@
               The target window.
             </param>
         </member>
-        <member name="M:MiCore.MiEntity.#ctor(System.String,System.String,SFML.Graphics.RenderWindow)">
-            <summary>
-              Constructor setting the object ID, name and optionally the target render window.
-            </summary>
-            <param name="id">
-              The object ID.
-            </param>
-            <param name="name">
-              The object name.
-            </param>
-            <param name="window">
-              The target window.
-            </param>
-        </member>
-        <member name="P:MiCore.MiEntity.Components">
-            <summary>
-              Entity component stack.
-            </summary>
-        </member>
         <member name="P:MiCore.MiEntity.Window">
             <summary>
               A reference to the target render window.
             </summary>
         </member>
-        <member name="M:MiCore.MiEntity.TextEntered(SFML.Window.TextEventArgs)">
+        <member name="M:MiCore.MiEntity.ChangeWindow(SFML.Graphics.RenderWindow)">
             <summary>
-              To be called on TextEntered event. Calls <see cref="M:MiCore.MiComponent.OnTextEntered(SFML.Window.TextEventArgs)"/>
-              for all enabled components for this entity and all child entities.
+              Unsubscribes window events, switches the target window and subscribes window events.
             </summary>
-            <param name="e">
-              The event args.
+            <param name="window">
+              The new target window.
             </param>
+        </member>
+        <member name="P:MiCore.MiEntity.ComponentCount">
+            <summary>
+              The amount of components the stack contains.
+            </summary>
+        </member>
+        <member name="P:MiCore.MiEntity.Components">
+            <summary>
+              Gets an array containing all components owned by the entity.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiEntity.GetIncompatibleComponents">
+            <summary>
+              Creates an array containing the names of all components incompatible with the existing
+              components.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiEntity.IsCompatible``1">
+            <summary>
+              Checks if a given component type is compatible with the current components.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              True if the component type is registered, compatible and can be added, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.IsCompatible(System.String)">
+            <summary>
+              Checks if a given component type name is compatible with the current components.
+            </summary>
+            <param name="typename">
+              The component type name.
+            </param>
+            <returns>
+              True if the component type is registered, compatible and can be added, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.IsCompatible(MiCore.MiComponent)">
+            <summary>
+              Checks if a given component and its required components are compatible with the 
+              current components.
+            </summary>
+            <param name="comp">
+              The component.
+            </param>
+            <returns>
+              True if the component and its requirements are registered, compatible and can be 
+              added, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.HasComponent``1">
+            <summary>
+              Checks if the stack contains a component of the given type.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              True if the stack contains a component with the given type, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.HasComponent(System.String)">
+            <summary>
+              Checks if the stack contains a component with the given type name.
+            </summary>
+            <param name="type">
+              The component type name.
+            </param>
+            <returns>
+              True if the stack contains a component with the given type name, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.ComponentIndex``1">
+            <summary>
+              Gets the index of the component with the given type.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              A non-negative index if the stack contains a component with the given type,
+              otherwise -1.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.ComponentIndex(System.String)">
+            <summary>
+              Gets the index of the component with the given type name.
+            </summary>
+            <param name="type">
+              The component type name.
+            </param>
+            <returns>
+              A non-negative index if the stack contains a component with the given type name,
+              otherwise -1.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.GetComponent(System.Int32)">
+            <summary>
+              Gets the component at the given index.
+            </summary>
+            <param name="index">
+              The component index.
+            </param>
+            <returns>
+              The component at the given index or null if the index is out of range.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.GetComponent(System.String)">
+            <summary>
+              Gets the component with the given type name.
+            </summary>
+            <param name="typename">
+              The component type name.
+            </param>
+            <returns>
+              The component with the given type name if it exists, otherwise null.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.GetComponent``1">
+            <summary>
+              Gets the component with the given type.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              The component with the given type or null if it does not exist.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.GetChildrenWithComponent``1">
+            <summary>
+              Gets all immediate children that contain the given component.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              All immediate children that contain the given component.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.GetChildrenWithComponent(System.String)">
+            <summary>
+              Gets all immediate children that contain the given component.
+            </summary>
+            <param name="typename">
+              The type name of the component.
+            </param>
+            <returns>
+              All immediate children that contain the given component.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.GetAllChildrenWithComponent``1">
+            <summary>
+              Recursively gets all children that contain the given component.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              All immediate children that contain the given component.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.GetAllChildrenWithComponent(System.String)">
+            <summary>
+              Recursively gets all immediate children that contain the given component.
+            </summary>
+            <param name="typename">
+              The type name of the component.
+            </param>
+            <returns>
+              All immediate children that contain the given component.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.GetChildrenWithAny(System.String[])">
+            <summary>
+              Gets all immediate children that contain any of the given components.
+            </summary>
+            <param name="types">
+              The type names of the components.
+            </param>
+            <returns>
+              All immediate children that contain any of the given components.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.GetChildrenWithAll(System.String[])">
+            <summary>
+              Gets all immediate children that contain all of the given components.
+            </summary>
+            <param name="types">
+              The type names of the components.
+            </param>
+            <returns>
+              All immediate children that contain all of the given components.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.GetAllChildrenWithAny(System.String[])">
+            <summary>
+              Recursively gets all children that contain any of the given components.
+            </summary>
+            <param name="types">
+              The type names of the components.
+            </param>
+            <returns>
+              All children that contain any of the given components.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.GetAllChildrenWithAll(System.String[])">
+            <summary>
+              Recursively gets all children that contain all of the given components.
+            </summary>
+            <param name="types">
+              The type names of the components.
+            </param>
+            <returns>
+              All children that contain all of the given components.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.AddNewComponent``1(System.Boolean)">
+            <summary>
+              Adds a new component to the stack.
+            </summary>
+            <typeparam name="T">
+              The component type to add.
+            </typeparam>
+            <param name="replace">
+              Should an already existing component of the same type be replaced?
+            </param>
+            <returns>
+              True if the component was added successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.AddComponent``1(``0,System.Boolean)">
+            <summary>
+              Adds a new existing component to the stack.
+            </summary>
+            <typeparam name="T">
+              The component type to add.
+            </typeparam>
+            <param name="comp">
+              The component to add.
+            </param>
+            <param name="replace">
+              Should an already existing component of the same type be replaced?
+            </param>
+            <returns>
+              True if the component was added successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.AddComponent(MiCore.MiComponent,System.Boolean)">
+            <summary>
+              Adds a component to the stack.
+            </summary>
+            <param name="comp">
+              The component to add.
+            </param>
+            <param name="replace">
+              If an already existing component should be replaced.
+            </param>
+            <returns>
+              True if the component was added successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.AddComponentRange(System.Collections.Generic.IEnumerable{MiCore.MiComponent},System.Boolean)">
+            <summary>
+              Adds a range of components to the stack.
+            </summary>
+            <param name="comps">
+              The component range to add.
+            </param>
+            <param name="replace">
+              If an already existing component should be replaced.
+            </param>
+            <returns>
+              True if comps is not null and all componenta were added successfully, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.MoveComponent(System.Int32,System.Int32)">
+            <summary>
+              Moves a component from one position to another in the list.
+            </summary>
+            <param name="from">
+              The index of the component to move.
+            </param>
+            <param name="to">
+              The destination to move the component. If >= <see cref="P:MiCore.MiEntity.ComponentCount"/>, it will be
+              added onto the end.
+            </param>
+            <returns>
+              True if from and to are within range and the move was successful, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.RemoveComponent``1">
+            <summary>
+              Removes the component with the given type.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              True if there was a component with the given type and it was removed,
+              otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.RemoveComponent(System.Int32)">
+            <summary>
+              Removes the component at the given index.
+            </summary>
+            <param name="index">
+              The component index.
+            </param>
+            <returns>
+              True if index was in range and the component was removed, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.RemoveComponent(System.String)">
+            <summary>
+              Removes the component with the given type name.
+            </summary>
+            <param name="typename">
+              The component type name.
+            </param>
+            <returns>
+              True if the component existed and was removed successfully.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.ReleaseComponent``1">
+            <summary>
+              Releases the component with the given type without disposing it.
+            </summary>
+            <typeparam name="T">
+              The component type.
+            </typeparam>
+            <returns>
+              The released component or null if nothing was removed.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.ReleaseComponent(System.Int32)">
+            <summary>
+              Releases the component at the given index.
+            </summary>
+            <param name="index">
+              The component index.
+            </param>
+            <returns>
+              The released component or null if index is out of range.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.ReleaseComponent(System.String)">
+            <summary>
+              Releases the component with the given type name.
+            </summary>
+            <param name="typename">
+              The component type name.
+            </param>
+            <returns>
+              The released component or null if it does not exist.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.ReleaseAllComponents">
+            <summary>
+              Releases all components into an array and returns it.
+            </summary>
+            <returns>
+              An array containing all released components.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.ClearComponents">
+            <summary>
+              Disposes of and clears all components from the stack.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiEntity.Refresh">
+            <summary>
+              Refreshes components and child entities.
+            </summary>
+        </member>
+        <member name="M:MiCore.MiEntity.Update(System.Single)">
+            <summary>
+              Updates the object if enabled; called once per frame.
+            </summary>
+            <param name="dt">
+              Delta time.
+            </param>
+        </member>
+        <member name="M:MiCore.MiEntity.SubscribeEvents(System.Boolean)">
+            <summary>
+              Subscribe to window events. 
+            </summary>
+            <param name="rec">
+              Recursively subscribe child entity events?
+            </param>
+            <returns>
+              True on success or false on failure.
+            </returns>
+        </member>
+        <member name="M:MiCore.MiEntity.UnsubscribeEvents(System.Boolean)">
+            <summary>
+              Unsubscribe to window events. 
+            </summary>
+            <param name="rec">
+              Recursively unsubscribe child entity events?
+            </param>
+            <returns>
+              True on success or false on failure.
+            </returns>
         </member>
         <member name="M:MiCore.MiEntity.OnUpdate(System.Single)">
             <summary>
-              Updates the component stack and children.
+              Updates components and child entities.
             </summary>
             <param name="dt">
               Delta time.
@@ -1788,6 +1671,14 @@
               True if the object loaded successfully or false on failure.
             </returns>
         </member>
+        <member name="M:MiCore.MiEntity.ToString">
+            <summary>
+              Gets the object xml string.
+            </summary>
+            <returns>
+              The xml string of the object.
+            </returns>
+        </member>
         <member name="M:MiCore.MiEntity.Equals(MiCore.MiEntity)">
             <summary>
               Checks if this object is equal to another.
@@ -1797,14 +1688,6 @@
             </param>
             <returns>
               True if the given object is concidered equal to this object, otherwise false.
-            </returns>
-        </member>
-        <member name="M:MiCore.MiEntity.ToString">
-            <summary>
-              Gets the object xml string.
-            </summary>
-            <returns>
-              The xml string of the object.
             </returns>
         </member>
         <member name="M:MiCore.MiEntity.Clone">
@@ -2655,15 +2538,12 @@
               The object to copy.
             </param>
         </member>
-        <member name="M:MiCore.MiNode`1.#ctor(System.String,System.String,`0)">
+        <member name="M:MiCore.MiNode`1.#ctor(System.String,`0)">
             <summary>
-              Constructor setting the ID and optionally the name and parent.
+              Constructor setting the ID and optionally the parent.
             </summary>
             <param name="id">
               Node ID.
-            </param>
-            <param name="name">
-              Node name.
             </param>
             <param name="parent">
               The parent of the node.
@@ -2672,11 +2552,6 @@
         <member name="P:MiCore.MiNode`1.ID">
             <summary>
               The object ID.
-            </summary>
-        </member>
-        <member name="P:MiCore.MiNode`1.Name">
-            <summary>
-              The object name.
             </summary>
         </member>
         <member name="P:MiCore.MiNode`1.Parent">
@@ -2761,20 +2636,6 @@
               True if the node contains a child with the given ID, otherwise false.
             </returns>
         </member>
-        <member name="M:MiCore.MiNode`1.HasChildNamed(System.String,System.Boolean)">
-            <summary>
-              If the node contains a child with the given name.
-            </summary>
-            <param name="name">
-              The node name.
-            </param>
-            <param name="recursive">
-              If children of children should be checked.
-            </param>
-            <returns>
-              True if the node contains a child with the given name, otherwise false.
-            </returns>
-        </member>
         <member name="M:MiCore.MiNode`1.GetChild(System.Int32)">
             <summary>
               Gets the child node at the given index.
@@ -2800,48 +2661,6 @@
               The node with the given ID if it exists, otherwise null.
             </returns>
         </member>
-        <member name="M:MiCore.MiNode`1.GetFirstChild(System.String,System.Boolean)">
-            <summary>
-              Gets the first child node with the given name.
-            </summary>
-            <param name="name">
-              node name.
-            </param>
-            <param name="recursive">
-              Should child entities be searched recursively.
-            </param>
-            <returns>
-              The node with the given name if it exists, otherwise null.
-            </returns>
-        </member>
-        <member name="M:MiCore.MiNode`1.GetLastChild(System.String,System.Boolean)">
-            <summary>
-              Gets the last child node with the given name.
-            </summary>
-            <param name="name">
-              node name.
-            </param>
-            <param name="recursive">
-              Should child entities be searched recursively.
-            </param>
-            <returns>
-              The node with the given name if it exists, otherwise null.
-            </returns>
-        </member>
-        <member name="M:MiCore.MiNode`1.GetChildren(System.String,System.Boolean)">
-            <summary>
-              Gets all child entities with the given name.
-            </summary>
-            <param name="name">
-              node name.
-            </param>
-            <param name="recursive">
-              Should child entities be searched recursively.
-            </param>
-            <returns>
-              All child entities with the given name or an empty array if there are no matches.
-            </returns>
-        </member>
         <member name="M:MiCore.MiNode`1.AddChild(`0,System.Boolean)">
             <summary>
               Sets an node as a child of this object.
@@ -2854,7 +2673,7 @@
             </param>
             <returns>
               True if e is already a child or if it was added successfully, false if e is null, 
-              this, or  e is parent or .
+              this, or parent or if a child already exists with the same ID and replace is false.
             </returns>
         </member>
         <member name="M:MiCore.MiNode`1.AddChildren(`0[])">
@@ -2983,28 +2802,6 @@
               The index of the child node if it exists, otherwise -1.
             </returns>
         </member>
-        <member name="M:MiCore.MiNode`1.FirstChildIndex(System.String)">
-            <summary>
-              Returns the first index of the child with the given name.
-            </summary>
-            <param name="name">
-              The child node name.
-            </param>
-            <returns>
-              The index of the child node if it exists, otherwise -1.
-            </returns>
-        </member>
-        <member name="M:MiCore.MiNode`1.LastChildIndex(System.String)">
-            <summary>
-              Returns the last index of the child with the given name.
-            </summary>
-            <param name="name">
-              The child node name.
-            </param>
-            <returns>
-              The index of the child node if it exists, otherwise -1.
-            </returns>
-        </member>
         <member name="M:MiCore.MiNode`1.LoadFromStream(System.IO.BinaryReader)">
             <summary>
               Attempts to deserialize the node and its children from the stream.
@@ -3068,6 +2865,33 @@
             </summary>
             <returns>
               An enumerator that can be used to iterate through the child collection.
+            </returns>
+        </member>
+        <member name="T:MiCore.Paths">
+            <summary>
+              Contains path related functionality.
+            </summary>
+        </member>
+        <member name="M:MiCore.Paths.ToWindows(System.String)">
+            <summary>
+              Swaps path seperator character '/' with '\\' like in windows paths.
+            </summary>
+            <param name="path">
+              The path.
+            </param>
+            <returns>
+              The path with the seperator character '/' replaced with '\\'.
+            </returns>
+        </member>
+        <member name="M:MiCore.Paths.FromWindows(System.String)">
+            <summary>
+              Swaps path seperator character '\\' with '/' like in non windows paths.
+            </summary>
+            <param name="path">
+              The path.
+            </param>
+            <returns>
+              The path with the seperator character '\\' replaced with '/'.
             </returns>
         </member>
         <member name="T:MiCore.ISerializable`2">
@@ -3310,6 +3134,23 @@
               True if the object was successfully loaded and false otherwise.
             </returns>
         </member>
+        <member name="M:MiCore.XmlLoadable.LoadFromFile(System.String,System.String,System.Xml.XmlNamespaceManager)">
+            <summary>
+              Attempts to load the object from an xml file.
+            </summary>
+            <param name="path">
+              The path to the xml file.
+            </param>
+            <param name="xpath">
+              Optional xpath expression to select a single node to load from.
+            </param>
+            <param name="nsm">
+              Optional xml namespace manager.
+            </param>
+            <returns>
+              True on success and false on failure.
+            </returns>
+        </member>
         <member name="M:MiCore.XmlLoadable.ToString">
             <summary>
               Converts the object to an xml string.
@@ -3481,6 +3322,150 @@
             <returns>
               True if tests succeeded, otherwise false.
             </returns>
+        </member>
+        <member name="T:MiCore.TypeRegister`1">
+            <summary>
+              Used for registering types to IDs.
+            </summary>
+        </member>
+        <member name="M:MiCore.TypeRegister`1.#ctor">
+            <summary>
+              Constructor.
+            </summary>
+        </member>
+        <member name="M:MiCore.TypeRegister`1.#ctor(System.Boolean)">
+            <summary>
+              Constructor setting if null types can be registered.
+            </summary>
+            <param name="allownull">
+              If null types can be registered.
+            </param>
+        </member>
+        <member name="P:MiCore.TypeRegister`1.Empty">
+            <summary>
+              If no types are registered.
+            </summary>
+        </member>
+        <member name="P:MiCore.TypeRegister`1.Count">
+            <summary>
+              The amount of types registered.
+            </summary>
+        </member>
+        <member name="M:MiCore.TypeRegister`1.Get(System.String)">
+            <summary>
+              Gets the type mapped to the given type ID.
+            </summary>
+            <param name="typeid">
+              The type ID.
+            </param>
+            <returns>
+              The type mapped to the given type ID.
+            </returns>
+        </member>
+        <member name="M:MiCore.TypeRegister`1.Registered``1">
+            <summary>
+              Checks if the given type is registered.
+            </summary>
+            <typeparam name="T">
+              The type.
+            </typeparam>
+            <returns>
+              True if the given type is registered, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.TypeRegister`1.Registered(System.String)">
+            <summary>
+              Checks if the given type ID is registered.
+            </summary>
+            <param name="typeid">
+              The type ID.
+            </param>
+            <returns>
+              True if the given type ID is registered, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.TypeRegister`1.Registered(System.Type)">
+            <summary>
+              Checks if the given type is registered.
+            </summary>
+            <remarks>
+              Always returns false if type is null.
+            </remarks>
+            <param name="type">
+              The type.
+            </param>
+            <returns>
+              True if the given type is registered, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.TypeRegister`1.Register``1(System.String,System.Boolean)">
+            <summary>
+              Registers a type.
+            </summary>
+            <typeparam name="T">
+              The type.
+            </typeparam>
+            <param name="typeid">
+              The type ID.
+            </param>
+            <param name="replace">
+              If an already registered type should be replaced.
+            </param>
+            <returns>
+              True if the type was registered successfully; false if typeid is not a valid ID or a
+              type is already registered to the ID and replace is false.
+            </returns>
+        </member>
+        <member name="M:MiCore.TypeRegister`1.Register(System.String,System.Type,System.Boolean)">
+            <summary>
+              Registers a type to a type ID.
+            </summary>
+            <param name="typeid">
+              Type ID.
+            </param>
+            <param name="type">
+              Object type.
+            </param>
+            <param name="replace">
+              If a type is already registered to the type ID, should it be replaced? 
+            </param>
+            <returns>
+              True if the type was registered successfully; false if typeid is not a valid ID, type
+              is null, or a type is already registered to the ID and replace is false.
+            </returns>
+        </member>
+        <member name="M:MiCore.TypeRegister`1.Create``1">
+            <summary>
+              Creates a new object of the given registered type.
+            </summary>
+            <typeparam name="T">
+              The type.
+            </typeparam>
+            <returns>
+              A new object of the given type or null if unregistered or unable to create.
+            </returns>
+        </member>
+        <member name="M:MiCore.TypeRegister`1.Create(System.String)">
+            <summary>
+              Creates an object of the type registered to the type ID.
+            </summary>
+            <param name="typeid">
+              The type ID.
+            </param>
+            <returns>
+              A new object if the type ID was registered, otherwise false.
+            </returns>
+        </member>
+        <member name="M:MiCore.TypeRegister`1.GetEnumerator">
+            <summary>
+              Gets an enumerator to iterate through the collection.
+            </summary>
+            <returns>
+              An enumerator to iterate through the collection.
+            </returns>
+        </member>
+        <member name="F:MiCore.TypeRegister`1.m_allownull">
+            <summary>If null types can be registered.</summary>
         </member>
         <member name="T:MiCore.Xml">
             <summary>
