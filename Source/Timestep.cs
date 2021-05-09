@@ -28,7 +28,7 @@ namespace MiGame
 	/// <summary>
 	///   Keeps time in the game.
 	/// </summary>
-	public class Timestep : IDisposable
+	public sealed class Timestep : IDisposable
 	{
 		/// <summary>
 		///   Constructs the instance, optionally setting the target frames per second.
@@ -53,8 +53,8 @@ namespace MiGame
 		/// </param>
 		public Timestep( Timestep t )
 		{
-			if( t == null )
-				throw new ArgumentNullException();
+			if( t is null )
+				throw new ArgumentNullException( nameof( t ) );
 
 			m_overhang     = t.m_overhang;
 			m_deltaTime    = t.m_deltaTime;
@@ -72,7 +72,7 @@ namespace MiGame
 			set
 			{
 				if( value <= 0.0f )
-					throw new System.Exception( "Target FPS cannot be less than or equal to zero." );
+					throw new ArgumentException( "Target FPS cannot be less than or equal to zero." );
 
 				m_targetFps    = value;
 				m_timePerFrame = Time.FromSeconds( 1.0f / m_targetFps );
@@ -117,8 +117,7 @@ namespace MiGame
 		/// </summary>
 		public void Dispose()
 		{
-			if( m_clock != null )
-				m_clock.Dispose();
+			m_clock?.Dispose();
 		}
 
 		private Time  m_timePerFrame,

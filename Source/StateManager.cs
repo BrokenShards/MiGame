@@ -33,13 +33,19 @@ namespace MiGame
 	/// <summary>
 	///   Manages running game states.
 	/// </summary>
-	public class StateManager : Drawable, IDisposable
+	public sealed class StateManager : Drawable, IDisposable
 	{
 		/// <summary>
 		///   Constructor.
 		/// </summary>
+		/// <exception cref="ArgumentNullException">
+		///   If <paramref name="game"/> is null.
+		/// </exception>
 		public StateManager( GameWindow game )
 		{
+			if( game is null )
+				throw new ArgumentNullException( nameof( game ) );
+
 			m_states = new Stack<IGameState>();
 			Game     = game;
 		}
@@ -49,18 +55,18 @@ namespace MiGame
 		/// </summary>
 		public GameWindow Game
 		{
-			get; private set;
+			get; init;
 		}
 
 		/// <summary>
-		///   If the manager contains no states.
+		///   If the manager does not contain a game state.
 		/// </summary>
 		public bool Empty
 		{
-			get { return Count == 0; }
+			get { return Count is 0; }
 		}
 		/// <summary>
-		///   The amount of states the manager currently contains.
+		///   The amount of game states the manager currently contains.
 		/// </summary>
 		public int Count
 		{
@@ -78,23 +84,31 @@ namespace MiGame
 		/// </returns>
 		public bool Push( IGameState state )
 		{
-			if( state == null )
+			if( state is null )
 				return Logger.LogReturn( "Cannot push null game state.", false, LogType.Error );
-
-			state.Manager = this;
 
 			if( !Empty )
 			{
+				m_states.Peek().UnsubscribeEvents();
+
 				if( m_states.Peek().Storable )
 					m_states.Peek().OnStore();
 				else
+				{
+					m_states.Peek().Manager = null;
 					m_states.Pop().Dispose();
+				}
 			}
+
+			state.Manager = this;
+			state.SubscribeEvents();
 
 			if( !state.LoadContent() )
 			{
+				state.UnsubscribeEvents();
 				state.Manager = null;
 				state.Dispose();
+				
 				return Logger.LogReturn( "Cannot push game state: Loading content failed.", false, LogType.Error );
 			}
 
@@ -110,11 +124,15 @@ namespace MiGame
 			if( Empty )
 				return false;
 
+			m_states.Peek().UnsubscribeEvents();
 			m_states.Peek().Manager = null;
 			m_states.Pop().Dispose();
 
 			if( !Empty )
-				m_states.Peek().onRestore();
+			{
+				m_states.Peek().SubscribeEvents();
+				m_states.Peek().OnRestore();
+			}
 
 			return true;
 		}
@@ -132,7 +150,7 @@ namespace MiGame
 			while( !Empty )
 				Pop();
 
-			return state == null || Push( state );
+			return state is null || Push( state );
 		}
 
 		/// <summary>
@@ -162,34 +180,6 @@ namespace MiGame
 		}
 
 		/// <summary>
-		///   Called when the game window gains focus.
-		/// </summary>
-		/// <param name="sender">
-		///   Event sender.
-		/// </param>
-		/// <param name="e">
-		///   Event arguments.
-		/// </param>
-		public void OnGainFocus( object sender, EventArgs e )
-		{
-			if( !Empty )
-				m_states.Peek().OnGainFocus( sender, e );
-		}
-		/// <summary>
-		///   Called when the game window loses focus.
-		/// </summary>
-		/// <param name="sender">
-		///   Event sender.
-		/// </param>
-		/// <param name="e">
-		///   Event arguments.
-		/// </param>
-		public void OnLoseFocus( object sender, EventArgs e )
-		{
-			if( !Empty )
-				m_states.Peek().OnLoseFocus( sender, e );
-		}
-		/// <summary>
 		///   Called when an attempt is made to cloe the game window. Return true to allow the
 		///   window to close, or false to deny it.
 		/// </summary>
@@ -209,20 +199,6 @@ namespace MiGame
 
 			return true;
 		}
-		/// <summary>
-		///   Called when text is entered.
-		/// </summary>
-		/// <param name="sender">
-		///   Event sender.
-		/// </param>
-		/// <param name="e">
-		///   Event arguments.
-		/// </param>
-		public void OnTextEntered( object sender, TextEventArgs e )
-		{
-			if( !Empty )
-				m_states.Peek().OnTextEntered( sender, e );
-		}
 
 		/// <summary>
 		///   Disposes of all game states.
@@ -230,10 +206,9 @@ namespace MiGame
 		public void Dispose()
 		{
 			Reset();
-			m_states = null;
-			Game = null;
+			m_states.Clear();
 		}
 
-		private Stack<IGameState> m_states;
+		private readonly Stack<IGameState> m_states;
 	}
 }

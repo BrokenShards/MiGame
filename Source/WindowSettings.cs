@@ -25,10 +25,31 @@ using System.Text;
 using System.Xml;
 
 using SFML.Window;
+using SFML.System;
+
 using MiCore;
 
 namespace MiGame
 {
+	/// <summary>
+	///   Possible window modes.
+	/// </summary>
+	public enum WindowMode
+	{
+		/// <summary>
+		///   Windowed with a titlebar.
+		/// </summary>
+		Bordered,
+		/// <summary>
+		///   Windowed with no titlebar or borders.
+		/// </summary>
+		Borderless,
+		/// <summary>
+		///   Fullscreen.
+		/// </summary>
+		Fullscreen
+	}
+
 	/// <summary>
 	///   Contains settings used to construct a window.
 	/// </summary>
@@ -39,10 +60,11 @@ namespace MiGame
 		/// </summary>
 		public WindowSettings()
 		{
-			Width      = 800;
-			Height     = 600;
-			Fullscreen = false;
+			Size       = new Vector2u( 800, 600 );
+			WindowMode = 0;
 			TargetFps  = 60.0f;
+			Close      = true;
+			Resizable  = false;
 		}
 		/// <summary>
 		///   Copy constructor.
@@ -55,36 +77,57 @@ namespace MiGame
 		/// </exception>
 		public WindowSettings( WindowSettings ws )
 		{
-			if( ws == null )
-				throw new ArgumentNullException();
+			if( ws is null )
+				throw new ArgumentNullException( nameof( ws ) );
 
-			Width      = ws.Width;
-			Height     = ws.Height;
-			Fullscreen = ws.Fullscreen;
+			Size       = ws.Size;
+			WindowMode = ws.WindowMode;
+			Close      = ws.Close;
+			Resizable  = ws.Resizable;
 			TargetFps  = ws.TargetFps;
 		}
-
 		/// <summary>
-		///   Constructor taking a width, height, fullscreen option and target fps.
+		///   Constructor assigning window size, mode flags and clear color, along with target fps.
 		/// </summary>
-		/// <param name="w">
-		///   Window width.
+		/// <param name="size">
+		///   Window size.
 		/// </param>
-		/// <param name="h">
-		///   Window height.
+		/// <param name="wm">
+		///   Window mode
 		/// </param>
-		/// <param name="f">
-		///   Fullscreen enabled?
+		/// <param name="close">
+		///   If window should be created with a close button.
+		/// </param>
+		/// <param name="resize">
+		///   If window should be resizable.
 		/// </param>
 		/// <param name="fps">
 		///   Target FPS.
 		/// </param>
-		public WindowSettings( uint w, uint h, bool f = false, float fps = 60.0f )
+		public WindowSettings( Vector2u size, WindowMode wm = 0, bool close = true, bool resize = false, float fps = 60.0f )
 		{
-			Width      = w;
-			Height     = h;
-			Fullscreen = f;
+			Size       = size;
+			WindowMode = wm;
+			Close      = close;
+			Resizable  = resize;
 			TargetFps  = fps;
+		}
+
+		/// <summary>
+		///   Window size.
+		/// </summary>
+		public Vector2u Size
+		{
+			get { return m_size; }
+			set
+			{
+				if( value.X is 0 )
+					value.X = 1;
+				if( value.Y is 0 )
+					value.Y = 1;
+
+				m_size = value;
+			}
 		}
 
 		/// <summary>
@@ -92,21 +135,22 @@ namespace MiGame
 		/// </summary>
 		public uint Width
 		{
-			get { return m_width; }
-			set { m_width = value == 0 ? 1 : value; }
+			get { return Size.X; }
+			set { Size = new Vector2u( value, Size.Y ); }
 		}
 		/// <summary>
 		///   Window height.
 		/// </summary>
 		public uint Height 
 		{
-			get { return m_height; }
-			set { m_height = value == 0 ? 1 : value; }
+			get { return Size.Y; }
+			set { Size = new Vector2u( Size.X, value ); }
 		}
+
 		/// <summary>
 		///   If window should be fullscreen or windowed.
 		/// </summary>
-		public bool Fullscreen
+		public WindowMode WindowMode
 		{
 			get; set;
 		}
@@ -120,13 +164,28 @@ namespace MiGame
 		}
 
 		/// <summary>
+		///   If a bordered window should be created with a close button.
+		/// </summary>
+		public bool Close
+		{
+			get; set;
+		}
+		/// <summary>
+		///   If the window should be resizable.
+		/// </summary>
+		public bool Resizable
+		{
+			get; set;
+		}
+
+		/// <summary>
 		///   Checks if the current settings are valid.
 		/// </summary>
 		public bool IsValid
 		{
 			get
 			{
-				if( Fullscreen )
+				if( WindowMode is WindowMode.Fullscreen )
 				{
 					if( !new VideoMode( Width, Height ).IsValid() )
 						return false;
@@ -150,7 +209,7 @@ namespace MiGame
 		{
 			VideoMode desk = VideoMode.DesktopMode;
 
-			if( Fullscreen )
+			if( WindowMode is WindowMode.Fullscreen )
 			{
 				if( !new VideoMode( Width, Height ).IsValid() )
 				{
@@ -184,7 +243,7 @@ namespace MiGame
 		/// </returns>
 		public WindowSettings AsValid()
 		{
-			WindowSettings w = new WindowSettings( this );
+			WindowSettings w = new( this );
 			w.MakeValid();
 			return w;
 		}
@@ -200,10 +259,36 @@ namespace MiGame
 		/// </returns>
 		public bool Equals( WindowSettings other )
 		{
-			return Width      == other.Width &&
-			       Height     == other.Height &&
-				   Fullscreen == other.Fullscreen &&
+			return other is not null &&
+			       Size.Equals( other.Size ) &&
+				   WindowMode == other.WindowMode &&
+				   Close      == other.Close &&
+				   Resizable  == other.Resizable &&
 				   TargetFps  == other.TargetFps;
+		}
+		/// <summary>
+		///   If this object has the same values of the other object.
+		/// </summary>
+		/// <param name="obj">
+		///   The other object to check against.
+		/// </param>
+		/// <returns>
+		///   True if both objects are concidered equal and false if they are not.
+		/// </returns>
+		public override bool Equals( object obj )
+		{
+			return Equals( obj as WindowSettings );
+		}
+
+		/// <summary>
+		///   Serves as the default hash function.
+		/// </summary>
+		/// <returns>
+		///   A hash code for the current object.
+		/// </returns>
+		public override int GetHashCode()
+		{
+			return HashCode.Combine( Size, WindowMode, Close, Resizable, TargetFps );
 		}
 
 		/// <summary>
@@ -217,21 +302,38 @@ namespace MiGame
 		/// </returns>
 		public override bool LoadFromXml( XmlElement element )
 		{
-			if( element == null )
-				return Logger.LogReturn( "Cannot load window settings from null xml element.", false, LogType.Error );
-			if( element.Name.ToLower() != "window" )
-				return Logger.LogReturn( "Unable to load window settings: Element name must be 'window'.", false, LogType.Error );
+			if( element is null )
+				return Logger.LogReturn( "Cannot load WindowSettings from null xml element.", false, LogType.Error );
+
+			WindowMode = 0;
+			TargetFps  = 60.0f;
+			Close      = true;
+			Resizable  = false;
+
+			XmlElement sizeele = element[ nameof( Size ) ];
+			Vector2u?  size    = Xml.ToVec2u( sizeele );
+
+			if( sizeele is null  )
+				return Logger.LogReturn( "Failed loading WindowSettings: Size element missing.", false, LogType.Error );
+			if( !size.HasValue )
+				return Logger.LogReturn( "Failed loading WindowSettings: Parsing Size failed.", false, LogType.Error );
+
+			Size = size.Value;
 
 			try
 			{
-				Width      = uint.Parse( element.Attributes[ "width" ]?.Value );
-				Height     = uint.Parse( element.Attributes[ "height" ]?.Value );
-				Fullscreen = bool.Parse( element.Attributes[ "fullscreen" ]?.Value );
-				TargetFps  = float.Parse( element.Attributes[ "target_fps" ]?.Value );
+				if( element.HasAttribute( nameof( WindowMode ) ) )
+					WindowMode = (WindowMode)Enum.Parse( typeof( WindowMode ), element.GetAttribute( nameof( WindowMode ) ), true );
+				if( element.HasAttribute( nameof( TargetFps ) ) )
+					TargetFps = float.Parse( element.GetAttribute( nameof( TargetFps ) ) );
+				if( element.HasAttribute( nameof( Close ) ) )
+					Close = bool.Parse( element.GetAttribute( nameof( Close ) ) );
+				if( element.HasAttribute( nameof( Resizable ) ) )
+					Resizable = bool.Parse( element.GetAttribute( nameof( Resizable ) ) );
 			}
 			catch( Exception e )
 			{
-				return Logger.LogReturn( "Unable to load window settings: " + e.Message + ".", false, LogType.Error );
+				return Logger.LogReturn( $"Failed loading WindowSettings: { e.Message }", false, LogType.Error );
 			}
 
 			return true;
@@ -245,28 +347,35 @@ namespace MiGame
 		/// </returns>
 		public override string ToString()
 		{
-			StringBuilder sb = new StringBuilder();
+			StringBuilder sb = new();
 
-			sb.Append( "<window width=\"" );
-			sb.Append( Width );
-			sb.AppendLine( "\"" );
+			sb.Append( '<' ).Append( nameof( WindowSettings ) ).Append( ' ' )
+				.Append( nameof( WindowMode ) ).Append( "=\"" ).Append( WindowMode.ToString() ).Append( '\"' );
+			
+			if( !Close )
+			{
+				sb.AppendLine().Append( "                " )
+					.Append( nameof( Close ) ).Append( "=\"" ).Append( Close ).Append( '\"' );
+			}
+			if( Resizable )
+			{
+				sb.AppendLine().Append( "                " )
+					.Append( nameof( Resizable ) ).Append( "=\"" ).Append( Resizable ).Append( '\"' );
+			}
+			if( TargetFps is not 60.0f )
+			{
+				sb.AppendLine().Append( "                " )
+					.Append( nameof( TargetFps ) ).Append( "=\"" ).Append( TargetFps ).Append( '\"' );
+			}
 
-			sb.Append( "        height=\"" );
-			sb.Append( Height );
-			sb.AppendLine( "\"" );
-
-			sb.Append( "        fullscreen=\"" );
-			sb.Append( Fullscreen );
-			sb.AppendLine( "\"" );
-
-			sb.Append( "        target_fps=\"" );
-			sb.Append( TargetFps );
-			sb.Append( "\" />" );
-
-			return sb.ToString();
+			return sb.AppendLine( ">" )
+				.AppendLine( Xml.ToString( Size, nameof( Size ), 1 ) )
+				
+				.Append( "</" ).Append( nameof( WindowSettings ) ).Append( '>' )
+				.ToString();
 		}
 
-		private uint  m_width, m_height;
-		private float m_fps;
+		private Vector2u m_size;
+		private float    m_fps;
 	}
 }

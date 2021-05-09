@@ -6,7 +6,7 @@ A basic game library for use with SFML.Net.
 - MiCore `https://github.com/BrokenShards/MiCore.git`
 - MiGfx `https://github.com/BrokenShards/MiGfx.git`
 - MiInput `https://github.com/BrokenShards/MiInput.git`
-- XInputDotNetPure `https://github.com/speps/XInputDotNet.git`
+- XInputDotNetPure `https://github.com/BrokenShards/XInputDotNet.git`
 
 ## Usage
 In MiGame, games are made up of game states that are managed by a state manager, owned by a game
@@ -26,12 +26,12 @@ example, if the beginning state of your game was a class called `StartState`, th
 the game like so:
 
 ```
-int result = 0;
+ExitCode result = ExitCode.UnexpectedFail;
 
 using( GameWindow game = new GameWindow() )
-	result = game.Run( new StartState() );
+	result = game.Run<StartState>();
 
-if( result != 0 )
+if( result != ExitCode.Success )
 	Console.WriteLine( "Game ran unsuccessfully." );
 ```
 
@@ -41,6 +41,15 @@ check the documentation for more information.
 Please see `MiGameTest/Test.cs` in the test project for usage examples.
 
 ## Changelog
+
+### Version 1.0.0
+- `GameState` now provides the `SubscribeEvents()` and `UnsubscribeEvents()` methods for subscribing
+  to window events and have replaced `OnGainFocus(object, EventArgs)`, `OnLoseFocus(object, EventArgs)`
+  and `OnTextEntered(object, TextEventArgs)`.
+- MiGame now targets .Net 5 and has updated code style for C#9.
+- Now depends on MiCore 1.0.0.
+- Now depends on MiInput 1.0.0.
+- Now depends on MiGfx 1.0.0.
 
 ### Version 0.5.0
 - Changed SFML source to latest official SFML.Net repository.

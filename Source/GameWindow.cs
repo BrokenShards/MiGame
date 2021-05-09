@@ -22,10 +22,15 @@
 
 using System;
 using System.IO;
+
 using SFML.Graphics;
+using SFML.System;
 using SFML.Window;
 
 using MiCore;
+using MiInput;
+
+using Action = MiInput.Action;
 
 namespace MiGame
 {
@@ -87,7 +92,12 @@ namespace MiGame
 		/// </summary>
 		public virtual string GameTitle
 		{
-			get { return "New GameWindow"; }
+			get { return m_title; }
+			set 
+			{
+				m_title = string.IsNullOrWhiteSpace( value ) ? string.Empty : value;
+				Window?.SetTitle( m_title );
+			}
 		}
 
 		/// <summary>
@@ -95,10 +105,17 @@ namespace MiGame
 		/// </summary>
 		public GameWindow()
 		{
-			Running  = false;
-			Settings = null;
-			Window   = null;
-			Manager  = null;
+			Running    = false;
+			Settings   = new WindowSettings();
+			ClearColor = Color.Black;
+			Window     = null;
+			Manager    = null;
+			RunAgain   = false;
+
+			LoadWindowSettings = true;
+			SaveWindowSettings = true;
+			LoadInputSettings  = true;
+			SaveInputSettings  = true;
 		}
 		/// <summary>
 		///   Constructor settings the initial window settings.
@@ -108,10 +125,17 @@ namespace MiGame
 		/// </param>
 		public GameWindow( WindowSettings settings )
 		{
-			Running  = false;
-			Settings = settings?.AsValid() ?? new WindowSettings();
-			Window   = null;
-			Manager  = null;
+			Running    = false;
+			Settings   = settings?.AsValid() ?? new WindowSettings();
+			ClearColor = Color.Black;
+			Window     = null;
+			Manager    = null;
+			RunAgain   = false;
+			
+			LoadWindowSettings = false;
+			SaveWindowSettings = true;
+			LoadInputSettings  = true;
+			SaveInputSettings  = true;
 		}
 
 		/// <summary>
@@ -127,6 +151,13 @@ namespace MiGame
 		public ExitCode ExitCode
 		{
 			get; private set;
+		}
+		/// <summary>
+		///   Window clear color.
+		/// </summary>
+		public Color ClearColor
+		{
+			get; set;
 		}
 
 		/// <summary>
@@ -152,54 +183,130 @@ namespace MiGame
 		}
 
 		/// <summary>
-		///   Runs the game.
+		///   If window settings should be loaded from file on init.
 		/// </summary>
-		/// <param name="state">
-		///   The initial game state.
+		public bool LoadWindowSettings
+		{
+			get; set;
+		}
+		/// <summary>
+		///   If window settings should be saved to file.
+		/// </summary>
+		public bool SaveWindowSettings
+		{
+			get; set;
+		}
+
+		/// <summary>
+		///   If input settings should be loaded from file on init.
+		/// </summary>
+		public bool LoadInputSettings
+		{
+			get; set;
+		}
+		/// <summary>
+		///   If input settings should be saved to file.
+		/// </summary>
+		public bool SaveInputSettings
+		{
+			get; set;
+		}
+
+		/// <summary>
+		///   If the game should run again when on closed. Set to false before consecutuve run.
+		/// </summary>
+		public bool RunAgain
+		{
+			get; set;
+		}
+
+		/// <summary>
+		///   Changes the current window settings, optionally restarting the game for the changes to
+		///   take effect. Has no effect if <see cref="SaveWindowSettings"/> is false.
+		/// </summary>
+		/// <remarks>
+		///   Changes will not be loaded on restart if <see cref="LoadWindowSettings"/> is false.
+		///   Changes will not be saved if <see cref="SaveWindowSettings"/> is false as thus will
+		///   not be applied unless <see cref="LoadWindowSettings"/> is also false.
+		/// </remarks>
+		/// <param name="settings">
+		///   Window settings.
+		/// </param>
+		/// <param name="restart">
+		///   If game should close and restart to apply new changes.
 		/// </param>
 		/// <returns>
-		///   Zero on success or a negative error code on failure.
+		///   True if settings were valid and were assigned and written to file, otherwise false.
 		/// </returns>
-		public ExitCode Run( IGameState state )
+		public bool ChangeSettings( WindowSettings settings, bool restart = false )
 		{
-			if( state == null )
+			if( settings is null || !settings.IsValid )
+				return false;
+
+			Settings = settings;
+
+			if( SaveWindowSettings && !XmlLoadable.ToFile( Settings, SettingsPath, true ) )
+				return Logger.LogReturn( "Unable to save newly set window settings to file.", false, LogType.Error );
+
+			if( restart )
 			{
-				ExitCode = ExitCode.NullStateFail;
-				Running  = false;
+				RunAgain = true;
+				Exit();
 			}
-			else if( Running )
+
+			return true;
+		}
+
+		/// <summary>
+		///   Runs the game.
+		/// </summary>
+		/// <typeparam name="T">
+		///   The game state type to start with.
+		/// </typeparam>
+		/// <returns>
+		///   Exit code.
+		/// </returns>
+		public ExitCode Run<T>() where T : class, IGameState, new()
+		{
+			if( Running )
 			{
 				ExitCode = ExitCode.UnexpectedRun;
 				Running  = false;
 			}
 			else
-				Running = Initialise() && LoadContent( state );
+				Running = Initialise() && LoadContent( new T() );
 
 			try
 			{
-				using( Timestep timer = new Timestep( Settings.TargetFps ) )
+				using Timestep timer = new( Settings.TargetFps );
+
+				while( Running && Window.IsOpen )
 				{
-					while( Running && Window.IsOpen )
+					timer.BeginFrame();
+					Window.DispatchEvents();
+
+					if( timer.IsTimeToUpdate )
 					{
-						timer.BeginFrame();
-						Window.DispatchEvents();
+						Update( timer.DeltaTime );
+						Draw();
 
-						if( timer.IsTimeToUpdate )
-						{
-							Update( timer.DeltaTime );
-							Draw();
-
-							timer.EndFrame();
-						}
+						timer.EndFrame();
 					}
 				}
 			}
 			catch( Exception e )
 			{
-				ExitCode = Logger.LogReturn( "Unexpected exception: " + e.Message, ExitCode.UnexpectedFail, LogType.Error );
+				ExitCode = Logger.LogReturn( $"Unexpected exception: { e.Message }", ExitCode.UnexpectedFail, LogType.Error );
 			}
 
 			Dispose();
+
+			if( RunAgain )
+			{
+				RunAgain = false;
+				return Run<T>();
+			}
+
 			return ExitCode;
 		}
 		/// <summary>
@@ -213,7 +320,7 @@ namespace MiGame
 			if( exitcode.HasValue )
 				ExitCode = exitcode.Value;
 
-			Running  = false;
+			Running = false;
 		}
 
 		/// <summary>
@@ -224,19 +331,26 @@ namespace MiGame
 			Running = false;
 			OnDispose();
 
-			if( !XmlLoadable.ToFile( Settings, SettingsPath, true ) )
-				Logger.Log( "Unable to save window settings to file.", LogType.Error );
+			if( SaveInputSettings )
+				if( !Input.Manager.SaveToFile() )
+					Logger.Log( "Unable to save input settings to file.", LogType.Error );
 
-			if( Manager != null )
+			if( SaveWindowSettings )
+				if( !XmlLoadable.ToFile( Settings, SettingsPath, true ) )
+					Logger.Log( "Unable to save window settings to file.", LogType.Error );
+
+			if( Manager is not null )
 			{
 				Manager.Dispose();
 				Manager = null;
 			}
-			if( Window != null )
+			if( Window is not null )
 			{
 				Window.Dispose();
 				Window = null;
 			}
+
+			GC.SuppressFinalize( this );
 		}
 
 		/// <summary>
@@ -300,50 +414,115 @@ namespace MiGame
 		protected virtual void OnDispose()
 		{ }
 
+		/// <summary>
+		///   Sets up default input mapping.
+		/// </summary>
+		/// <returns>
+		///   True on success, false on failure.
+		/// </returns>
+		protected virtual bool MapDefaultActions()
+		{
+			Action decision = new( "Decision",
+							  new InputMap( InputDevice.Keyboard, InputType.Button, "Enter", "Escape" ),
+							  new InputMap( InputDevice.Keyboard, InputType.Button, "Space", "Backspace" ),
+							  new InputMap( InputDevice.Joystick, InputType.Button, "A", "B" ) ),
+				   submit   = new( "Submit",
+							  new InputMap( InputDevice.Keyboard, InputType.Button, "Enter" ),
+							  new InputMap( InputDevice.Keyboard, InputType.Button, "Space" ),
+							  new InputMap( InputDevice.Joystick, InputType.Button, "A" ) ),
+				   cancel   = new( "Cancel",
+							  new InputMap( InputDevice.Keyboard, InputType.Button, "Escape" ),
+							  new InputMap( InputDevice.Keyboard, InputType.Button, "Backspace" ),
+							  new InputMap( InputDevice.Joystick, InputType.Button, "B" ) ),
+				   horizont = new( "Horizontal",
+							  new InputMap( InputDevice.Keyboard, InputType.Button, "D",         "A" ),
+							  new InputMap( InputDevice.Keyboard, InputType.Button, "Right",     "Left" ),
+							  new InputMap( InputDevice.Joystick, InputType.Button, "DPadRight", "DPadLeft" ),
+							  new InputMap( InputDevice.Joystick, InputType.Axis,   "LeftStickX" ) ),
+				   vertical = new( "Vertical",
+							  new InputMap( InputDevice.Keyboard, InputType.Button, "W",      "S" ),
+							  new InputMap( InputDevice.Keyboard, InputType.Button, "Up",     "Down" ),
+							  new InputMap( InputDevice.Joystick, InputType.Button, "DPadUp", "DPadDown" ),
+							  new InputMap( InputDevice.Joystick, InputType.Axis,   "LeftStickY" ) );
+
+				if( !Input.Manager.Actions.Add( decision ) || !Input.Manager.Actions.Add( submit ) ||
+				    !Input.Manager.Actions.Add( cancel ) ||	!Input.Manager.Actions.Add( horizont ) ||
+					!Input.Manager.Actions.Add( vertical ) )
+					return false;
+
+			return true;
+		}
+
 		private bool Initialise()
 		{
-			// Load/Save WindowSettings.
-			if( Settings == null )
+			// Load input settings.
+			if( LoadInputSettings )
+			{
+				if( !Input.Manager.LoadFromFile() )
+				{
+					if( !MapDefaultActions() )
+						return Logger.LogReturn( "Failed assigning default input actions.", false, LogType.Error );
+
+					if( !Input.Manager.SaveToFile() )
+						Logger.Log( "Failed saving default inputs. Any modifications to the assigned inputs will not be saved.", LogType.Warning );
+				}
+			}
+			else if( !MapDefaultActions() )
+				return Logger.LogReturn( "Failed assigning default input actions.", false, LogType.Error );
+
+			if( Settings is null )
 				Settings = new WindowSettings();
+
+			// Load/Save WindowSettings.
+			if( LoadWindowSettings )
+			{
+				if( File.Exists( SettingsPath ) )
+				{
+					Settings = XmlLoadable.FromFile<WindowSettings>( SettingsPath );
+
+					if( Settings is null )
+					{
+						ExitCode = ExitCode.InitFail;
+						return Logger.LogReturn( "Failed loading window settings from file although it exists.", false, LogType.Error );
+					}
+				}
+			}
 
 			Settings.MakeValid();
 
-			if( !File.Exists( SettingsPath ) )
+			if( SaveWindowSettings )
 			{
 				if( !XmlLoadable.ToFile( Settings, SettingsPath, true ) )
 				{
 					ExitCode = ExitCode.InitFail;
-					return Logger.LogReturn( "Failed saving default window settings to file.", false, LogType.Error );
-				}
-			}
-			else
-			{
-				Settings = XmlLoadable.FromFile<WindowSettings>( SettingsPath );
-
-				if( Settings == null )
-				{
-					ExitCode = ExitCode.InitFail;
-					return Logger.LogReturn( "Failed loading window settings from file although it exists.", false, LogType.Error );
+					return Logger.LogReturn( "Failed saving window settings to file.", false, LogType.Error );
 				}
 			}
 
 			// Set up window.
-			if( Window != null )
+			if( Window is not null )
 				Window.Dispose();
 
-			Window = new RenderWindow( new VideoMode( Settings.Width, Settings.Height ), GameTitle, Settings.Fullscreen ? Styles.Fullscreen : Styles.Close );
+			Styles wm = Settings.WindowMode is WindowMode.Bordered   ? Styles.Titlebar : 
+			          ( Settings.WindowMode is WindowMode.Fullscreen ? Styles.Fullscreen : Styles.None );
 
-			if( Window == null || !Window.IsOpen )
+			if( wm is Styles.Titlebar )
+			{
+				if( Settings.Close )
+					wm |= Styles.Close;
+				if( Settings.Resizable )
+					wm |= Styles.Resize;
+			}
+
+			Window = new RenderWindow( new VideoMode( Settings.Width, Settings.Height ), GameTitle, wm );
+
+			if( Window is null || !Window.IsOpen )
 			{
 				ExitCode = ExitCode.InitFail;
 				return Logger.LogReturn( "Failed creating render window.", false, LogType.Error );
 			}
 
-			Window.Closed      += OnClose;
-			Window.GainedFocus += OnGainFocus;
-			Window.LostFocus   += OnLoseFocus;
-			Window.TextEntered += OnTextEntered;
-
+			Window.Closed += OnClose;
 			Manager = new StateManager( this );
 
 			if( !OnInit() )
@@ -371,13 +550,15 @@ namespace MiGame
 		}
 		private void Update( float dt )
 		{
+			Input.Manager.Update();
+
 			PreUpdate( dt );
 			Manager.Update( dt );
 			PostUpdate( dt );
 		}
 		private void Draw()
 		{
-			Window.Clear();
+			Window.Clear( ClearColor );
 
 			PreDraw();
 			Window.Draw( Manager );
@@ -386,24 +567,14 @@ namespace MiGame
 			Window.Display();
 		}
 
-		private void OnGainFocus( object sender, EventArgs e )
-		{
-			Manager?.OnGainFocus( sender, e );
-		}
-		private void OnLoseFocus( object sender, EventArgs e )
-		{
-			Manager?.OnLoseFocus( sender, e );
-		}
-		private void OnTextEntered( object sender, TextEventArgs e )
-		{
-			Manager?.OnTextEntered( sender, e );
-		}
 		private void OnClose( object sender, EventArgs e )
 		{
-			if( Manager != null && !Manager.OnCloseRequest( sender, e ) )
+			if( Manager is not null && !Manager.OnCloseRequest( sender, e ) )
 				return;
 
 			Window?.Close();
 		}
+
+		private string m_title;
 	}
 }

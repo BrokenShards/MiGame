@@ -35,18 +35,18 @@ namespace MiGameTest
 		{
 			Logger.Log( "Running WindowSettings tests..." );
 
-			WindowSettings s1 = new WindowSettings( 400, 400, false, 45.0f );
+			WindowSettings s1 = new( new Vector2u( 400, 400 ), 0, true, true, 45.0f );
 
-			if( s1.Width != 400 )
+			if( s1.Width is not 400 )
 				return Logger.LogReturn( "Failed: WindowSettings width did not set correctly.", false );
-			if( s1.Height != 400 )
+			if( s1.Height is not 400 )
 				return Logger.LogReturn( "Failed: WindowSettings height did not set correctly.", false );
-			if( s1.Fullscreen != false )
+			if( s1.WindowMode is not 0 )
 				return Logger.LogReturn( "Failed: WindowSettings fullscreen did not set correctly.", false );
-			if( s1.TargetFps != 45.0f )
+			if( s1.TargetFps is not 45.0f )
 				return Logger.LogReturn( "Failed: WindowSettings target fps did not set correctly.", false );
 
-			string xml = Xml.Header + "\r\n" + s1.ToString();
+			string xml = $"{ Xml.Header }\r\n{ s1 }";
 			WindowSettings x = XmlLoadable.FromXml<WindowSettings>( xml );
 
 			if( x == null )
@@ -62,7 +62,7 @@ namespace MiGameTest
 	{
 		// In this example, we implement two different game states, use the state manager to
 		// switch between them and then use the game window to run them.
-		public class TestState : GameState
+		public sealed class TestState : GameState
 		{
 			// Here we set Storable to true to indicate our state can be stored behind another and will
 			// not be removed when a new state is added.
@@ -142,7 +142,7 @@ namespace MiGameTest
 			}
 			// OnRestore is called when the state becomes active again. This should be used to
 			// reinitialise the state, ready to run again.
-			public override void onRestore()
+			public override void OnRestore()
 			{
 				for( uint i = 0; i < 4; i++ )
 				{
@@ -156,7 +156,7 @@ namespace MiGameTest
 
 			private VertexArray m_verts;
 		}
-		public class TestState2 : GameState
+		public sealed class TestState2 : GameState
 		{
 			public override bool Storable
 			{
@@ -187,7 +187,7 @@ namespace MiGameTest
 				{
 					// Ensure there is a state to pop back to, if not, we call Reset to remove all 
 					// stored states and add a new one.
-					if( Manager.Count == 1 )
+					if( Manager.Count is 1 )
 					{
 						if( !Manager.Reset( new TestState() ) )
 							throw new Exception( "Failed resetting back to test state." );
@@ -224,11 +224,11 @@ namespace MiGameTest
 
 			// Here we use the default game window implementation and call Run with the first
 			// state of the game, in this case, our test state.
-			using( GameWindow game = new GameWindow() )
-				exit = game.Run( new TestState() );
+			using( GameWindow game = new() )
+				exit = game.Run<TestState>();
 
 			if( exit != 0 )
-				return Logger.LogReturn( "Failed! ExitCode: " + exit.ToString(), false, LogType.Error );
+				return Logger.LogReturn( $"Failed! ExitCode: { exit }", false, LogType.Error );
 
 			return Logger.LogReturn( "Game tests succeeded!", true );
 		}
@@ -236,7 +236,7 @@ namespace MiGameTest
 
 	public static class Tests
 	{
-		public static void Main( string[] args )
+		public static void Main( string[] _ )
 		{
 			bool result = true;
 			Logger.Log( "Running MiGame tests..." );
